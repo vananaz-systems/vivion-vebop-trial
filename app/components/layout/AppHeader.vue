@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const { brand } = useSite()
 const { isOpen, toggle } = useMenu()
+const { onAboutClick } = useAboutNav()
+
+function onNavClick(to: string, event: Event) {
+  if (isAboutNavTo(to)) onAboutClick(event)
+}
 
 const headerNav = computed(() => brand.nav.main.filter(item => item.label !== 'HOME'))
 
@@ -49,7 +54,7 @@ onUnmounted(() => {
           >
             {{ item.label }}
           </a>
-          <NuxtLink v-else :to="item.to" class="c-header__link">
+          <NuxtLink v-else :to="item.to" class="c-header__link" @click="onNavClick(item.to, $event)">
             {{ item.label }}
           </NuxtLink>
         </template>

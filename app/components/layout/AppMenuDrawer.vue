@@ -4,7 +4,13 @@ import { drawerJa } from '~/data/home'
 
 const { brand } = useSite()
 const { isOpen, close } = useMenu()
+const { onAboutClick } = useAboutNav()
 const route = useRoute()
+
+function onDrawerNav(item: BrandNavItem, event: Event) {
+  close()
+  if (isAboutNavTo(item.to)) onAboutClick(event)
+}
 
 const subLabels: Record<string, { en: string, jp: string }> = {
   プライバシーポリシー: { en: 'PRIVACY POLICY', jp: 'プライバシーポリシー' },
@@ -113,7 +119,7 @@ onUnmounted(() => {
                       <em>{{ item.label }}</em>
                       <small>{{ drawerJa[item.label] }}</small>
                     </a>
-                    <NuxtLink v-else :to="item.to" @click="close">
+                    <NuxtLink v-else :to="item.to" @click="onDrawerNav(item, $event)">
                       <em>{{ item.label }}</em>
                       <small>{{ drawerJa[item.label] }}</small>
                     </NuxtLink>

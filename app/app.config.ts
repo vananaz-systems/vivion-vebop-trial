@@ -29,7 +29,7 @@ export default defineAppConfig({
     nav: {
       main: [
         { label: 'HOME', to: '/' },
-        { label: 'ABOUT', to: '/about/' },
+        { label: 'ABOUT', to: '/#About' },
         { label: 'TALENTS', to: '/talents/' },
         { label: 'TOPICS', to: '/topics/' },
         { label: 'SHOP', to: 'https://vivionblue.com/collections/vebop-project', external: true, newTab: true },

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { aboutPage } from '~/data/pages'
 
+useAboutHashScroll()
+
 const headingLines = aboutPage.heading.split('\n')
 </script>
 
