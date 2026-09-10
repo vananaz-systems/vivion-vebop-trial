@@ -1,0 +1,20 @@
+{
+  "name": "@vhs-city/vebophighschool",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --dotenv .env.development",
+    "generate": "nuxt generate --dotenv .env.production",
+    "generate:staging": "nuxt generate --dotenv .env.staging",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^4.5.2",
+    "sass": "^1.90.0",
+    "sass-embedded": "^1.104.0",
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.1"
+  }
+}

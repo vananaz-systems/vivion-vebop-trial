@@ -1,0 +1,13 @@
+// Vebop High School SCSS entry.
+// When this app moves into the vhs-city monorepo, override core tokens first:
+//
+//   @use '@core/assets/scss/foundation/config/variable' with (
+//     $black: #0b0b0b,
+//     $white: #f5f5f5,
+//   );
+//   @use '@core/assets/scss/main';
+//
+// Sass `!default` can only be overridden on the first `@use`.
+
+@use 'foundation/reset';
+@use 'foundation/base';

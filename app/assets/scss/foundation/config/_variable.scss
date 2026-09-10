@@ -1,0 +1,29 @@
+$black: #111111 !default;
+$white: #ffffff !default;
+$blue: #888888 !default;
+$cyan: #111111 !default;
+$pink: #e23c8b !default;
+$yellow: #c8e64a !default;
+
+$page-bg: #f7f7fa !default;
+$bg: $page-bg !default;
+$bg-elevated: $white !default;
+$surface: $white !default;
+$text: $black !default;
+$text-muted: #6b6b6b !default;
+$border: $black !default;
+$accent: #b8e04a !default;
+$drawer-bg: #656575 !default;
+
+$font-sans: "ClashDisplay-Regular", "Noto Sans JP", "IBM Plex Sans JP", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif !default;
+$font-display: "ClashDisplay-Semibold", "Noto Sans JP", "IBM Plex Sans JP", sans-serif !default;
+$font-display-medium: "ClashDisplay-Medium", "Noto Sans JP", "IBM Plex Sans JP", sans-serif !default;
+$font-dela: "Dela Gothic One", sans-serif !default;
+
+$container: 1180px !default;
+$header-height: 72px !default;
+$ease: 0.2s ease !default;
+
+$bpSp: 768px !default;
+$bpSp_lg: 1024px !default;
+$bpPc: 960px !default;

@@ -1,0 +1,33 @@
+@use 'config/variable' as variable;
+
+html {
+  background: variable.$bg;
+}
+
+html,
+body {
+  color: variable.$text;
+  font-family: variable.$font-sans;
+  line-height: 1.7;
+}
+
+body {
+  background: variable.$bg;
+}
+
+.l-content {
+  width: min(#{variable.$container}, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

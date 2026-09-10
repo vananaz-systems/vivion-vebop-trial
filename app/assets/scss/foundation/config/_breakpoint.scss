@@ -1,0 +1,25 @@
+@use 'variable' as variable;
+
+@mixin mq($type, $min: null, $max: null) {
+  @if $type == sp {
+    @media (max-width: variable.$bpSp) {
+      @content;
+    }
+  } @else if $type == pc {
+    @media (min-width: variable.$bpPc) {
+      @content;
+    }
+  } @else if $type == min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else if $type == max {
+    @media (max-width: $min) {
+      @content;
+    }
+  } @else if $type == min_max {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  }
+}
