@@ -29,8 +29,9 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     microCmsApiKey: '',
-    siteUser: process.env.SITE_USER || '',
-    sitePassword: process.env.SITE_PASSWORD || '',
+    // Build-time: SITE_* or NUXT_SITE_*. Runtime overlay (Nitro): NUXT_SITE_* only.
+    siteUser: process.env.NUXT_SITE_USER || process.env.SITE_USER || '',
+    sitePassword: process.env.NUXT_SITE_PASSWORD || process.env.SITE_PASSWORD || '',
     public: {
       apiBaseUrl: '',
       parentSiteUrl: '',

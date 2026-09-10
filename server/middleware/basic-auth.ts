@@ -33,14 +33,25 @@ function readBasicCredentials(authorization: string | undefined): { user: string
   }
 }
 
+function runtimeEnv(...keys: string[]): string {
+  for (const key of keys) {
+    const value = process.env[key]
+    if (value) {
+      return String(value)
+    }
+  }
+
+  return ''
+}
+
 export default defineEventHandler((event) => {
   if (import.meta.prerender) {
     return
   }
 
-  const config = useRuntimeConfig()
-  const expectedUser = String(config.siteUser || process.env.SITE_USER || '')
-  const expectedPassword = String(config.sitePassword || process.env.SITE_PASSWORD || '')
+  const config = useRuntimeConfig(event)
+  const expectedUser = String(config.siteUser || '') || runtimeEnv('NUXT_SITE_USER', 'SITE_USER')
+  const expectedPassword = String(config.sitePassword || '') || runtimeEnv('NUXT_SITE_PASSWORD', 'SITE_PASSWORD')
 
   if (!expectedUser || !expectedPassword) {
     return
