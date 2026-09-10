@@ -29,6 +29,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     microCmsApiKey: '',
+    siteUser: process.env.SITE_USER || '',
+    sitePassword: process.env.SITE_PASSWORD || '',
     public: {
       apiBaseUrl: '',
       parentSiteUrl: '',
