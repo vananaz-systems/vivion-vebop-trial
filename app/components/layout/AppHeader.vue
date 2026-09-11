@@ -110,6 +110,17 @@ onUnmounted(() => {
   top: 0;
   z-index: 30;
   padding: 16px 20px 0;
+  overflow: visible;
+
+  // Official `.l-header` is `position: fixed` (not sticky). On SP the pill bar is
+  // `display: none`, so sticky + padding 0 yields a 0-height box that clips the
+  // fixed MENU on first paint until scroll/reflow. Keep MENU on the viewport.
+  @include breakpoint.mq(max, 768px) {
+    position: relative;
+    top: auto;
+    padding: 0;
+    overflow: visible;
+  }
 
   @include breakpoint.mq(pc) {
     padding: 20px 32px 0;
@@ -190,22 +201,23 @@ onUnmounted(() => {
     transition-delay: 0.2s;
     transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
-    &.is-show {
-      transform: translateY(0);
-    }
-
-    &:not(.is-show) {
-      pointer-events: none;
-    }
-
-    @include breakpoint.mq(sp) {
-      width: calc(100% - 34.1121495327vw - 8px);
+    // Official `.l-pcheader.is-pc` is `display: none !important` at max-width: 768px
+    @include breakpoint.mq(max, 768px) {
+      display: none;
     }
 
     @include breakpoint.mq(min, 769px) {
       width: 680px;
       max-width: 680px;
       margin-inline: auto;
+
+      &.is-show {
+        transform: translateY(0);
+      }
+
+      &:not(.is-show) {
+        pointer-events: none;
+      }
     }
 
     @include breakpoint.mq(min_max, 769px, 1200px) {
@@ -300,6 +312,20 @@ onUnmounted(() => {
     margin: 0;
     padding: 0;
     line-height: 0;
+    overflow: visible;
+
+    // Official `.l-navtrigger` @ max-width 768: 34.112vw × (50/146) tall, `right: 0`.
+    // Pin with `left` + `vw` (not `right: 0`) so a wider layout viewport after the
+    // intro overflow lock — or a 0-height sticky CB — cannot shove MENU off-screen.
+    @include breakpoint.mq(max, 768px) {
+      top: 4.6vw;
+      left: 65.8878504673vw;
+      right: auto;
+      width: 34.1121495327vw;
+      height: 11.6822429907vw;
+      max-width: none;
+      overflow: visible;
+    }
 
     @include breakpoint.mq(min, 769px) {
       top: 35px;
@@ -320,6 +346,11 @@ onUnmounted(() => {
       display: block;
       width: 100%;
       height: auto;
+      overflow: visible;
+
+      @include breakpoint.mq(max, 768px) {
+        height: 100%;
+      }
     }
   }
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { talentSlides } from '~/data/home'
+import { aboutPage } from '~/data/pages'
 
 const DRAG_THRESHOLD = 6
 const SCROLL_SETTLE_MS = 520
@@ -439,29 +440,30 @@ onUnmounted(() => {
     class="p-indexTalents"
     :class="{ 'is-scrolled': isScrolled }"
   >
-    <div class="p-indexTalents__head">
-      <div class="p-indexTalents__head-inner">
-        <h2 class="p-indexTalents__title">TALENTS</h2>
-        <NuxtLink to="/talents/" class="p-indexTalents__all">
-          <i class="p-indexTalents__all-icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15">
-              <g transform="translate(0 -2)">
-                <rect width="3" height="15" transform="translate(10 2)" />
-                <rect width="3" height="15" transform="translate(5 2)" />
-                <rect width="3" height="15" transform="translate(0 2)" />
-              </g>
-            </svg>
-          </i>
-          <em class="p-indexTalents__all-label">ALL TALENTS</em>
-        </NuxtLink>
+    <div class="p-indexTalents__inner">
+      <div class="p-indexTalents__head">
+        <div class="p-indexTalents__head-inner">
+          <h2 class="p-indexTalents__title">TALENTS</h2>
+          <NuxtLink to="/talents/" class="p-indexTalents__all p-indexTalents__all--pc">
+            <i class="p-indexTalents__all-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15">
+                <g transform="translate(0 -2)">
+                  <rect width="3" height="15" transform="translate(10 2)" />
+                  <rect width="3" height="15" transform="translate(5 2)" />
+                  <rect width="3" height="15" transform="translate(0 2)" />
+                </g>
+              </svg>
+            </i>
+            <em class="p-indexTalents__all-label">ALL TALENTS</em>
+          </NuxtLink>
+        </div>
       </div>
-    </div>
 
-    <div
-      class="p-indexTalents__carousel"
-      @mouseenter="onCarouselEnter"
-      @mouseleave="onCarouselLeave"
-    >
+      <div
+        class="p-indexTalents__carousel"
+        @mouseenter="onCarouselEnter"
+        @mouseleave="onCarouselLeave"
+      >
       <div class="p-indexTalents__nav">
         <div class="p-indexTalents__nav-inner">
           <button
@@ -503,6 +505,8 @@ onUnmounted(() => {
           :key="slide.loopKey"
           :name="slide.name"
           :image="slide.image"
+          :image-width="slide.imageWidth"
+          :image-height="slide.imageHeight"
           :description="slide.description"
           :cta-label="slide.ctaLabel"
           :cta-stacked="slide.ctaStacked"
@@ -510,6 +514,31 @@ onUnmounted(() => {
           :aria-hidden="slide.isClone"
         />
       </div>
+      </div>
+
+      <footer class="p-indexTalents__foot">
+        <h4 class="p-indexTalents__catch">
+          <img
+            src="/images/common/deco/txt_deco_alignleft.svg"
+            :alt="aboutPage.english"
+            width="170"
+            height="20"
+            decoding="async"
+          >
+        </h4>
+        <NuxtLink to="/talents/" class="p-indexTalents__all p-indexTalents__all--sp">
+          <i class="p-indexTalents__all-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15">
+              <g transform="translate(0 -2)">
+                <rect width="3" height="15" transform="translate(10 2)" />
+                <rect width="3" height="15" transform="translate(5 2)" />
+                <rect width="3" height="15" transform="translate(0 2)" />
+              </g>
+            </svg>
+          </i>
+          <em class="p-indexTalents__all-label">ALL TALENTS</em>
+        </NuxtLink>
+      </footer>
     </div>
   </section>
 </template>
@@ -575,6 +604,12 @@ onUnmounted(() => {
     }
   }
 
+  // Official `.inner-section` — SP slider nav positions against this, not the carousel
+  &__inner {
+    position: relative;
+    z-index: 2;
+  }
+
   &__head {
     position: relative;
     z-index: 2;
@@ -612,8 +647,13 @@ onUnmounted(() => {
     opacity: 0;
     transform: scaleX(1.2);
 
+    @include breakpoint.mq(max, 768px) {
+      padding-left: 23px;
+    }
+
     @include breakpoint.mq(min, 769px) {
       font-size: 1.3333333333vw;
+      
     }
 
     @include breakpoint.mq(min, 1201px) {
@@ -630,21 +670,39 @@ onUnmounted(() => {
   }
 
   &__all {
-    display: none;
+    display: flex;
     align-items: center;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
     font-family: variable.$font-display;
-    font-size: 1.25vw;
+    font-size: 3.2710280374vw;
     font-weight: 700;
     letter-spacing: 0.1em;
     line-height: 1;
     color: variable.$black;
 
     @include breakpoint.mq(min, 769px) {
-      display: flex;
+      font-size: 1.25vw;
     }
 
     @include breakpoint.mq(min, 1201px) {
       font-size: 15px;
+    }
+
+    &--pc {
+      display: none;
+
+      @include breakpoint.mq(min, 769px) {
+        display: flex;
+      }
+    }
+
+    &--sp {
+      display: flex;
+
+      @include breakpoint.mq(min, 769px) {
+        display: none;
+      }
     }
 
     &:hover {
@@ -660,9 +718,14 @@ onUnmounted(() => {
 
   &__all-icon {
     display: block;
-    margin-right: 1vw;
-    width: 1.6666666667vw;
+    margin-right: 2.5700934579vw;
+    width: 3.0373831776vw;
     line-height: 0;
+
+    @include breakpoint.mq(min, 769px) {
+      margin-right: 1vw;
+      width: 1.6666666667vw;
+    }
 
     @include breakpoint.mq(min, 1201px) {
       margin-right: 12px;
@@ -695,10 +758,13 @@ onUnmounted(() => {
   }
 
   &__carousel {
-    position: relative;
-    z-index: 2;
     overflow: visible;
     opacity: 0;
+
+    // Official: `main` is position:relative only ≥769, so SP arrows sit in the title row
+    @include breakpoint.mq(min, 769px) {
+      position: relative;
+    }
   }
 
   &.is-scrolled &__carousel {
@@ -739,9 +805,9 @@ onUnmounted(() => {
       user-select: none;
     }
 
-    @include breakpoint.mq(max, 768px) {
-      width: 89.3023255814%;
-    }
+    // @include breakpoint.mq(max, 768px) {
+    //   width: 89.3023255814%;
+    // }
 
     @include breakpoint.mq(min, 769px) {
       padding-inline: max(0px, calc((100% - 1000px) / 2));
@@ -827,6 +893,43 @@ onUnmounted(() => {
 
     &--next svg {
       animation: sliderNextAnime 2s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    }
+  }
+
+  // Official `.talents > footer.is-sp` — under-carousel catch + ALL TALENTS
+  &__foot {
+    display: none;
+
+    @include breakpoint.mq(max, 768px) {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+
+  &__catch {
+    position: relative;
+    line-height: 1;
+    padding-top: 8.1775700935vw;
+    width: 39.7196261682vw;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      height: 1px;
+      background: #000;
+      width: 7.476635514vw;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      vertical-align: bottom;
     }
   }
 }

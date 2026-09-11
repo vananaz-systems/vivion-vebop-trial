@@ -2,6 +2,8 @@
 defineProps<{
   name: string
   image: string
+  imageWidth?: number
+  imageHeight?: number
   description: string[]
   ctaLabel: string
   ctaStacked?: boolean
@@ -35,7 +37,14 @@ function bodyParts(paragraph: string): BodyPart[] {
 <template>
   <article class="c-talentSlide">
     <div class="c-talentSlide__visual">
-      <img :src="image" :alt="name" loading="eager" decoding="async">
+      <img
+        :src="image"
+        :alt="name"
+        :width="imageWidth || 1600"
+        :height="imageHeight"
+        loading="eager"
+        decoding="async"
+      >
     </div>
     <div class="c-talentSlide__main">
       <h3 class="c-talentSlide__name">{{ name }}</h3>
@@ -85,11 +94,11 @@ function bodyParts(paragraph: string): BodyPart[] {
     z-index: 1;
     display: block;
     width: 100%;
-    aspect-ratio: 1000 / 530;
     margin-bottom: 3.5046728972vw;
     background: variable.$white;
 
     @include breakpoint.mq(min, 769px) {
+      aspect-ratio: 1000 / 530;
       margin-bottom: 1.6666666667vw;
     }
 
@@ -103,9 +112,18 @@ function bodyParts(paragraph: string): BodyPart[] {
     img {
       display: block;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
+      height: auto;
+
+      @include breakpoint.mq(min, 769px) {
+        height: 100%;
+        aspect-ratio: 1000 / 530;
+        object-fit: cover;
+        object-position: center top;
+      }
+
+      @include breakpoint.mq(min, 1201px) {
+        aspect-ratio: auto;
+      }
     }
   }
 

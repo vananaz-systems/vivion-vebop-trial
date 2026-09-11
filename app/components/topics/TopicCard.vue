@@ -32,6 +32,7 @@ defineProps<{
 .c-topicCard {
   position: relative;
   box-sizing: border-box;
+  z-index: 3;
 
   &::after {
     content: "";
