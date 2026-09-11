@@ -32,13 +32,17 @@ onMounted(() => {
 
     <section class="p-index__fv" :class="{ 'is-loaded': fvLoaded }">
       <div class="p-index__fv-media">
-        <img
-          ref="fvImg"
-          src="/images/home/fv-pc.png"
-          :alt="brand.siteName"
-          @load="onFvImgReady"
-          @error="markFvReady"
-        >
+        <picture>
+          <source media="(min-width:769px)" srcset="/images/home/fv-pc.png">
+          <source media="(max-width:768px)" srcset="/images/home/fv-sp.png">
+          <img
+            ref="fvImg"
+            src="/images/home/fv-pc.png"
+            :alt="brand.siteName"
+            @load="onFvImgReady"
+            @error="markFvReady"
+          >
+        </picture>
       </div>
       <h1 class="p-index__fv-logo">
         <picture>
@@ -59,7 +63,8 @@ onMounted(() => {
 @use '~/assets/scss/foundation/config/breakpoint' as breakpoint;
 
 .p-index {
-  margin-top: calc(9.3457943925vw - 100px);
+  // Official `.l-fv` SP margin; header bar is hidden so no -100px overlap
+  margin-top: 9.3457943925vw;
   opacity: 0;
   pointer-events: none;
 
@@ -87,10 +92,45 @@ onMounted(() => {
   }
 
   &__fv-media {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: variable.$white;
+
+    picture {
+      display: block;
+    }
+
     img {
       display: block;
       width: 100%;
       height: auto;
+    }
+
+    // Official `.fvvideo` / `.fvvideo--inner` / `.fvvideo--image` on SP
+    @include breakpoint.mq(max, 768px) {
+      aspect-ratio: 430 / 674;
+      overflow: hidden;
+
+      picture {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 4300 / 6747;
+        object-fit: cover;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 1;
+      }
     }
   }
 
