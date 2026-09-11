@@ -19,6 +19,7 @@ export interface Talent {
   profile?: TalentProfile
   socials?: TalentSocials
   image?: string
+  color?: string
 }
 
 export interface TalentUnit {
@@ -29,4 +30,7 @@ export interface TalentUnit {
   summary: string
   description: string[]
   image?: string
+  logo?: string
+  archiveName?: string
+  inArchive?: boolean
 }

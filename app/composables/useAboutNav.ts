@@ -1,3 +1,5 @@
+import { INTRO_ABOUT_HASH_DELAY_MS } from '~/composables/useIntroLoader'
+
 const ABOUT_ID = 'About'
 const ABOUT_HASH = '#About'
 
@@ -37,14 +39,22 @@ export function useAboutNav() {
 /** Scroll to #About after homepage mount and when the hash is set. */
 export function useAboutHashScroll() {
   const route = useRoute()
+  const { contentRevealed } = useIntroLoader()
 
-  function maybeScroll() {
+  function maybeScroll(afterIntro = false) {
     if (!isAboutHash(route.hash)) return
+    if (!contentRevealed.value) return
     nextTick(() => {
-      requestAnimationFrame(() => scrollToAboutSection())
+      requestAnimationFrame(() => {
+        if (afterIntro) window.setTimeout(scrollToAboutSection, INTRO_ABOUT_HASH_DELAY_MS)
+        else scrollToAboutSection()
+      })
     })
   }
 
-  onMounted(maybeScroll)
-  watch(() => route.hash, maybeScroll)
+  onMounted(() => maybeScroll())
+  watch(() => route.hash, () => maybeScroll())
+  watch(contentRevealed, (revealed) => {
+    if (revealed) maybeScroll(true)
+  })
 }

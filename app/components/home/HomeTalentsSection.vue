@@ -9,6 +9,7 @@ const sectionEl = ref<HTMLElement | null>(null)
 const track = ref<HTMLElement | null>(null)
 const index = ref(0)
 const isScrolled = ref(false)
+const { contentRevealed } = useIntroLoader()
 const isDragging = ref(false)
 const isReady = ref(false)
 
@@ -373,6 +374,21 @@ function onClickCapture(event: MouseEvent) {
   suppressClick = false
 }
 
+function observeScrollIn() {
+  const el = sectionEl.value
+  if (!el || observer) return
+
+  observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry?.isIntersecting) return
+      isScrolled.value = true
+      observer?.disconnect()
+    },
+    { rootMargin: '0px 0px -200px 0px', threshold: 0 },
+  )
+  observer.observe(el)
+}
+
 onMounted(() => {
   const position = () => {
     syncToIndex()
@@ -391,18 +407,19 @@ onMounted(() => {
   document.addEventListener('visibilitychange', onVisibilityChange)
   startAutoplay()
 
-  const el = sectionEl.value
-  if (!el) return
+  if (contentRevealed.value) {
+    if (reducedMotionQuery?.matches) isScrolled.value = true
+    else observeScrollIn()
+  }
+})
 
-  observer = new IntersectionObserver(
-    ([entry]) => {
-      if (!entry?.isIntersecting) return
-      isScrolled.value = true
-      observer?.disconnect()
-    },
-    { threshold: 0.15 },
-  )
-  observer.observe(el)
+watch(contentRevealed, (revealed) => {
+  if (!revealed) return
+  if (reducedMotionQuery?.matches) {
+    isScrolled.value = true
+    return
+  }
+  nextTick(observeScrollIn)
 })
 
 onUnmounted(() => {
@@ -592,6 +609,8 @@ onUnmounted(() => {
     letter-spacing: 0.25em;
     line-height: 1;
     color: variable.$black;
+    opacity: 0;
+    transform: scaleX(1.2);
 
     @include breakpoint.mq(min, 769px) {
       font-size: 1.3333333333vw;
@@ -600,6 +619,14 @@ onUnmounted(() => {
     @include breakpoint.mq(min, 1201px) {
       font-size: 16px;
     }
+  }
+
+  &.is-scrolled &__title {
+    opacity: 1;
+    transform: scaleX(1);
+    transition-duration: 2.2s;
+    transition-delay: 0s;
+    transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
   }
 
   &__all {
@@ -671,6 +698,14 @@ onUnmounted(() => {
     position: relative;
     z-index: 2;
     overflow: visible;
+    opacity: 0;
+  }
+
+  &.is-scrolled &__carousel {
+    opacity: 1;
+    transition-duration: 1.2s;
+    transition-delay: 1s;
+    transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
   }
 
   &__track {
@@ -792,6 +827,17 @@ onUnmounted(() => {
 
     &--next svg {
       animation: sliderNextAnime 2s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-indexTalents {
+    &__title,
+    &__carousel {
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
   }
 }
