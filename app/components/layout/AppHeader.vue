@@ -2,6 +2,8 @@
 const { brand } = useSite()
 const { isOpen, toggle } = useMenu()
 const { onAboutClick } = useAboutNav()
+const route = useRoute()
+const { headerShown } = useIntroLoader()
 
 function onNavClick(to: string, event: Event) {
   if (isAboutNavTo(to)) onAboutClick(event)
@@ -11,10 +13,15 @@ const headerNav = computed(() => brand.nav.main.filter(item => item.label !== 'H
 
 /** Official `#js-pcheader`: hide when `$(window).scrollTop() > 200`. */
 const SCROLL_HIDE_THRESHOLD = 200
-const isBarVisible = ref(true)
+const scrollAllowsBar = ref(true)
+
+const isBarVisible = computed(() => {
+  if (isHomePath(route.path) && !headerShown.value) return false
+  return scrollAllowsBar.value
+})
 
 function syncBarVisibility() {
-  isBarVisible.value = window.scrollY <= SCROLL_HIDE_THRESHOLD
+  scrollAllowsBar.value = window.scrollY <= SCROLL_HIDE_THRESHOLD
 }
 
 onMounted(() => {

@@ -5,4 +5,6 @@ export interface Topic {
   publishedAt: string
   excerpt: string
   body: string[]
+  /** Official WordPress tags. `#NEWS` is currently the only category. */
+  tags: string[]
 }

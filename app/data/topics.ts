@@ -11,6 +11,7 @@ export const topics: Topic[] = [
       '株式会社viviONが運営するVTuberプロダクション「ビバップ高校」より、新たな所属VTuberとして「漆八ぷてら」がデビューすることをお知らせいたします。',
       '本文は静的データです。microCMS接続後に正式な記事本文へ差し替えます。',
     ],
+    tags: ['news'],
   },
   {
     id: 'name-change',
@@ -23,6 +24,7 @@ export const topics: Topic[] = [
       'この度、2026年6月1日をもちまして、VTuberグループ『Vebop Project』は新たに『ビバップ高校』へと名称を変更することをお知らせいたします。',
       '本名称変更は、同日に発表されました、viviON所属のVTuberたちが交差する『VHS City』への参加に伴う新たなステップとなります。',
     ],
+    tags: [],
   },
   {
     id: 'new-management',
@@ -34,6 +36,7 @@ export const topics: Topic[] = [
       '株式会社viviONは、RealityStudios株式会社よりVTuberグループ『Vebop Project』を事業譲受頂き、新たに運営をスタートいたしました。',
       'YouTubeを中心とした動画公開、ライブ配信などは引き続きファンの皆様により楽しんでいただけるよう活動を行ってまいります。',
     ],
+    tags: [],
   },
   {
     id: 'present-rules',
@@ -44,6 +47,7 @@ export const topics: Topic[] = [
     body: [
       'ファンレター・プレゼント送付ガイドラインを公開しています。詳細はプレゼント送付ガイドラインページをご確認ください。',
     ],
+    tags: [],
   },
   {
     id: 'guideline-revision',
@@ -54,6 +58,7 @@ export const topics: Topic[] = [
     body: [
       '二次創作ガイドラインを改定いたしました。詳細はガイドラインページをご確認ください。',
     ],
+    tags: [],
   },
   {
     id: 'gen2-debut',
@@ -64,6 +69,7 @@ export const topics: Topic[] = [
     body: [
       '本文は静的データです。microCMS接続後に正式な記事本文へ差し替えます。',
     ],
+    tags: ['news'],
   },
   {
     id: 'gen1-debut',
@@ -74,5 +80,6 @@ export const topics: Topic[] = [
     body: [
       '本文は静的データです。microCMS接続後に正式な記事本文へ差し替えます。',
     ],
+    tags: ['news'],
   },
 ]

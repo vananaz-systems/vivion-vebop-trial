@@ -4,10 +4,48 @@ import { aboutPage } from '~/data/pages'
 useAboutHashScroll()
 
 const headingLines = aboutPage.heading.split('\n')
+const sectionEl = ref<HTMLElement | null>(null)
+const isScrolled = ref(false)
+const { contentRevealed } = useIntroLoader()
+
+let observer: IntersectionObserver | null = null
+
+function observe() {
+  const el = sectionEl.value
+  if (!el || observer) return
+
+  observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry?.isIntersecting) return
+      isScrolled.value = true
+      observer?.disconnect()
+    },
+    { rootMargin: '0px 0px -200px 0px', threshold: 0 },
+  )
+  observer.observe(el)
+}
+
+watch(contentRevealed, (revealed) => {
+  if (!revealed) return
+  if (import.meta.client && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    isScrolled.value = true
+    return
+  }
+  nextTick(observe)
+}, { immediate: true })
+
+onUnmounted(() => {
+  observer?.disconnect()
+})
 </script>
 
 <template>
-  <section id="About" class="p-indexAbout">
+  <section
+    id="About"
+    ref="sectionEl"
+    class="p-indexAbout"
+    :class="{ 'is-scrolled': isScrolled }"
+  >
     <div class="p-indexAbout__inner">
       <header class="p-indexAbout__head">
         <h2 class="p-indexAbout__title">
@@ -67,6 +105,14 @@ const headingLines = aboutPage.heading.split('\n')
 
 .p-indexAbout {
   padding: 26.8691588785vw 0 18.691588785vw;
+  opacity: 0;
+
+  &.is-scrolled {
+    opacity: 1;
+    transition-duration: 1.2s;
+    transition-delay: 0s;
+    transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  }
 
   @include breakpoint.mq(min, 769px) {
     padding: 13.3333333333vw 40px 16.6666666667vw;
@@ -274,6 +320,13 @@ const headingLines = aboutPage.heading.split('\n')
       background-size: 66px auto;
       animation: logogroup-m 6s linear infinite reverse;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-indexAbout {
+    opacity: 1;
+    transition: none;
   }
 }
 </style>
