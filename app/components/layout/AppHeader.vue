@@ -243,10 +243,6 @@ onUnmounted(() => {
     font-weight: 700;
     text-transform: uppercase;
     color: variable.$black;
-    -webkit-font-smoothing: antialiased;
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-feature-settings: "palt";
-    font-feature-settings: "palt";
 
     // Official `.l-pcheader` nav underline (min-width: 769px)
     @include breakpoint.mq(min, 769px) {

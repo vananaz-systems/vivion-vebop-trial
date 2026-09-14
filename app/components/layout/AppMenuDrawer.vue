@@ -364,7 +364,7 @@ $drawer-green: #60ec33;
 
   &__head {
     @include breakpoint.mq(min, 769px) {
-      margin-bottom: 50px;
+      margin-bottom: 54px;
       padding-top: 35px;
     }
 
@@ -781,7 +781,7 @@ $drawer-green: #60ec33;
     transform: translateY(20%);
 
     li:not(:last-child) {
-      margin-bottom: 8px;
+      // margin-bottom: 8px;
     }
 
     a {
