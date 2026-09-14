@@ -49,7 +49,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
             <i class="p-talentsArchive__filterIcon" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
                 <rect width="15" height="15" />
-                <path d="M3.5,0,7,5H0Z" transform="translate(11 12) rotate(-180)" fill="#fff" />
+                <path d="M3.5,0,7,5H0Z" transform="translate(11 11) rotate(-180)" fill="#fff" />
               </svg>
             </i>
           </button>
@@ -105,6 +105,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
     align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 9.3457943925vw;
+    margin-top: 0.5px;
 
     @include breakpoint.mq(min, 769px) {
       display: block;
@@ -117,7 +118,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
     width: 47.3684210526%;
 
     &:not(:last-child) {
-      margin-bottom: 0.4em;
+      margin-bottom: 0.45em;
     }
 
     @include breakpoint.mq(min, 769px) {
@@ -218,7 +219,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
   &__main {
     @include breakpoint.mq(min, 769px) {
       width: 80.8333333333%;
-      padding-top: 5px;
+      padding-top: 1px;
     }
   }
 
@@ -236,7 +237,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 40px;
+      margin-bottom: 36px;
     }
 
     h2 {

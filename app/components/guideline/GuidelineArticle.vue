@@ -234,7 +234,7 @@
   padding-left: 5.8411214953%;
   padding-right: 5.8411214953%;
   color: #000;
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: variable.$font-sans;
   font-feature-settings: "palt";
   line-height: 1.8;
   word-wrap: break-word;
@@ -405,7 +405,7 @@
       }
 
       &:not(:last-child) {
-        margin-bottom: 0.85em;
+        // margin-bottom: 0.85em;
       }
     }
 
