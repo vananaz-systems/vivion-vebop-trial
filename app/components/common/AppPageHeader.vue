@@ -86,11 +86,13 @@ const isBanner = computed(() => !props.eyebrow && !props.description)
       margin-inline: auto;
       padding-inline: 0;
       font-size: 3.5vw;
+      margin-top: 64px;
     }
 
     @include breakpoint.mq(min, 1201px) {
       height: 136px;
       font-size: 42px;
+      
     }
   }
 

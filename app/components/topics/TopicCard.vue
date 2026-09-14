@@ -61,7 +61,7 @@ defineProps<{
     flex-wrap: wrap;
     box-sizing: border-box;
     height: 100%;
-    padding: 5.8411214953vw 4.6728971963vw;
+    padding: 5.8411214953vw 4.6728971963vw 4.6728971963vw;
     background: variable.$white;
     border: 1px solid variable.$black;
 

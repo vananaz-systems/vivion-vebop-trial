@@ -223,15 +223,19 @@ onUnmounted(() => {
     pointer-events: auto;
 
     @include breakpoint.mq(min, 769px) {
-      padding-top: 25px;
-      padding-left: 40px;
+      // padding-top: 25px;
+      // padding-left: 40px;
+      padding-top: 0;
+      padding-left: 0;
       width: 16.1764705882%;
       max-width: 220px;
+      margin-top: 25px;
+      margin-left: 40px;
     }
 
-    @include breakpoint.mq(min_max, 769px, 1200px) {
-      padding-top: 3.3333333333vw;
-    }
+    // @include breakpoint.mq(min_max, 769px, 1200px) {
+    //   padding-top: 3.3333333333vw;
+    // }
 
     picture,
     img {
@@ -308,7 +312,7 @@ onUnmounted(() => {
         content: "";
         position: absolute;
         left: 0;
-        bottom: -0.3em;
+        bottom: 0.1em;
         display: block;
         width: 0;
         height: 2px;

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { presentRulesPage } from '~/data/pages'
-import { INTRO_CONTENT_EASE, INTRO_CONTENT_FADE_MS } from '~/composables/useIntroLoader'
 
 useSeo({
   title: presentRulesPage.seoTitle,
@@ -41,7 +40,7 @@ onMounted(() => {
             </div>
 
             <!-- Official article uses a raw <br> (~18px) around the address card. -->
-            <br class="p-present__break" aria-hidden="true">
+            <!-- <br class="p-present__break" aria-hidden="true"> -->
 
             <div class="p-present__frame">
               <p class="p-present__frame-label">
@@ -60,7 +59,7 @@ onMounted(() => {
               </div>
             </div>
 
-            <br class="p-present__break" aria-hidden="true">
+            <!-- <br class="p-present__break" aria-hidden="true"> -->
 
             <div class="p-present__block">
               <p>{{ presentRulesPage.fanLetter.eligibleHeading }}</p>
@@ -123,7 +122,7 @@ onMounted(() => {
 
   &.is-revealed {
     opacity: 1;
-    transition: opacity #{INTRO_CONTENT_FADE_MS}ms #{INTRO_CONTENT_EASE};
+    transition: opacity 1.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
   }
 
   &__article {
@@ -266,6 +265,7 @@ onMounted(() => {
     p {
       margin: 0;
       letter-spacing: 0.05em;
+      font-family: variable.$font-sans;
     }
   }
 
@@ -282,9 +282,11 @@ onMounted(() => {
     padding: 2em;
     background: variable.$white;
     border: 1px solid variable.$black;
+    margin-top: 1.1999em;
+    margin-bottom: 1.1999em;
 
     @include breakpoint.mq(min, 769px) {
-      padding: 2em 3em;
+      padding: 1.8em 2.8em;
     }
   }
 
@@ -315,6 +317,7 @@ onMounted(() => {
 
   &__frame-body {
     font-size: 3.2710280374vw;
+    font-family: variable.$font-sans;
 
     p {
       margin: 0;
