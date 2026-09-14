@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { presentRulesPage } from '~/data/pages'
-import { INTRO_CONTENT_EASE, INTRO_CONTENT_FADE_MS } from '~/composables/useIntroLoader'
 
 useSeo({
   title: presentRulesPage.seoTitle,
@@ -123,7 +122,7 @@ onMounted(() => {
 
   &.is-revealed {
     opacity: 1;
-    transition: opacity #{INTRO_CONTENT_FADE_MS}ms #{INTRO_CONTENT_EASE};
+    transition: opacity 1.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
   }
 
   &__article {

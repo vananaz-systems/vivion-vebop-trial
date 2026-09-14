@@ -15,13 +15,20 @@ useSeo({
   title: 'TOPICS',
   description: 'ビバップ高校のお知らせ一覧。',
 })
+
+/** Official `#Main` fade: `$(#Main).animate({ opacity: 1 }, 1200, "easeInOutCirc")`. */
+const revealed = ref(false)
+
+onMounted(() => {
+  requestAnimationFrame(() => {
+    revealed.value = true
+  })
+})
 </script>
 
 <template>
-  <div class="p-topics">
-    <div class="p-topics__header">
-      <AppPageHeader title="TOPICS" />
-    </div>
+  <div class="p-topics" :class="{ 'is-revealed': revealed }">
+    <AppPageHeader title="TOPICS" />
 
     <section class="p-topics__body" id="Topics">
       <nav class="p-topics__category" aria-label="CATEGORY">
@@ -61,60 +68,18 @@ useSeo({
 
 .p-topics {
   background: variable.$page-bg;
+  opacity: 0;
 
-  &__header {
-    @include breakpoint.mq(min, 769px) {
-      padding-inline: 40px;
-    }
-
-    :deep(.c-pageHeader) {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      height: 21.0280373832vw;
-      margin-bottom: 0;
-      padding-inline: 5.8411214953%;
-      background: #000;
-      color: #fff;
-
-      @include breakpoint.mq(min, 769px) {
-        height: 11.3333333333vw;
-        max-width: 1200px;
-        margin-inline: auto;
-        padding-inline: 0;
-      }
-
-      @include breakpoint.mq(min, 1201px) {
-        height: 136px;
-      }
-    }
-
-    :deep(.c-pageHeader__title) {
-      color: #fff;
-      font-family: variable.$font-dela;
-      font-size: 7.476635514vw;
-      font-style: normal;
-      font-weight: 400;
-      letter-spacing: 0;
-      line-height: 1;
-
-      @include breakpoint.mq(min, 769px) {
-        font-size: 3.5vw;
-      }
-
-      @include breakpoint.mq(min, 1201px) {
-        font-size: 42px;
-      }
-    }
+  &.is-revealed {
+    opacity: 1;
+    transition: opacity 1.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
   }
 
   &__body {
     padding: 7.0093457944vw 0 17.523364486vw;
 
     @include breakpoint.mq(min, 769px) {
-      padding: 4.5833333333vw 40px 100px;
+      padding: 4.5833333333vw 40px 0;
     }
 
     @include breakpoint.mq(min, 1201px) {
@@ -131,6 +96,7 @@ useSeo({
       margin-inline: auto;
       margin-bottom: 5vw;
       padding-inline: 0;
+      margin-top: 2px;
     }
 
     @include breakpoint.mq(min, 1201px) {
@@ -146,7 +112,7 @@ useSeo({
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 15px;
+      margin-bottom: 16.5px;
     }
   }
 
@@ -166,6 +132,7 @@ useSeo({
       font-weight: 700;
       letter-spacing: 0.08em;
       line-height: 1;
+      font-optical-sizing: auto;
 
       @include breakpoint.mq(min, 769px) {
         font-size: 1vw;
@@ -194,7 +161,6 @@ useSeo({
       display: block;
       width: 100%;
       height: auto;
-      vertical-align: middle;
     }
   }
 
@@ -204,6 +170,8 @@ useSeo({
     font-family: variable.$font-display;
     font-size: 3.5046728972vw;
     font-weight: 700;
+    font-style: normal;
+    font-optical-sizing: auto;
 
     @include breakpoint.mq(min, 769px) {
       font-size: 1.5vw;
@@ -288,10 +256,14 @@ useSeo({
       max-width: 1200px;
       margin-inline: auto;
       padding-inline: 0;
+      margin-bottom: 13vw;
     }
   }
 
   :deep(.c-topicCard) {
+    width: 100%;
+    min-width: 0;
+
     &:not(:last-child) {
       margin-bottom: 3.738317757vw;
     }
@@ -320,13 +292,12 @@ useSeo({
       }
     }
   }
+}
 
-  :deep(.c-topicCard__footer) {
-    font-size: 2.3364485981vw;
-
-    @include breakpoint.mq(min, 769px) {
-      font-size: 10px;
-    }
+@media (prefers-reduced-motion: reduce) {
+  .p-topics {
+    opacity: 1;
+    transition: none;
   }
 }
 </style>
