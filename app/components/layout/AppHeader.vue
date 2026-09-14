@@ -192,10 +192,10 @@ onUnmounted(() => {
     align-items: center;
     gap: 20px;
     min-height: 60px;
-    padding: 12px 32px;
+    padding: 12px 34px 12px 32.5px;
     background: variable.$white;
     border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(17, 17, 17, 0.08);
+    box-shadow: 0 8px 24px rgba(17, 17, 17, 0.04);
     transform: translateY(-150%);
     transition-duration: 1.2s;
     transition-delay: 0.2s;
@@ -229,7 +229,8 @@ onUnmounted(() => {
     display: none;
     flex: 1;
     justify-content: center;
-    gap: clamp(18px, 3vw, 40px);
+    gap: 40.7px;
+    padding-left: 5px;
 
     @include breakpoint.mq(pc) {
       display: flex;
@@ -238,11 +239,14 @@ onUnmounted(() => {
 
   &__link {
     font-family: variable.$font-display;
-    font-size: 0.92rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    font-size: 15.1px;
+    font-weight: 700;
     text-transform: uppercase;
     color: variable.$black;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-feature-settings: "palt";
+    font-feature-settings: "palt";
 
     // Official `.l-pcheader` nav underline (min-width: 769px)
     @include breakpoint.mq(min, 769px) {
@@ -271,7 +275,7 @@ onUnmounted(() => {
   &__sns {
     display: none;
     align-items: center;
-    gap: 14px;
+    gap: 8px;
 
     @include breakpoint.mq(pc) {
       display: flex;

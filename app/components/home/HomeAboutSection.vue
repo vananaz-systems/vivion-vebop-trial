@@ -172,6 +172,10 @@ onUnmounted(() => {
       font-size: 3.5046728972vw;
       letter-spacing: 0.07em;
       color: #6a6b76;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-feature-settings: "palt";
+      font-feature-settings: "palt";
 
       @include breakpoint.mq(sp) {
         padding-inline: 5.8411214953%;
@@ -224,6 +228,10 @@ onUnmounted(() => {
     font-family: "Noto Sans JP", sans-serif;
     font-weight: 700;
     font-size: 3.738317757vw;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-feature-settings: "palt";
+    font-feature-settings: "palt";
 
     @include breakpoint.mq(sp) {
       padding-inline: 5.8411214953%;
