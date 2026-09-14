@@ -10,7 +10,7 @@ export const aboutPage = {
 }
 
 export const guidelinePage = {
-  title: 'GUIDELINE',
+  title: '二次創作ガイドライン',
   heading: '二次創作ガイドライン',
   description:
     'いつも『ビバップ高校』と所属メンバーたちへの応援、誠にありがとうございます。',

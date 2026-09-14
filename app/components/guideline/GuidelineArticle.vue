@@ -304,7 +304,7 @@
       width: 4.6728971963vw;
       height: 2px;
       margin-top: 0.5em;
-      background: #60ec33;
+      background: #000;
     }
 
     @include breakpoint.mq(min, 769px) {

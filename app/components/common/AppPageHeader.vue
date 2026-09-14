@@ -53,6 +53,12 @@ const isBanner = computed(() => !props.eyebrow && !props.description)
     gap: 0;
     margin-bottom: 0;
 
+    // Official `.l-pagesheader`. Sticky header already occupies PC flow space;
+    // SP header is 0-height so the banner needs the official top offset.
+    @include breakpoint.mq(max, 768px) {
+      margin-top: 21.0280373832vw;
+    }
+
     @include breakpoint.mq(min, 769px) {
       padding-left: 40px;
       padding-right: 40px;
@@ -98,7 +104,7 @@ const isBanner = computed(() => !props.eyebrow && !props.description)
     letter-spacing: 0;
     line-height: inherit;
     text-align: center;
-    text-transform: uppercase;
+    text-transform: none;
   }
 }
 </style>

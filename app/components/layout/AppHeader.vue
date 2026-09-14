@@ -11,6 +11,22 @@ function onNavClick(to: string, event: Event) {
 
 const headerNav = computed(() => brand.nav.main.filter(item => item.label !== 'HOME'))
 
+/** Homepage keeps catch SVG; all inner pages use the wordmark on the left. */
+const isHome = computed(() => isHomePath(route.path))
+
+function normalizeNavPath(path: string) {
+  const bare = path.split('#')[0].split('?')[0]
+  if (!bare || bare === '/') return '/'
+  return bare.replace(/\/+$/, '')
+}
+
+function isNavCurrent(to: string) {
+  if (isAboutNavTo(to) || to === '/') return false
+  const current = normalizeNavPath(route.path)
+  const target = normalizeNavPath(to)
+  return current === target || current.startsWith(`${target}/`)
+}
+
 /** Official `#js-pcheader`: hide when `$(window).scrollTop() > 200`. */
 const SCROLL_HIDE_THRESHOLD = 200
 const scrollAllowsBar = ref(true)
@@ -36,7 +52,7 @@ onUnmounted(() => {
 
 <template>
   <header class="c-header" :class="{ 'is-menu-open': isOpen }">
-    <div class="c-header__catch">
+    <div v-if="isHome" class="c-header__catch">
       <picture>
         <source media="(min-width:769px)" srcset="/images/common/header/txt_header_1line.svg">
         <source media="(max-width:768px)" srcset="/images/common/header/txt_header_2line.svg">
@@ -47,6 +63,7 @@ onUnmounted(() => {
         >
       </picture>
     </div>
+    <AppLogo v-else variant="wordmark" class="c-header__logo" />
 
     <div class="c-header__bar" :class="{ 'is-show': isBarVisible }" :aria-hidden="!isBarVisible">
       <AppLogo />
@@ -61,7 +78,14 @@ onUnmounted(() => {
           >
             {{ item.label }}
           </a>
-          <NuxtLink v-else :to="item.to" class="c-header__link" @click="onNavClick(item.to, $event)">
+          <NuxtLink
+            v-else
+            :to="item.to"
+            class="c-header__link"
+            :class="{ 'is-current': isNavCurrent(item.to) }"
+            :data-status="isNavCurrent(item.to) ? 'current' : undefined"
+            @click="onNavClick(item.to, $event)"
+          >
             {{ item.label }}
           </NuxtLink>
         </template>
@@ -136,7 +160,8 @@ onUnmounted(() => {
     pointer-events: auto;
   }
 
-  &.is-menu-open &__catch {
+  &.is-menu-open &__catch,
+  &.is-menu-open &__logo {
     z-index: 41;
   }
 
@@ -178,6 +203,37 @@ onUnmounted(() => {
       }
     }
 
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  // Official `.l-header > .logo` on inner pages (wordmark, not catch).
+  &__logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: block;
+    padding-top: 4.6728971963vw;
+    padding-left: 5.8411214953%;
+    width: 46.7289719626vw;
+    pointer-events: auto;
+
+    @include breakpoint.mq(min, 769px) {
+      padding-top: 25px;
+      padding-left: 40px;
+      width: 16.1764705882%;
+      max-width: 220px;
+    }
+
+    @include breakpoint.mq(min_max, 769px, 1200px) {
+      padding-top: 3.3333333333vw;
+    }
+
+    picture,
     img {
       display: block;
       width: 100%;
@@ -262,7 +318,10 @@ onUnmounted(() => {
         transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
       }
 
-      &:hover::after {
+      &:hover::after,
+      &.is-current::after,
+      &[data-status='current']::after,
+      &.router-link-active::after {
         width: 100%;
       }
     }
