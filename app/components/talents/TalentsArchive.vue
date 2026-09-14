@@ -116,14 +116,14 @@ const isTalentsView = computed(() => props.mode === 'talents')
   &__tab {
     width: 47.3684210526%;
 
+    &:not(:last-child) {
+      margin-bottom: 0.4em;
+    }
+
     @include breakpoint.mq(min, 769px) {
       width: auto;
       font-size: 1.6666666667vw;
       transition: color 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-
-      &:not(:last-child) {
-        margin-bottom: 0.4em;
-      }
     }
 
     @include breakpoint.mq(min, 1201px) {

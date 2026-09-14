@@ -1,5 +1,5 @@
 export const aboutPage = {
-  title: '“ビバップ高校” とは？',
+  title: '“ビバップ高校”とは？',
   heading: 'ジャンル問わず。\nマルチタレントユニットを\nプロデュース。',
   tagline: '合言葉は「型通りより型破り」。',
   body: [
@@ -10,7 +10,7 @@ export const aboutPage = {
 }
 
 export const guidelinePage = {
-  title: 'GUIDELINE',
+  title: '二次創作ガイドライン',
   heading: '二次創作ガイドライン',
   description:
     'いつも『ビバップ高校』と所属メンバーたちへの応援、誠にありがとうございます。',

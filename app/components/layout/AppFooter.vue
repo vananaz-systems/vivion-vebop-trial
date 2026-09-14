@@ -212,7 +212,7 @@ function scrollTop() {
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 32px;
+      margin-bottom: 6px;
     }
   }
 

@@ -4,11 +4,40 @@ import type { Talent } from '#shared/types/talent'
 defineProps<{
   talent: Talent
 }>()
+
+const root = ref<HTMLElement | null>(null)
+const revealed = ref(false)
+
+onMounted(() => {
+  const el = root.value
+  if (!el) return
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealed.value = true
+    return
+  }
+
+  const io = new IntersectionObserver(([entry]) => {
+    if (!entry?.isIntersecting) return
+    window.setTimeout(() => {
+      revealed.value = true
+    }, 80)
+    io.disconnect()
+  }, { threshold: 0.12 })
+
+  io.observe(el)
+  onUnmounted(() => io.disconnect())
+})
 </script>
 
 <template>
-  <NuxtLink :to="`/talents/${talent.slug}/`" class="c-talentCard">
+  <NuxtLink
+    :to="`/talents/${talent.slug}/`"
+    class="c-talentCard"
+    :class="{ 'is-show': revealed }"
+  >
     <div
+      ref="root"
       class="c-talentCard__thumb"
       :style="{ backgroundColor: talent.color || '#111' }"
     >
@@ -63,6 +92,16 @@ defineProps<{
     position: relative;
     z-index: 2;
     display: block;
+    opacity: 0;
+    transform: scale(1.1) translateY(50%);
+  }
+
+  &.is-show picture {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    transition-duration: 0.8s;
+    transition-delay: 0s;
+    transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
   }
 
   picture::before {

@@ -1,14 +1,24 @@
 <script setup lang="ts">
 import { presentRulesPage } from '~/data/pages'
+import { INTRO_CONTENT_EASE, INTRO_CONTENT_FADE_MS } from '~/composables/useIntroLoader'
 
 useSeo({
   title: presentRulesPage.seoTitle,
   description: presentRulesPage.seoTitle,
 })
+
+/** Official `#Main` fade: `$(#Main).animate({ opacity: 1 }, 1200, "easeInOutCirc")`. */
+const revealed = ref(false)
+
+onMounted(() => {
+  requestAnimationFrame(() => {
+    revealed.value = true
+  })
+})
 </script>
 
 <template>
-  <div class="p-present">
+  <div class="p-present" :class="{ 'is-revealed': revealed }">
     <AppPageHeader :title="presentRulesPage.title" />
 
     <article class="p-present__article">
@@ -30,6 +40,9 @@ useSeo({
               <p>{{ presentRulesPage.fanLetter.intro }}</p>
             </div>
 
+            <!-- Official article uses a raw <br> (~18px) around the address card. -->
+            <br class="p-present__break" aria-hidden="true">
+
             <div class="p-present__frame">
               <p class="p-present__frame-label">
                 <em>{{ presentRulesPage.fanLetter.address.label }}</em>
@@ -47,14 +60,16 @@ useSeo({
               </div>
             </div>
 
+            <br class="p-present__break" aria-hidden="true">
+
             <div class="p-present__block">
               <p>{{ presentRulesPage.fanLetter.eligibleHeading }}</p>
-            </div>
-            <div class="p-present__block">
               <p v-for="paragraph in presentRulesPage.fanLetter.eligible" :key="paragraph">
                 {{ paragraph }}
               </p>
             </div>
+
+            <br class="p-present__break" aria-hidden="true">
 
             <div class="p-present__block">
               <p>{{ presentRulesPage.fanLetter.acceptedHeading }}</p>
@@ -84,11 +99,7 @@ useSeo({
               <p v-for="paragraph in presentRulesPage.present.paragraphs" :key="paragraph">
                 {{ paragraph }}
               </p>
-            </div>
-            <div class="p-present__block">
               <p>{{ presentRulesPage.present.eventHeading }}</p>
-            </div>
-            <div class="p-present__block">
               <p v-for="paragraph in presentRulesPage.present.eventParagraphs" :key="paragraph">
                 {{ paragraph }}
               </p>
@@ -108,6 +119,12 @@ useSeo({
 
 .p-present {
   background: variable.$page-bg;
+  opacity: 0;
+
+  &.is-revealed {
+    opacity: 1;
+    transition: opacity #{INTRO_CONTENT_FADE_MS}ms #{INTRO_CONTENT_EASE};
+  }
 
   &__article {
     padding-top: 9.3457943925vw;
@@ -234,8 +251,7 @@ useSeo({
     font-family: "Noto Sans JP", sans-serif;
     font-size: 3.0373831776vw;
     font-weight: 400;
-    letter-spacing: 0.05em;
-    line-height: 2;
+    line-height: 1.8;
 
     @include breakpoint.mq(min, 769px) {
       font-size: 1.3333333333vw;
@@ -249,13 +265,16 @@ useSeo({
   &__block {
     p {
       margin: 0;
+      letter-spacing: 0.05em;
     }
   }
 
-  &__block + &__block,
-  &__block + &__frame,
-  &__frame + &__block {
-    margin-top: 1em;
+  // Official `<br>` sits on `#Main` body (10px × line-height 1.8).
+  &__break {
+    display: block;
+    height: 18px;
+    font-size: 0;
+    line-height: 0;
   }
 
   &__frame {
@@ -316,9 +335,17 @@ useSeo({
   }
 
   &__list {
-    margin: 1.5em 0;
+    margin: 0;
     padding: 0;
     list-style: disc;
+
+    &:not(:first-child) {
+      margin-top: 1.5em;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1.5em;
+    }
 
     li {
       margin-left: 1.5em;
@@ -328,6 +355,13 @@ useSeo({
     li:not(:last-child) {
       margin-bottom: 0.45em;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-present {
+    opacity: 1;
+    transition: none;
   }
 }
 </style>
