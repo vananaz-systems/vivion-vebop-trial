@@ -56,8 +56,11 @@ const isTalentsView = computed(() => props.mode === 'talents')
         </header>
 
         <ul v-if="isTalentsView" class="p-talentsArchive__talents">
-          <li v-for="talent in visibleTalents" :key="talent.id">
-            <TalentCard :talent="talent" />
+          <li
+            v-for="(talent, index) in visibleTalents"
+            :key="`${activeUnitId ?? 'all'}-${talent.id}`"
+          >
+            <TalentCard :talent="talent" :index="index" />
           </li>
         </ul>
 
