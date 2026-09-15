@@ -219,7 +219,7 @@ onUnmounted(() => {
     display: block;
     padding-top: 4.6728971963vw;
     padding-left: 5.8411214953%;
-    width: 46.7289719626vw;
+    width: 52.59vw;
     pointer-events: auto;
 
     @include breakpoint.mq(min, 769px) {
@@ -329,7 +329,7 @@ onUnmounted(() => {
         content: "";
         position: absolute;
         left: 0;
-        bottom: 0.1em;
+        bottom: -0.3em;
         display: block;
         width: 0;
         height: 2px;
