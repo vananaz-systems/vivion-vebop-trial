@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import type { Talent } from '#shared/types/talent'
 
-defineProps<{
+const STAGGER_MS = 100
+
+const props = withDefaults(defineProps<{
   talent: Talent
-}>()
+  index?: number
+}>(), {
+  index: 0,
+})
 
 const root = ref<HTMLElement | null>(null)
 const revealed = ref(false)
+const staggerStyle = computed(() => ({
+  '--talent-card-stagger': `${props.index * STAGGER_MS}ms`,
+}))
 
 onMounted(() => {
   const el = root.value
@@ -19,9 +27,7 @@ onMounted(() => {
 
   const io = new IntersectionObserver(([entry]) => {
     if (!entry?.isIntersecting) return
-    window.setTimeout(() => {
-      revealed.value = true
-    }, 80)
+    revealed.value = true
     io.disconnect()
   }, { threshold: 0.12 })
 
@@ -35,6 +41,7 @@ onMounted(() => {
     :to="`/talents/${talent.slug}/`"
     class="c-talentCard"
     :class="{ 'is-show': revealed }"
+    :style="staggerStyle"
   >
     <div
       ref="root"
@@ -100,8 +107,20 @@ onMounted(() => {
     opacity: 1;
     transform: scale(1) translateY(0);
     transition-duration: 0.8s;
-    transition-delay: 0s;
+    transition-delay: var(--talent-card-stagger, 0s);
     transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    picture {
+      opacity: 1;
+      transform: none;
+    }
+
+    &.is-show picture {
+      transition: none;
+      transition-delay: 0s;
+    }
   }
 
   picture::before {
