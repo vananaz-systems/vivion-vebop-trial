@@ -228,8 +228,8 @@ const isTalentsView = computed(() => props.mode === 'talents')
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding-top: 7.0093457944vw;
-    margin-bottom: 5.1401869159vw;
+    padding-top: 6.5vw;
+    margin-bottom: 4.3vw;
 
     @include breakpoint.mq(min, 769px) {
       padding-top: 0;
