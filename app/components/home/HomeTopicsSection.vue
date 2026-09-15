@@ -23,6 +23,7 @@ const latest = computed(() => topics.value.slice(0, LATEST_TOPICS_LIMIT))
         <TopicCard v-for="topic in latest" :key="topic.id" :topic="topic" />
       </div>
     </div>
+    <div class="p-indexTopics__background"></div>
   </section>
 </template>
 
@@ -36,7 +37,7 @@ const latest = computed(() => topics.value.slice(0, LATEST_TOPICS_LIMIT))
 
   @include breakpoint.mq(max, 768px) {
     padding: 32vw 0 0;
-    margin-bottom: -26vw;
+    // margin-bottom: -26vw;
   }
 
   @include breakpoint.mq(min, 769px) {
@@ -55,6 +56,16 @@ const latest = computed(() => topics.value.slice(0, LATEST_TOPICS_LIMIT))
       justify-content: space-between;
       max-width: 1200px;
       margin-inline: auto;
+    }
+  }
+
+  &__background {
+    display: block;
+    background-color: variable.$white;
+    height: 12.3vh;
+    margin-top: -12.3vh;
+    @include breakpoint.mq(min, 769px) {
+      display: none;
     }
   }
 

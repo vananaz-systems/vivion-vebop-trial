@@ -249,6 +249,7 @@ onUnmounted(() => {
     position: relative;
     z-index: 2;
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     gap: 20px;
     min-height: 60px;
@@ -282,25 +283,41 @@ onUnmounted(() => {
 
     @include breakpoint.mq(min_max, 769px, 1200px) {
       width: 56.6666666667vw;
+      gap: 1.6666666667vw;
+      padding: 12px 2.8333333333vw 12px 2.7083333333vw;
+
+      :deep(.c-logo:not(.c-logo--wordmark)) {
+        width: 2.5vw;
+      }
     }
   }
 
   &__nav {
     display: none;
     flex: 1;
-    justify-content: center;
-    gap: 40.7px;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 0;
+    gap: 0;
     padding-left: 5px;
+    // Official `.l-navlinks`: 1.5rem with html rem 10px
+    font-size: 15px;
 
-    @include breakpoint.mq(pc) {
+    @include breakpoint.mq(min, 769px) {
       display: flex;
+    }
+
+    @include breakpoint.mq(min_max, 769px, 1200px) {
+      font-size: 1.25vw;
     }
   }
 
   &__link {
     font-family: variable.$font-display;
-    font-size: 15.1px;
+    font-size: inherit;
     font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
     text-transform: uppercase;
     color: variable.$black;
 
@@ -333,11 +350,16 @@ onUnmounted(() => {
 
   &__sns {
     display: none;
+    flex-shrink: 0;
     align-items: center;
     gap: 8px;
 
-    @include breakpoint.mq(pc) {
+    @include breakpoint.mq(min, 769px) {
       display: flex;
+    }
+
+    @include breakpoint.mq(min_max, 769px, 1200px) {
+      gap: 0.6666666667vw;
     }
 
     a {
@@ -349,10 +371,20 @@ onUnmounted(() => {
       color: variable.$black;
       line-height: 0;
 
+      @include breakpoint.mq(min_max, 769px, 1200px) {
+        width: 2.5vw;
+        height: 2.5vw;
+      }
+
       svg {
         display: block;
         width: 30px;
         height: 30px;
+
+        @include breakpoint.mq(min_max, 769px, 1200px) {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   }
