@@ -27,6 +27,12 @@ body {
   overflow-wrap: break-word;
 }
 
+// Official `::selection` from vhs-city style.css.
+::selection {
+  background: #6a6b76;
+  color: #000;
+}
+
 .l-content {
   width: min(#{variable.$container}, calc(100% - 40px));
   margin-inline: auto;

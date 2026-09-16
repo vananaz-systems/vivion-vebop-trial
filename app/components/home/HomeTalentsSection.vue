@@ -868,6 +868,14 @@ onUnmounted(() => {
     cursor: pointer;
     pointer-events: auto;
     line-height: 0;
+    -webkit-tap-highlight-color: transparent;
+
+    // The arrow is focused on pointer down to keep keyboard paging in sync, so the
+    // UA focus ring would otherwise stay visible after a click/tap.
+    &:focus,
+    &:focus-visible {
+      outline: none;
+    }
 
     @include breakpoint.mq(min, 769px) {
       width: 5vw;
