@@ -286,7 +286,7 @@ onMounted(() => {
     margin-bottom: 1.1999em;
 
     @include breakpoint.mq(min, 769px) {
-      padding: 1.8em 2.8em;
+      padding: 2em 3em;
     }
   }
 
