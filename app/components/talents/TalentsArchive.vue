@@ -8,13 +8,13 @@ const { archiveUnits, getArchiveTalents, isArchiveUnit } = useTalents()
 
 const isFilterOpen = ref(false)
 
-const activeUnitId = computed(() => {
+const activeUnitSlug = computed(() => {
   const value = route.query.unit
-  const id = Array.isArray(value) ? value[0] : value
-  return id && isArchiveUnit(id) ? id : null
+  const slug = Array.isArray(value) ? value[0] : value
+  return slug && isArchiveUnit(slug) ? slug : null
 })
 
-const visibleTalents = computed(() => getArchiveTalents(activeUnitId.value))
+const visibleTalents = computed(() => getArchiveTalents(activeUnitSlug.value))
 
 const isTalentsView = computed(() => props.mode === 'talents')
 </script>
@@ -58,7 +58,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
         <ul v-if="isTalentsView" class="p-talentsArchive__talents">
           <li
             v-for="(talent, index) in visibleTalents"
-            :key="`${activeUnitId ?? 'all'}-${talent.id}`"
+            :key="`${activeUnitSlug ?? 'all'}-${talent.id}`"
           >
             <TalentCard :talent="talent" :index="index" />
           </li>
@@ -222,7 +222,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
   &__main {
     @include breakpoint.mq(min, 769px) {
       width: 80.8333333333%;
-      padding-top: 1px;
+      padding-top: 5px;
     }
   }
 

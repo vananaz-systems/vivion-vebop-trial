@@ -46,12 +46,12 @@ onMounted(() => {
     <div
       ref="root"
       class="c-talentCard__thumb"
-      :style="{ backgroundColor: talent.color || '#111' }"
+      :style="{ backgroundColor: talent.theme || '#111' }"
     >
       <picture>
         <img
-          v-if="talent.image"
-          :src="talent.image"
+          v-if="talent.thumbnail"
+          :src="talent.thumbnail.url"
           :alt="talent.name"
           loading="lazy"
           decoding="async"

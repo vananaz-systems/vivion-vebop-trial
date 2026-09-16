@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
-const { getTalentBySlug, getUnitById, getTalentsByUnit } = useTalents()
+const { getTalentBySlug, getUnitBySlug, getTalentsByUnit } = useTalents()
 
 const talent = computed(() => getTalentBySlug(String(route.params.slug)))
 
@@ -9,16 +9,31 @@ if (!talent.value) {
 }
 
 const unit = computed(() => (
-  talent.value?.unitId ? getUnitById(talent.value.unitId) : undefined
+  talent.value?.unit ? getUnitBySlug(talent.value.unit.slug) : undefined
 ))
 
 const unitMembers = computed(() => (
-  talent.value?.unitId ? getTalentsByUnit(talent.value.unitId) : []
+  talent.value?.unit ? getTalentsByUnit(talent.value.unit.slug) : []
 ))
+
+const profileEntries = computed<{ headline: string, content: string }[]>(() => {
+  if (!talent.value?.data) return []
+
+  try {
+    return JSON.parse(talent.value.data)
+  }
+  catch {
+    return []
+  }
+})
+
+const seoDescription = computed(() =>
+  talent.value?.profileText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() ?? '',
+)
 
 useSeo({
   title: talent.value.name,
-  description: talent.value.bio,
+  description: seoDescription.value,
 })
 </script>
 
@@ -27,26 +42,18 @@ useSeo({
     <AppPageHeader eyebrow="TALENT PROFILE" :title="talent.name" :description="talent.nameEn" />
 
     <div class="p-profile__layout">
-      <div class="p-profile__visual" aria-hidden="true">
-        {{ talent.name.slice(0, 1) }}
+      <div class="p-profile__visual">
+        <img :src="talent.portrait.url" :alt="talent.name">
       </div>
 
       <div class="p-profile__content">
         <h2>PROFILE</h2>
-        <p>{{ talent.bio }}</p>
+        <div v-html="talent.profileText" />
 
-        <dl v-if="talent.profile" class="p-profile__meta">
-          <div v-if="talent.profile.attribute">
-            <dt>属性</dt>
-            <dd>{{ talent.profile.attribute }}</dd>
-          </div>
-          <div v-if="talent.profile.height">
-            <dt>身長</dt>
-            <dd>{{ talent.profile.height }}</dd>
-          </div>
-          <div v-if="talent.profile.birthday">
-            <dt>誕生日</dt>
-            <dd>{{ talent.profile.birthday }}</dd>
+        <dl v-if="profileEntries.length" class="p-profile__meta">
+          <div v-for="entry in profileEntries" :key="entry.headline">
+            <dt>{{ entry.headline }}</dt>
+            <dd>{{ entry.content.trim() }}</dd>
           </div>
         </dl>
 

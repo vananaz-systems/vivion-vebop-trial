@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { TalentUnit } from '#shared/types/talent'
+
 const { archiveUnits } = useTalents()
 
 const isOpen = defineModel<boolean>({ default: false })
@@ -7,8 +9,8 @@ function close() {
   isOpen.value = false
 }
 
-function unitNameLines(unit: { archiveName?: string, name: string }) {
-  return (unit.archiveName || unit.name).split('\n')
+function unitNameLines(unit: TalentUnit) {
+  return unit.name.split(/<br\s*\/?>/i)
 }
 
 watch(isOpen, (open) => {
@@ -54,12 +56,12 @@ onUnmounted(() => {
           </header>
           <ul>
             <li v-for="unit in archiveUnits" :key="unit.id">
-              <NuxtLink :to="{ path: '/talents/', query: { unit: unit.id } }" @click="close">
+              <NuxtLink :to="`/talents/unit/${unit.slug}`" @click="close">
                 <picture>
                   <img
                     v-if="unit.logo"
-                    :src="unit.logo"
-                    :alt="unit.archiveName || unit.name"
+                    :src="unit.logo.url"
+                    :alt="unitNameLines(unit).join(' ')"
                     loading="lazy"
                     decoding="async"
                   >
