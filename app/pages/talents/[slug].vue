@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
-const { getTalentBySlug, getUnitBySlug, getTalentsByUnit } = useTalents()
+const { getTalentBySlug, getUnitBySlug } = useTalents()
 
 const talent = computed(() => getTalentBySlug(String(route.params.slug)))
 
@@ -12,15 +12,16 @@ const unit = computed(() => (
   talent.value?.unit ? getUnitBySlug(talent.value.unit.slug) : undefined
 ))
 
-const unitMembers = computed(() => (
-  talent.value?.unit ? getTalentsByUnit(talent.value.unit.slug) : []
-))
+const unitMembers = computed(() =>
+  [...(unit.value?.members ?? [])],
+)
 
 const seoDescription = computed(() =>
   talent.value?.profileText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() ?? '',
 )
 
-const unitName = computed(() => unit.value?.name.replace(/<br\s*\/?>/gi, ' ') ?? '')
+// const unitName = computed(() => unit.value?.name.replace(/<br\s*\/?>/gi, ' ') ?? '')
+const unitName = unit.value?.name
 
 const socialLinks = computed(() => {
   const links = []
@@ -29,7 +30,7 @@ const socialLinks = computed(() => {
     links.push({
       type: 'x',
       url: talent.value.xTwitterLink,
-      label: getSocialHandle(talent.value.xTwitterLink),
+      label: `@${getSocialHandle(talent.value.xTwitterLink)}`,
     })
   }
 
@@ -122,7 +123,7 @@ useSeo({
           <h2>所属ユニット</h2>
         </header>
 
-        <NuxtLink :to="`/talents/unit/${unit.slug}`" class="p-talentDetail__unitLink">
+        <div class="p-talentDetail__unitLink">
           <picture class="p-talentDetail__unitVisual">
             <img
               :src="unit.groupImage.url"
@@ -140,10 +141,10 @@ useSeo({
               alt=""
             >
           </picture>
-        </NuxtLink>
+        </div>
 
         <div class="p-talentDetail__unitProfile">
-          <h3>{{ unitName }}</h3>
+          <h3 v-html="unitName" />
           <div v-html="unit.profileText" />
         </div>
 
@@ -263,9 +264,13 @@ useSeo({
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 1200 / 968;
+      // aspect-ratio: 1200 / 968;
       object-fit: contain;
       object-position: center;
+
+      @include breakpoint.mq(min, 769px) {
+        aspect-ratio: 1200 / 968;
+      }
     }
   }
 
@@ -273,7 +278,7 @@ useSeo({
     position: relative;
     z-index: 3;
     margin: 0;
-    padding: 2.3364485981vw 5.8411214953% 0;
+    padding: 5.7vw 5.8411214953% 0;
 
     @include breakpoint.mq(min, 769px) {
       padding: 0;
@@ -354,7 +359,7 @@ useSeo({
 
     > dt {
       width: 10.5263157895%;
-      padding-top: 0.5em;
+      padding-top: 0.3em;
       font-family: variable.$font-display-medium;
       font-size: 2.3364485981vw;
       font-weight: 500;
@@ -364,7 +369,7 @@ useSeo({
 
       @include breakpoint.mq(min, 769px) {
         width: 20.7977207977%;
-        padding-top: 0;
+        // padding-top: 0;
         font-size: 1vw;
         writing-mode: horizontal-tb;
       }
@@ -385,7 +390,7 @@ useSeo({
   }
 
   &__profile > dd {
-    font-family: "Noto Sans JP", sans-serif;
+    font-family: variable.$font-sans;
     font-size: 3.0373831776vw;
     line-height: 1.8;
 
@@ -581,7 +586,8 @@ useSeo({
 
   &__unit {
     margin-top: 16.3551401869vw;
-    padding: 21.0280373832vw 5.8411214953% 18.691588785vw;
+    // padding: 21.0280373832vw 5.8411214953% 18.691588785vw;
+    padding: 21.0280373832vw 0 18.691588785vw;
     background: #fff;
 
     @include breakpoint.mq(min, 769px) {
@@ -652,13 +658,13 @@ useSeo({
     display: block;
     color: #000;
 
-    @include breakpoint.mq(min, 769px) {
-      transition: opacity 0.3s;
+    // @include breakpoint.mq(min, 769px) {
+    //   transition: opacity 0.3s;
 
-      &:hover {
-        opacity: 0.7;
-      }
-    }
+    //   &:hover {
+    //     opacity: 0.7;
+    //   }
+    // }
   }
 
   &__unitVisual,
@@ -693,13 +699,14 @@ useSeo({
   &__unitProfile {
     margin-bottom: 14.0186915888vw;
     text-align: center;
+    margin-top: -0.4em;
 
     @include breakpoint.mq(min, 769px) {
       margin-bottom: 5vw;
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 60px;
+      margin-bottom: 65px;
     }
 
     h3 {
@@ -710,7 +717,7 @@ useSeo({
       line-height: 1.3;
 
       @include breakpoint.mq(min, 769px) {
-        margin-bottom: 0.5em;
+        margin-bottom: 0.35em;
         font-size: 3.3333333333vw;
       }
 
@@ -725,6 +732,12 @@ useSeo({
       font-weight: 500;
       line-height: 2;
 
+      :deep(.is-sp) {
+        @include breakpoint.mq(min, 769px) {
+          display: none;
+        }
+      }
+
       @include breakpoint.mq(min, 769px) {
         font-size: 1.4166666667vw;
       }
@@ -732,10 +745,13 @@ useSeo({
       @include breakpoint.mq(min, 1201px) {
         font-size: 17px;
       }
+
     }
 
     :deep(p) {
       margin: 0;
+      letter-spacing: 0.08em;
+      line-height: 1.8;
     }
 
     :deep(p:not(:last-child)) {
@@ -744,6 +760,12 @@ useSeo({
   }
 
   &__unitMembers {
+    padding-inline: 5.8411214953%;
+
+    @include breakpoint.mq(min, 769px) {
+      padding-inline: 0;
+    }
+
     > h3 {
       display: flex;
       align-items: center;
@@ -762,7 +784,7 @@ useSeo({
       }
 
       @include breakpoint.mq(min, 1201px) {
-        margin-bottom: 20px;
+        margin-bottom: 26px;
         font-size: 14px;
       }
 
@@ -806,7 +828,7 @@ useSeo({
       }
 
       &:nth-child(n + 3) {
-        margin-top: 7.0093457944vw;
+        margin-top: 3.3vw;
 
         @include breakpoint.mq(min, 769px) {
           margin-top: 0;
@@ -827,7 +849,7 @@ useSeo({
     }
 
     @include breakpoint.mq(min, 1201px) {
-      padding: 50px 0 90px;
+      padding: 50px 0 0px;
     }
 
     a {
@@ -836,7 +858,7 @@ useSeo({
       align-items: center;
       justify-content: center;
       width: 47.3684210526%;
-      padding: 0.4em 0;
+      padding: 0.23em 0;
       border: solid 0 #000;
       border-width: 1px 0;
       color: #000;

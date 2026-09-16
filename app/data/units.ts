@@ -19,38 +19,40 @@ export const units: TalentUnit[] = [
             "height": 898,
             "width": 1350
         },
-        "profileText": "<p style=\"text-align: center\"><strong>マボロシトモダチクラブ<br>特殊な能力を持ちながら人間ではない存在を監視する任務を受け、街で増える異常現象の調査を開始する。<br>能力を隠しつつ情報収集を進めるため、配信活動を始め、さまざまな人々と交流しながら異界の存在に関する情報を集める。<br>彼女たちのゆるやかな捜査が今始まる。</strong></p><p style=\"text-align: center\"><strong>コインランドリースカッド<br>地球侵略が目的（だったはず）の異人怪人の4人組。<br>商店街にあるコインランドリーによく出没する。<br>侵略の前準備としてインターネットから人類の調査を進めるはずだったのだが…<br>彼女たちのゆるやかな地球侵略が今、始まる？</strong></p>",
+        "profileText": "<p style=\"text-align: center\">マボロシトモダチクラブ<br>特殊な能力を持ちながら人間ではない存在を監視する任務を<br class=\"is-sp\">受け、街で増える異常現象の調査を開始する。<br>能力を隠しつつ情報収集を進めるため、配信活動を始め、さま<br class=\"is-sp\">ざまな人々と交流しながら異界の存在に関する情報を集める。<br>彼女たちのゆるやかな捜査が今始まる。</p><p style=\"text-align: center\">コインランドリースカッド<br>地球侵略が目的（だったはず）の異人怪人の4人組。<br>商店街にあるコインランドリーによく出没する。<br>侵略の前準備としてインターネットから人類の調査を進めるは<br class=\"is-sp\">ずだったのだが…<br>彼女たちのゆるやかな地球侵略が今、始まる？</p>",
         "members": [
             {
-                "id": "nmbn6xjvubu",
-                "createdAt": "2026-09-15T16:01:19.057Z",
-                "updatedAt": "2026-09-15T16:01:19.057Z",
-                "publishedAt": "2026-09-15T16:01:19.057Z",
-                "revisedAt": "2026-09-15T16:01:19.057Z",
-                "slug": "明鏡止水ふわり",
-                "name": "明鏡止水ふわり",
-                "nameEn": "KIYORAKA FUWARI",
+                "id": "3f2ailzatacm",
+                "order": 9,
+                "createdAt": "2026-09-15T16:21:39.039Z",
+                "updatedAt": "2026-09-15T16:21:39.039Z",
+                "publishedAt": "2026-09-15T16:21:39.039Z",
+                "revisedAt": "2026-09-15T16:21:39.039Z",
+                "slug": "アカシ・ニコ",
+                "name": "アカシ・ニコ",
+                "nameEn": "AKASHI・NIKO",
                 "thumbnail": {
-                    "url": "/images/talents/kiyoraka-fuwari-thumb.png",
+                    "url": "/images/talents/akashi-niko-thumb.png",
                     "height": 540,
                     "width": 540
                 },
                 "portrait": {
-                    "url": "/images/talents/kiyoraka-fuwari.png",
-                    "height": 8036,
-                    "width": 6000
+                    "url": "/images/talents/akashi-niko.png",
+                    "height": 6100,
+                    "width": 4000
                 },
-                "theme": "#a4a8d4",
+                "theme": "#b3ada0",
                 "unit": {
                     "id": "4vo7wa7qc"
                 },
-                "profileText": "<p>神出鬼没のミステリアス少女。<br>人間からは好かれており、よく色々なものを貰って帰ってくる。<br>探し物はすぐ見つけたり、なにかと運が良い。</p>",
-                "xTwitterLink": "https://x.com/fuwari_coisqa",
-                "youtubeLink": "https://www.youtube.com/@fuwari_coisqa?sub_confirmation=1",
-                "data": [{"headline": "属性", "content": "ケセランパセラン"}, {"headline": "身長", "content": "141cm"}, {"headline": "誕生日", "content": "4/29"}]
+                "profileText": "<p>芸大卒で現役パラリーガルという異色の経歴を持つマッドサイエンティスト。<br>「マボロシトモダチクラブ｣の支配人であり、人心掌握と調教が得意なサディストで、<br>実験ということにすれば何をしても良いと思っている。<br>配信を通じて人間の思考実験をしており、<br>「A25実験室｣と銘打ちYouTubeにて被験体たるリスナーと日々戯れている。</p>",
+                "xTwitterLink": "https://x.com/niko_brdc",
+                "youtubeLink": "https://www.youtube.com/@niko_brdc?sub_confirmation=1",
+                "data": [{"headline": "属性", "content": "マッドサイエンティスト"}, {"headline": "身長", "content": "170cm"}, {"headline": "誕生日", "content": "2/5"}]
             },
             {
                 "id": "maoih5wvjg",
+                "order": 8,
                 "createdAt": "2026-09-15T16:04:50.128Z",
                 "updatedAt": "2026-09-15T16:04:50.128Z",
                 "publishedAt": "2026-09-15T16:04:50.128Z",
@@ -78,32 +80,33 @@ export const units: TalentUnit[] = [
                 "data": [{"headline": "属性", "content": "邪神"}, {"headline": "身長", "content": "150cm"}, {"headline": "誕生日", "content": "8/3"}]
             },
             {
-                "id": "3f2ailzatacm",
-                "createdAt": "2026-09-15T16:21:39.039Z",
-                "updatedAt": "2026-09-15T16:21:39.039Z",
-                "publishedAt": "2026-09-15T16:21:39.039Z",
-                "revisedAt": "2026-09-15T16:21:39.039Z",
-                "slug": "アカシ・ニコ",
-                "name": "アカシ・ニコ",
-                "nameEn": "AKASHI・NIKO",
+                "id": "nmbn6xjvubu",
+                "order": 7,
+                "createdAt": "2026-09-15T16:01:19.057Z",
+                "updatedAt": "2026-09-15T16:01:19.057Z",
+                "publishedAt": "2026-09-15T16:01:19.057Z",
+                "revisedAt": "2026-09-15T16:01:19.057Z",
+                "slug": "明鏡止水ふわり",
+                "name": "明鏡止水ふわり",
+                "nameEn": "KIYORAKA FUWARI",
                 "thumbnail": {
-                    "url": "/images/talents/akashi-niko-thumb.png",
+                    "url": "/images/talents/kiyoraka-fuwari-thumb.png",
                     "height": 540,
                     "width": 540
                 },
                 "portrait": {
-                    "url": "/images/talents/akashi-niko.png",
-                    "height": 6100,
-                    "width": 4000
+                    "url": "/images/talents/kiyoraka-fuwari.png",
+                    "height": 8036,
+                    "width": 6000
                 },
-                "theme": "#b3ada0",
+                "theme": "#a4a8d4",
                 "unit": {
                     "id": "4vo7wa7qc"
                 },
-                "profileText": "<p>芸大卒で現役パラリーガルという異色の経歴を持つマッドサイエンティスト。<br>「マボロシトモダチクラブ｣の支配人であり、人心掌握と調教が得意なサディストで、<br>実験ということにすれば何をしても良いと思っている。<br>配信を通じて人間の思考実験をしており、<br>「A25実験室｣と銘打ちYouTubeにて被験体たるリスナーと日々戯れている。</p>",
-                "xTwitterLink": "https://x.com/niko_brdc",
-                "youtubeLink": "https://www.youtube.com/@niko_brdc?sub_confirmation=1",
-                "data": [{"headline": "属性", "content": "マッドサイエンティスト"}, {"headline": "身長", "content": "170cm"}, {"headline": "誕生日", "content": "2/5"}]
+                "profileText": "<p>神出鬼没のミステリアス少女。<br>人間からは好かれており、よく色々なものを貰って帰ってくる。<br>探し物はすぐ見つけたり、なにかと運が良い。</p>",
+                "xTwitterLink": "https://x.com/fuwari_coisqa",
+                "youtubeLink": "https://www.youtube.com/@fuwari_coisqa?sub_confirmation=1",
+                "data": [{"headline": "属性", "content": "ケセランパセラン"}, {"headline": "身長", "content": "141cm"}, {"headline": "誕生日", "content": "4/29"}]
             }
         ]
     },
@@ -126,10 +129,11 @@ export const units: TalentUnit[] = [
             "height": 800,
             "width": 1355
         },
-        "profileText": "<p style=\"text-align: center\"><strong>急成長中の新興老舗企業。<br>缶詰からマタタビまで猫を喜ばせるありとあらゆる物を開発している。</strong></p><p style=\"text-align: center\"><strong>秘密裏に開発に成功していた不思議なけむりで<br>社員がもふもふになってしまったという事故の噂がある。</strong></p><p style=\"text-align: center\"><strong>最近ビルが爆発した。<br>ーーというかよく爆発する。</strong></p>",
+        "profileText": "<p style=\"text-align: center\">急成長中の新興老舗企業。<br>缶詰からマタタビまで猫を喜ばせる<br class=\"is-sp\">ありとあらゆる物を開発している。</p><p style=\"text-align: center\">秘密裏に開発に成功していた<br class=\"is-sp\">不思議なけむりで<br>社員がもふもふになってしまったという<br class=\"is-sp\">事故の噂がある。</p><p style=\"text-align: center\">最近ビルが爆発した。<br>ーーというかよく爆発する。</p>",
         "members": [
             {
                 "id": "dbndk4n6_6w",
+                "order": 4,
                 "createdAt": "2026-09-15T15:49:58.315Z",
                 "updatedAt": "2026-09-15T15:49:58.315Z",
                 "publishedAt": "2026-09-15T15:49:58.315Z",
@@ -157,35 +161,8 @@ export const units: TalentUnit[] = [
                 "data": [{"headline": "属性", "content": "ダウナー系ねむねむ"}, {"headline": "身長", "content": "158cm"}, {"headline": "誕生日", "content": "7/28"}]
             },
             {
-                "id": "edlj-iej3",
-                "createdAt": "2026-09-15T15:54:57.498Z",
-                "updatedAt": "2026-09-15T15:54:57.498Z",
-                "publishedAt": "2026-09-15T15:54:57.498Z",
-                "revisedAt": "2026-09-15T15:54:57.498Z",
-                "slug": "shia-futaai",
-                "name": "二藍しぃあ",
-                "nameEn": "FUTAAI SHIA",
-                "thumbnail": {
-                    "url": "/images/talents/futaai-shia-thumb.png",
-                    "height": 540,
-                    "width": 540
-                },
-                "portrait": {
-                    "url": "/images/talents/futaai-shia.png",
-                    "height": 2004,
-                    "width": 1290
-                },
-                "theme": "#af72b4",
-                "unit": {
-                    "id": "r-kajwdqeu"
-                },
-                "profileText": "<p>不思議なけむりでネコの性質を得たもりもりにゃんこめしの社員。<br>ネコの性質か母性が強い。</p><p style=\"text-align: start\">面倒見が良いドMのブラコン。</p>",
-                "xTwitterLink": "https://twitter.com/shia_morinyan",
-                "youtubeLink": "https://www.youtube.com/@shia_morinyan?sub_confirmation=1",
-                "data": [{"headline": "属性", "content": "元気お姉さん"}, {"headline": "身長", "content": "165cm"}, {"headline": "誕生日", "content": "8/30"}]
-            },
-            {
                 "id": "gylh48yy5",
+                "order": 6,
                 "createdAt": "2026-09-15T15:57:58.291Z",
                 "updatedAt": "2026-09-15T15:57:58.291Z",
                 "publishedAt": "2026-09-15T15:57:58.291Z",
@@ -211,6 +188,35 @@ export const units: TalentUnit[] = [
                 "xTwitterLink": "https://twitter.com/renge_morinyan",
                 "youtubeLink": "https://www.youtube.com/@renge_morinyan?sub_confirmation=1",
                 "data": [{"headline": "属性", "content": "なまいきようじょ"}, {"headline": "身長", "content": "150cm"}, {"headline": "誕生日", "content": "10/27"}]
+            },
+            {
+                "id": "edlj-iej3",
+                "order": 5,
+                "createdAt": "2026-09-15T15:54:57.498Z",
+                "updatedAt": "2026-09-15T15:54:57.498Z",
+                "publishedAt": "2026-09-15T15:54:57.498Z",
+                "revisedAt": "2026-09-15T15:54:57.498Z",
+                "slug": "shia-futaai",
+                "name": "二藍しぃあ",
+                "nameEn": "FUTAAI SHIA",
+                "thumbnail": {
+                    "url": "/images/talents/futaai-shia-thumb.png",
+                    "height": 540,
+                    "width": 540
+                },
+                "portrait": {
+                    "url": "/images/talents/futaai-shia.png",
+                    "height": 2004,
+                    "width": 1290
+                },
+                "theme": "#af72b4",
+                "unit": {
+                    "id": "r-kajwdqeu"
+                },
+                "profileText": "<p>不思議なけむりでネコの性質を得たもりもりにゃんこめしの社員。<br>ネコの性質か母性が強い。</p><p style=\"text-align: start\">面倒見が良いドMのブラコン。</p>",
+                "xTwitterLink": "https://twitter.com/shia_morinyan",
+                "youtubeLink": "https://www.youtube.com/@shia_morinyan?sub_confirmation=1",
+                "data": [{"headline": "属性", "content": "元気お姉さん"}, {"headline": "身長", "content": "165cm"}, {"headline": "誕生日", "content": "8/30"}]
             }
         ]
     },
@@ -233,10 +239,11 @@ export const units: TalentUnit[] = [
             "height": 900,
             "width": 1350
         },
-        "profileText": "<p style=\"text-align: center\"><strong>都内のどこかにあるメイド喫茶。<br>クセの強い店員しかいないことでその筋では有名。</strong></p><p style=\"text-align: center\"><strong>営業時間も決まっておらず日替わりでメニューが変わる。<br>何を頼んでも出てこない日もある。</strong></p><p style=\"text-align: center\"><strong>とある企業が道楽で始めたらしい。赤字覚悟である。<br>ーーというかめちゃくちゃ赤字である。</strong></p>",
+        "profileText": "<p style=\"text-align: center\">都内のどこかにあるメイド喫茶。<br>クセの強い店員しかいないことでその筋では有名。</p><p style=\"text-align: center\">営業時間も決まっておらず<br class=\"is-sp\">日替わりでメニューが変わる。<br>何を頼んでも出てこない日もある。</p><p style=\"text-align: center\">とある企業が道楽で始めたらしい。<br class=\"is-sp\">赤字覚悟である。<br>ーーというかめちゃくちゃ赤字である。</p>",
         "members": [
             {
                 "id": "5jwytn4_m",
+                "order": 1,
                 "createdAt": "2026-09-15T15:12:13.537Z",
                 "updatedAt": "2026-09-15T15:44:00.589Z",
                 "publishedAt": "2026-09-15T15:12:13.537Z",
@@ -265,6 +272,7 @@ export const units: TalentUnit[] = [
             },
             {
                 "id": "yi4kkvv3z",
+                "order": 2,
                 "createdAt": "2026-09-15T15:40:02.332Z",
                 "updatedAt": "2026-09-15T15:40:02.332Z",
                 "publishedAt": "2026-09-15T15:40:02.332Z",
@@ -293,6 +301,7 @@ export const units: TalentUnit[] = [
             },
             {
                 "id": "ib0hs087ae_v",
+                "order": 3,
                 "createdAt": "2026-09-15T15:45:04.058Z",
                 "updatedAt": "2026-09-15T15:45:04.058Z",
                 "publishedAt": "2026-09-15T15:45:04.058Z",
