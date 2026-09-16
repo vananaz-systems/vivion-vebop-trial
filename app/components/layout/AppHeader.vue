@@ -339,10 +339,11 @@ onUnmounted(() => {
         transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
       }
 
+      // `.router-link-active` is intentionally excluded: ABOUT links to `/#About`,
+      // so it matches the homepage route and would be underlined by default.
       &:hover::after,
       &.is-current::after,
-      &[data-status='current']::after,
-      &.router-link-active::after {
+      &[data-status='current']::after {
         width: 100%;
       }
     }
