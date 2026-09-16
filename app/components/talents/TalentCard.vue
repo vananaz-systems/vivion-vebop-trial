@@ -6,33 +6,22 @@ const STAGGER_MS = 100
 const props = withDefaults(defineProps<{
   talent: Talent
   index?: number
+  /** Background the card sits on; the thumb masks its top strip to match. */
+  surface?: 'page' | 'white'
 }>(), {
   index: 0,
+  surface: 'page',
 })
 
-const root = ref<HTMLElement | null>(null)
 const revealed = ref(false)
 const staggerStyle = computed(() => ({
   '--talent-card-stagger': `${props.index * STAGGER_MS}ms`,
 }))
 
 onMounted(() => {
-  const el = root.value
-  if (!el) return
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  requestAnimationFrame(() => {
     revealed.value = true
-    return
-  }
-
-  const io = new IntersectionObserver(([entry]) => {
-    if (!entry?.isIntersecting) return
-    revealed.value = true
-    io.disconnect()
-  }, { threshold: 0.12 })
-
-  io.observe(el)
-  onUnmounted(() => io.disconnect())
+  })
 })
 </script>
 
@@ -40,11 +29,10 @@ onMounted(() => {
   <NuxtLink
     :to="`/talents/${talent.slug}/`"
     class="c-talentCard"
-    :class="{ 'is-show': revealed }"
+    :class="{ 'is-show': revealed, 'c-talentCard--onWhite': surface === 'white' }"
     :style="staggerStyle"
   >
     <div
-      ref="root"
       class="c-talentCard__thumb"
       :style="{ backgroundColor: talent.theme || '#111' }"
     >
@@ -53,7 +41,6 @@ onMounted(() => {
           v-if="talent.thumbnail"
           :src="talent.thumbnail.url"
           :alt="talent.name"
-          loading="lazy"
           decoding="async"
         >
         <span v-else>{{ talent.name.slice(0, 1) }}</span>
@@ -93,6 +80,11 @@ onMounted(() => {
       background: variable.$page-bg;
       z-index: 1;
     }
+  }
+
+  // Official `.talents--detail` unit member list masks with `#fff`.
+  &--onWhite &__thumb::before {
+    background: variable.$white;
   }
 
   picture {

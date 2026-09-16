@@ -18,12 +18,16 @@ export function useTalents() {
     return units.find(unit => unit.slug === slug)
   }
 
+  function sortTalentsByOrder(list: Talent[]) {
+    return [...list].sort((a, b) => a.order - b.order)
+  }
+
   function getTalentsByUnit(unitSlug: string): Talent[] {
-    return talents.filter(talent => talent.unit?.slug === unitSlug)
+    return sortTalentsByOrder(talents.filter(talent => talent.unit?.slug === unitSlug))
   }
 
   function getArchiveTalents(unitSlug?: string | null): Talent[] {
-    if (!unitSlug) return talents
+    if (!unitSlug) return sortTalentsByOrder(talents)
     return getTalentsByUnit(unitSlug)
   }
 

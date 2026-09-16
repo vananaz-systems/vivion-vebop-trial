@@ -1,5 +1,10 @@
 import type { MicroCMSContent, MicroCMSImage } from '#shared/types/microcms'
 
+export interface TalentMetadata {
+  headline: string
+  content: string
+}
+
 export interface TalentUnitSummary extends MicroCMSContent {
   slug: string
   name: string
@@ -11,6 +16,7 @@ export interface TalentUnitSummary extends MicroCMSContent {
 }
 
 export interface Talent extends MicroCMSContent {
+  order: number
   slug: string
   name: string
   nameEn: string
@@ -21,7 +27,7 @@ export interface Talent extends MicroCMSContent {
   profileText: string
   xTwitterLink?: string
   youtubeLink?: string
-  data: string
+  data: TalentMetadata[]
 }
 
 export interface TalentUnitMember extends Omit<Talent, 'unit'> {
