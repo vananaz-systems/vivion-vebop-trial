@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { Talent } from '#shared/types/talent'
+import type { Talent, TalentUnitMember } from '#shared/types/talent'
 
 const STAGGER_MS = 100
 
 const props = withDefaults(defineProps<{
-  talent: Talent
+  talent: Talent | TalentUnitMember
   index?: number
   /** Background the card sits on; the thumb masks its top strip to match. */
   surface?: 'page' | 'white'

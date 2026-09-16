@@ -30,8 +30,11 @@ function isNavCurrent(to: string) {
 /** Official `#js-pcheader`: hide when `$(window).scrollTop() > 200`. */
 const SCROLL_HIDE_THRESHOLD = 200
 const scrollAllowsBar = ref(true)
+/** Starts hidden so the bar slides down on entry, like the pages' own enter animations. */
+const barEntered = ref(false)
 
 const isBarVisible = computed(() => {
+  if (!barEntered.value) return false
   if (isHomePath(route.path) && !headerShown.value) return false
   return scrollAllowsBar.value
 })
@@ -40,9 +43,25 @@ function syncBarVisibility() {
   scrollAllowsBar.value = window.scrollY <= SCROLL_HIDE_THRESHOLD
 }
 
+/** Two frames: one to paint the offscreen state, one to transition away from it. */
+function playBarEnter() {
+  barEntered.value = false
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      barEntered.value = true
+    })
+  })
+}
+
 onMounted(() => {
   syncBarVisibility()
+  playBarEnter()
   window.addEventListener('scroll', syncBarVisibility, { passive: true })
+})
+
+watch(() => route.path, () => {
+  syncBarVisibility()
+  playBarEnter()
 })
 
 onUnmounted(() => {

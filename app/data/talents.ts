@@ -67,7 +67,7 @@ export const talents: Talent[] = [
               "height": 898,
               "width": 1350
           },
-          "profileText": "<p style=\"text-align: center\"><strong>マボロシトモダチクラブ<br>特殊な能力を持ちながら人間ではない存在を監視する任務を受け、街で増える異常現象の調査を開始する。<br>能力を隠しつつ情報収集を進めるため、配信活動を始め、さまざまな人々と交流しながら異界の存在に関する情報を集める。<br>彼女たちのゆるやかな捜査が今始まる。</strong></p><p style=\"text-align: center\"><strong>コインランドリースカッド<br>地球侵略が目的（だったはず）の異人怪人の4人組。<br>商店街にあるコインランドリーによく出没する。<br>侵略の前準備としてインターネットから人類の調査を進めるはずだったのだが…<br>彼女たちのゆるやかな地球侵略が今、始まる？</strong></p>",
+          "profileText": "<p style=\"text-align: center\">マボロシトモダチクラブ<br>特殊な能力を持ちながら人間ではない存在を監視する任務を受け、街で増える異常現象の調査を開始する。<br>能力を隠しつつ情報収集を進めるため、配信活動を始め、さまざまな人々と交流しながら異界の存在に関する情報を集める。<br>彼女たちのゆるやかな捜査が今始まる。</p><p style=\"text-align: center\">コインランドリースカッド<br>地球侵略が目的（だったはず）の異人怪人の4人組。<br>商店街にあるコインランドリーによく出没する。<br>侵略の前準備としてインターネットから人類の調査を進めるはずだったのだが…<br>彼女たちのゆるやかな地球侵略が今、始まる？</p>",
           "members": [
               {
                   "id": "nmbn6xjvubu"
@@ -124,7 +124,7 @@ export const talents: Talent[] = [
               "height": 898,
               "width": 1350
           },
-          "profileText": "<p style=\"text-align: center\"><strong>マボロシトモダチクラブ<br>特殊な能力を持ちながら人間ではない存在を監視する任務を受け、街で増える異常現象の調査を開始する。<br>能力を隠しつつ情報収集を進めるため、配信活動を始め、さまざまな人々と交流しながら異界の存在に関する情報を集める。<br>彼女たちのゆるやかな捜査が今始まる。</strong></p><p style=\"text-align: center\"><strong>コインランドリースカッド<br>地球侵略が目的（だったはず）の異人怪人の4人組。<br>商店街にあるコインランドリーによく出没する。<br>侵略の前準備としてインターネットから人類の調査を進めるはずだったのだが…<br>彼女たちのゆるやかな地球侵略が今、始まる？</strong></p>",
+          "profileText": "<p style=\"text-align: center\">マボロシトモダチクラブ<br>特殊な能力を持ちながら人間ではない存在を監視する任務を受け、街で増える異常現象の調査を開始する。<br>能力を隠しつつ情報収集を進めるため、配信活動を始め、さまざまな人々と交流しながら異界の存在に関する情報を集める。<br>彼女たちのゆるやかな捜査が今始まる。</p><p style=\"text-align: center\">コインランドリースカッド<br>地球侵略が目的（だったはず）の異人怪人の4人組。<br>商店街にあるコインランドリーによく出没する。<br>侵略の前準備としてインターネットから人類の調査を進めるはずだったのだが…<br>彼女たちのゆるやかな地球侵略が今、始まる？</p>",
           "members": [
               {
                   "id": "nmbn6xjvubu"
@@ -181,7 +181,7 @@ export const talents: Talent[] = [
               "height": 898,
               "width": 1350
           },
-          "profileText": "<p style=\"text-align: center\"><strong>マボロシトモダチクラブ<br>特殊な能力を持ちながら人間ではない存在を監視する任務を受け、街で増える異常現象の調査を開始する。<br>能力を隠しつつ情報収集を進めるため、配信活動を始め、さまざまな人々と交流しながら異界の存在に関する情報を集める。<br>彼女たちのゆるやかな捜査が今始まる。</strong></p><p style=\"text-align: center\"><strong>コインランドリースカッド<br>地球侵略が目的（だったはず）の異人怪人の4人組。<br>商店街にあるコインランドリーによく出没する。<br>侵略の前準備としてインターネットから人類の調査を進めるはずだったのだが…<br>彼女たちのゆるやかな地球侵略が今、始まる？</strong></p>",
+          "profileText": "<p style=\"text-align: center\">マボロシトモダチクラブ<br>特殊な能力を持ちながら人間ではない存在を監視する任務を受け、街で増える異常現象の調査を開始する。<br>能力を隠しつつ情報収集を進めるため、配信活動を始め、さまざまな人々と交流しながら異界の存在に関する情報を集める。<br>彼女たちのゆるやかな捜査が今始まる。</p><p style=\"text-align: center\">コインランドリースカッド<br>地球侵略が目的（だったはず）の異人怪人の4人組。<br>商店街にあるコインランドリーによく出没する。<br>侵略の前準備としてインターネットから人類の調査を進めるはずだったのだが…<br>彼女たちのゆるやかな地球侵略が今、始まる？</p>",
           "members": [
               {
                   "id": "nmbn6xjvubu"
@@ -239,7 +239,7 @@ export const talents: Talent[] = [
               "height": 800,
               "width": 1355
           },
-          "profileText": "<p style=\"text-align: center\"><strong>急成長中の新興老舗企業。<br>缶詰からマタタビまで猫を喜ばせるありとあらゆる物を開発している。</strong></p><p style=\"text-align: center\"><strong>秘密裏に開発に成功していた不思議なけむりで<br>社員がもふもふになってしまったという事故の噂がある。</strong></p><p style=\"text-align: center\"><strong>最近ビルが爆発した。<br>ーーというかよく爆発する。</strong></p>",
+          "profileText": "<p style=\"text-align: center\">急成長中の新興老舗企業。<br>缶詰からマタタビまで猫を喜ばせるありとあらゆる物を開発している。</p><p style=\"text-align: center\">秘密裏に開発に成功していた不思議なけむりで<br>社員がもふもふになってしまったという事故の噂がある。</p><p style=\"text-align: center\">最近ビルが爆発した。<br>ーーというかよく爆発する。</p>",
           "members": [
               {
                   "id": "dbndk4n6_6w"
@@ -297,7 +297,7 @@ export const talents: Talent[] = [
               "height": 800,
               "width": 1355
           },
-          "profileText": "<p style=\"text-align: center\"><strong>急成長中の新興老舗企業。<br>缶詰からマタタビまで猫を喜ばせるありとあらゆる物を開発している。</strong></p><p style=\"text-align: center\"><strong>秘密裏に開発に成功していた不思議なけむりで<br>社員がもふもふになってしまったという事故の噂がある。</strong></p><p style=\"text-align: center\"><strong>最近ビルが爆発した。<br>ーーというかよく爆発する。</strong></p>",
+          "profileText": "<p style=\"text-align: center\">急成長中の新興老舗企業。<br>缶詰からマタタビまで猫を喜ばせるありとあらゆる物を開発している。</p><p style=\"text-align: center\">秘密裏に開発に成功していた不思議なけむりで<br>社員がもふもふになってしまったという事故の噂がある。</p><p style=\"text-align: center\">最近ビルが爆発した。<br>ーーというかよく爆発する。</p>",
           "members": [
               {
                   "id": "dbndk4n6_6w"
@@ -355,7 +355,7 @@ export const talents: Talent[] = [
               "height": 800,
               "width": 1355
           },
-          "profileText": "<p style=\"text-align: center\"><strong>急成長中の新興老舗企業。<br>缶詰からマタタビまで猫を喜ばせるありとあらゆる物を開発している。</strong></p><p style=\"text-align: center\"><strong>秘密裏に開発に成功していた不思議なけむりで<br>社員がもふもふになってしまったという事故の噂がある。</strong></p><p style=\"text-align: center\"><strong>最近ビルが爆発した。<br>ーーというかよく爆発する。</strong></p>",
+          "profileText": "<p style=\"text-align: center\">急成長中の新興老舗企業。<br>缶詰からマタタビまで猫を喜ばせるありとあらゆる物を開発している。</p><p style=\"text-align: center\">秘密裏に開発に成功していた不思議なけむりで<br>社員がもふもふになってしまったという事故の噂がある。</p><p style=\"text-align: center\">最近ビルが爆発した。<br>ーーというかよく爆発する。</p>",
           "members": [
               {
                   "id": "dbndk4n6_6w"
@@ -413,7 +413,7 @@ export const talents: Talent[] = [
               "height": 900,
               "width": 1350
           },
-          "profileText": "<p style=\"text-align: center\"><strong>都内のどこかにあるメイド喫茶。<br>クセの強い店員しかいないことでその筋では有名。</strong></p><p style=\"text-align: center\"><strong>営業時間も決まっておらず日替わりでメニューが変わる。<br>何を頼んでも出てこない日もある。</strong></p><p style=\"text-align: center\"><strong>とある企業が道楽で始めたらしい。赤字覚悟である。<br>ーーというかめちゃくちゃ赤字である。</strong></p>",
+          "profileText": "<p style=\"text-align: center\">都内のどこかにあるメイド喫茶。<br>クセの強い店員しかいないことでその筋では有名。</p><p style=\"text-align: center\">営業時間も決まっておらず日替わりでメニューが変わる。<br>何を頼んでも出てこない日もある。</p><p style=\"text-align: center\">とある企業が道楽で始めたらしい。赤字覚悟である。<br>ーーというかめちゃくちゃ赤字である。</p>",
           "members": [
               {
                   "id": "5jwytn4_m"
@@ -471,7 +471,7 @@ export const talents: Talent[] = [
               "height": 900,
               "width": 1350
           },
-          "profileText": "<p style=\"text-align: center\"><strong>都内のどこかにあるメイド喫茶。<br>クセの強い店員しかいないことでその筋では有名。</strong></p><p style=\"text-align: center\"><strong>営業時間も決まっておらず日替わりでメニューが変わる。<br>何を頼んでも出てこない日もある。</strong></p><p style=\"text-align: center\"><strong>とある企業が道楽で始めたらしい。赤字覚悟である。<br>ーーというかめちゃくちゃ赤字である。</strong></p>",
+          "profileText": "<p style=\"text-align: center\">都内のどこかにあるメイド喫茶。<br>クセの強い店員しかいないことでその筋では有名。</p><p style=\"text-align: center\">営業時間も決まっておらず日替わりでメニューが変わる。<br>何を頼んでも出てこない日もある。</p><p style=\"text-align: center\">とある企業が道楽で始めたらしい。赤字覚悟である。<br>ーーというかめちゃくちゃ赤字である。</p>",
           "members": [
               {
                   "id": "5jwytn4_m"
@@ -529,7 +529,7 @@ export const talents: Talent[] = [
               "height": 900,
               "width": 1350
           },
-          "profileText": "<p style=\"text-align: center\"><strong>都内のどこかにあるメイド喫茶。<br>クセの強い店員しかいないことでその筋では有名。</strong></p><p style=\"text-align: center\"><strong>営業時間も決まっておらず日替わりでメニューが変わる。<br>何を頼んでも出てこない日もある。</strong></p><p style=\"text-align: center\"><strong>とある企業が道楽で始めたらしい。赤字覚悟である。<br>ーーというかめちゃくちゃ赤字である。</strong></p>",
+          "profileText": "<p style=\"text-align: center\">都内のどこかにあるメイド喫茶。<br>クセの強い店員しかいないことでその筋では有名。</p><p style=\"text-align: center\">営業時間も決まっておらず日替わりでメニューが変わる。<br>何を頼んでも出てこない日もある。</p><p style=\"text-align: center\">とある企業が道楽で始めたらしい。赤字覚悟である。<br>ーーというかめちゃくちゃ赤字である。</p>",
           "members": [
               {
                   "id": "5jwytn4_m"
