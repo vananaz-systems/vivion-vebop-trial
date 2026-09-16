@@ -6,9 +6,9 @@ const props = defineProps<{
   to?: string
 }>()
 
-const displayName = computed(() => props.unit.archiveName || props.unit.name)
-const nameLines = computed(() => displayName.value.split('\n'))
-const href = computed(() => props.to ?? `/talents/?unit=${props.unit.id}`)
+const nameLines = computed(() => props.unit.name.split(/<br\s*\/?>/i))
+const displayName = computed(() => nameLines.value.join(' '))
+const href = computed(() => props.to ?? `/talents/unit/${props.unit.slug}`)
 </script>
 
 <template>
@@ -16,8 +16,8 @@ const href = computed(() => props.to ?? `/talents/?unit=${props.unit.id}`)
     <div class="c-unitCard__thumb">
       <picture>
         <img
-          v-if="unit.logo || unit.image"
-          :src="unit.logo || unit.image"
+          v-if="unit.logo"
+          :src="unit.logo.url"
           :alt="displayName"
           loading="lazy"
           decoding="async"
