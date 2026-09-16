@@ -549,10 +549,13 @@ useSeo({
     }
   }
 
+  // Official `.l-pagelinks` + `.md-btn__pagelinks`
   &__footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     padding-top: 4.6728971963vw;
     padding-bottom: 16.3551401869vw;
-    text-align: center;
 
     @include breakpoint.mq(min, 769px) {
       padding-top: 4.1666666667vw;
@@ -565,42 +568,31 @@ useSeo({
     }
 
     a {
-      position: relative;
-      display: inline-block;
-      min-width: 220px;
-      padding: 0.85em 2em;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      width: 47.3684210526%;
+      padding: 0.4em 0;
+      border: solid 0 #000;
+      border-width: 1px 0;
       color: #000;
       font-family: variable.$font-dela;
-      font-size: 3.2710280374vw;
-      line-height: 1;
+      font-size: 5.1401869159vw;
 
       @include breakpoint.mq(min, 769px) {
-        font-size: 1.3333333333vw;
+        width: 23.3333333333%;
+        font-size: 1.8333333333vw;
+        transition: color 0.15s, border-color 0.15s;
+
+        &:hover {
+          border-color: #60ec33;
+          color: #60ec33;
+        }
       }
 
       @include breakpoint.mq(min, 1201px) {
-        font-size: 16px;
-      }
-
-      &::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        width: 70%;
-        height: 1px;
-        background: #000;
-        transform: translateX(-50%);
-        transition: width 0.3s, background-color 0.3s;
-      }
-
-      &:hover {
-        color: #60ec33;
-
-        &::after {
-          width: 100%;
-          background: #60ec33;
-        }
+        font-size: 22px;
       }
     }
   }
