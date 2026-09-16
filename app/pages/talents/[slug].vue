@@ -16,6 +16,99 @@ const unitMembers = computed(() =>
   [...(unit.value?.members ?? [])],
 )
 
+/** Official `.visual--img.is__loaded`: fade the portrait up from a light, zoomed state. */
+const portraitImage = ref<HTMLImageElement | null>(null)
+const portraitLoaded = ref(false)
+
+function revealPortrait() {
+  // One frame so the pre-load state paints before the transition starts.
+  requestAnimationFrame(() => {
+    portraitLoaded.value = true
+  })
+}
+
+/** Official `.ttl` reveal: name un-stretches and the romanized name fades in on scroll. */
+const nameEl = ref<HTMLElement | null>(null)
+const nameScrolled = ref(false)
+let nameObserver: IntersectionObserver | null = null
+
+function observeName() {
+  const el = nameEl.value
+  if (!el || nameObserver) return
+
+  nameObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry?.isIntersecting) return
+      nameScrolled.value = true
+      nameObserver?.disconnect()
+    },
+    { rootMargin: '0px 0px -200px 0px', threshold: 0 },
+  )
+  nameObserver.observe(el)
+}
+
+/** Official `.txt`: profile block fades up from translateY(20%) on scroll. */
+const infoEl = ref<HTMLElement | null>(null)
+const infoScrolled = ref(false)
+let infoObserver: IntersectionObserver | null = null
+
+function observeInfo() {
+  const el = infoEl.value
+  if (!el || infoObserver) return
+
+  infoObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry?.isIntersecting) return
+      infoScrolled.value = true
+      infoObserver?.disconnect()
+    },
+    { rootMargin: '0px 0px -200px 0px', threshold: 0 },
+  )
+  infoObserver.observe(el)
+}
+
+/** Official unit block: fades in from contrast(300%) on a white ground. */
+const unitEl = ref<HTMLElement | null>(null)
+const unitScrolled = ref(false)
+let unitObserver: IntersectionObserver | null = null
+
+function observeUnit() {
+  const el = unitEl.value
+  if (!el || unitObserver) return
+
+  unitObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry?.isIntersecting) return
+      unitScrolled.value = true
+      unitObserver?.disconnect()
+    },
+    { rootMargin: '0px 0px -200px 0px', threshold: 0 },
+  )
+  unitObserver.observe(el)
+}
+
+onMounted(() => {
+  if (portraitImage.value?.complete) revealPortrait()
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    nameScrolled.value = true
+    infoScrolled.value = true
+    unitScrolled.value = true
+    return
+  }
+  nextTick(() => {
+    observeName()
+    observeInfo()
+    observeUnit()
+  })
+})
+
+onUnmounted(() => {
+  nameObserver?.disconnect()
+  infoObserver?.disconnect()
+  unitObserver?.disconnect()
+})
+
 const seoDescription = computed(() =>
   talent.value?.profileText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() ?? '',
 )
@@ -66,22 +159,24 @@ useSeo({
           <img src="/images/common/deco/txt_deco_alignleft.svg" alt="">
         </div>
 
-        <picture class="p-talentDetail__portrait">
+        <picture class="p-talentDetail__portrait" :class="{ 'is-loaded': portraitLoaded }">
           <img
+            ref="portraitImage"
             :src="talent.portrait.url"
             :width="talent.portrait.width"
             :height="talent.portrait.height"
             :alt="talent.name"
+            @load="revealPortrait"
           >
         </picture>
 
-        <h1 class="p-talentDetail__name">
+        <h1 ref="nameEl" class="p-talentDetail__name" :class="{ 'is-scrolled': nameScrolled }">
           <span>{{ talent.name }}</span>
           <small :style="{ color: talent.theme }">{{ talent.nameEn }}</small>
         </h1>
       </section>
 
-      <section class="p-talentDetail__info">
+      <section ref="infoEl" class="p-talentDetail__info" :class="{ 'is-scrolled': infoScrolled }">
         <div class="p-talentDetail__infoMain">
           <dl class="p-talentDetail__profile">
             <dt :style="{ color: talent.theme }">PROFILE</dt>
@@ -118,7 +213,7 @@ useSeo({
         </dl>
       </section>
 
-      <section v-if="unit" class="p-talentDetail__unit">
+      <section v-if="unit" ref="unitEl" class="p-talentDetail__unit" :class="{ 'is-scrolled': unitScrolled }">
         <header class="p-talentDetail__unitHeader">
           <h2>所属ユニット</h2>
         </header>
@@ -251,6 +346,8 @@ useSeo({
     position: relative;
     z-index: 3;
     display: block;
+    // The pre-load zoom would otherwise widen the page while it eases back to scale(1).
+    overflow: clip;
 
     @include breakpoint.mq(min, 769px) {
       margin-bottom: 3.3333333333vw;
@@ -267,10 +364,23 @@ useSeo({
       // aspect-ratio: 1200 / 968;
       object-fit: contain;
       object-position: center;
+      opacity: 0;
+      filter: contrast(300%) brightness(1.2);
+      transform: scale(1.08);
+      transition-property: opacity, filter, transform;
+      transition-duration: 1.2s;
+      transition-delay: 0s;
+      transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 
       @include breakpoint.mq(min, 769px) {
         aspect-ratio: 1200 / 968;
       }
+    }
+
+    &.is-loaded img {
+      opacity: 1;
+      filter: contrast(100%) brightness(1);
+      transform: scale(1);
     }
   }
 
@@ -296,6 +406,11 @@ useSeo({
       font-size: 8.4112149533vw;
       font-weight: 900;
       letter-spacing: 0;
+      opacity: 0;
+      transform: scaleX(1.2);
+      transition-property: opacity, letter-spacing, transform;
+      transition-duration: 1.2s;
+      transition-delay: 0s;
 
       @include breakpoint.mq(min, 769px) {
         font-size: 4.3333333333vw;
@@ -312,6 +427,11 @@ useSeo({
       font-size: 2.3364485981vw;
       font-weight: 500;
       letter-spacing: 0.2em;
+      opacity: 0;
+      transition-property: opacity;
+      transition-duration: 1.2s;
+      transition-delay: 0.2s;
+      transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
       @include breakpoint.mq(min, 769px) {
         font-size: 1.3333333333vw;
@@ -321,13 +441,34 @@ useSeo({
         font-size: 16px;
       }
     }
+
+    &.is-scrolled span {
+      opacity: 1;
+      letter-spacing: 0;
+      transform: scaleX(1);
+    }
+
+    &.is-scrolled small {
+      opacity: 1;
+    }
   }
 
   &__info {
     padding-inline: 5.8411214953%;
+    opacity: 0;
+    transform: translateY(20%);
+    transition-property: opacity, transform;
+    transition-duration: 1.2s;
+    transition-delay: 0s;
+    transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
     @include breakpoint.mq(min, 769px) {
       padding-inline: 0;
+    }
+
+    &.is-scrolled {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
@@ -589,6 +730,12 @@ useSeo({
     // padding: 21.0280373832vw 5.8411214953% 18.691588785vw;
     padding: 21.0280373832vw 0 18.691588785vw;
     background: #fff;
+    opacity: 0;
+    filter: contrast(300%);
+    transition-property: opacity, filter;
+    transition-duration: 1.2s;
+    transition-delay: 0s;
+    transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
     @include breakpoint.mq(min, 769px) {
       margin-top: 7.5vw;
@@ -599,6 +746,11 @@ useSeo({
     @include breakpoint.mq(min, 1201px) {
       margin-top: 90px;
       padding: 90px 100px 80px;
+    }
+
+    &.is-scrolled {
+      opacity: 1;
+      filter: contrast(100%);
     }
   }
 
@@ -893,6 +1045,27 @@ useSeo({
   .p-talentDetail {
     opacity: 1;
     animation: none;
+  }
+
+  .p-talentDetail__portrait img {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+
+  .p-talentDetail__name span,
+  .p-talentDetail__name small,
+  .p-talentDetail__info {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .p-talentDetail__unit {
+    opacity: 1;
+    filter: none;
+    transition: none;
   }
 }
 </style>
