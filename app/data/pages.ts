@@ -64,16 +64,3 @@ export const presentRulesPage = {
     ],
   },
 }
-
-export const privacyPage = {
-  title: 'プライバシーポリシー',
-  intro: [
-    '株式会社viviONのプライバシーポリシーに準拠します。',
-    '全文は静的プレースホルダーです。microCMS接続後に正式な本文へ差し替えます。',
-  ],
-}
-
-export const contactPage = {
-  title: 'お問い合わせ',
-  intro: 'ビバップ高校に関するお問い合わせは、以下のフォームよりご連絡ください。送信処理は後続で接続します。',
-}

@@ -27,6 +27,13 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/clash-display.css', '~/assets/scss/main.scss'],
 
+  routeRules: {
+    '/privacy': { redirect: { to: 'https://vivion.jp/privacy_protection/', statusCode: 301 } },
+    '/privacy/': { redirect: { to: 'https://vivion.jp/privacy_protection/', statusCode: 301 } },
+    '/contact': { redirect: { to: 'https://vebop.zendesk.com/hc/ja/requests/new', statusCode: 301 } },
+    '/contact/': { redirect: { to: 'https://vebop.zendesk.com/hc/ja/requests/new', statusCode: 301 } },
+  },
+
   runtimeConfig: {
     microCmsApiKey: '',
     // Build-time: SITE_* or NUXT_SITE_*. Runtime overlay (Nitro): NUXT_SITE_* only.
