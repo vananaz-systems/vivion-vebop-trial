@@ -100,16 +100,16 @@ useSeo({
 
             <ul class="p-unitDetail__memberList">
               <li v-for="(member, index) in members" :key="member.id">
-                <TalentCard :talent="member" :index="index" />
+                <TalentCard :talent="member" :index="index" reveal-on-scroll />
               </li>
             </ul>
           </section>
-
-          <footer class="p-unitDetail__footer">
-            <NuxtLink to="/talents/unit/">ユニット一覧へ</NuxtLink>
-          </footer>
         </div>
       </div>
+
+      <footer class="p-unitDetail__footer">
+        <NuxtLink to="/talents/unit/">ユニット一覧へ</NuxtLink>
+      </footer>
     </section>
 
     <HomeTopicsSection />
@@ -257,7 +257,7 @@ useSeo({
 
     @include breakpoint.mq(min, 769px) {
       width: 80.8333333333%;
-      padding-top: 5px;
+      padding-top: 8.5px;
     }
   }
 
@@ -274,13 +274,13 @@ useSeo({
       font-family: variable.$font-display-medium;
       font-size: 1.0833333333vw;
       font-weight: 500;
-      letter-spacing: 0.08em;
+      // letter-spacing: 0.08em;
       line-height: 1;
       list-style: none;
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 40px;
+      margin-bottom: 44px;
       font-size: 13px;
     }
 
@@ -299,7 +299,7 @@ useSeo({
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 90px;
+      margin-bottom: 86px;
     }
   }
 
@@ -322,43 +322,43 @@ useSeo({
 
     @include breakpoint.mq(min, 769px) {
       width: 69.587628866%;
-      margin-top: 1.6666666667vw;
+      margin-top: 0;
     }
 
-    @include breakpoint.mq(min, 1201px) {
-      margin-top: 20px;
-    }
+    // @include breakpoint.mq(min, 1201px) {
+    //   margin-top: 20px;
+    // }
   }
 
   &__visual {
     width: 100%;
 
-    @include breakpoint.mq(min, 769px) {
-      width: 82%;
-    }
+    // @include breakpoint.mq(min, 769px) {
+    //   width: 82%;
+    // }
   }
 
   &__copy {
     margin-top: 4.6728971963vw;
 
     @include breakpoint.mq(min, 769px) {
-      margin-top: 2.5vw;
+      margin-top: -9px;
     }
 
-    @include breakpoint.mq(min, 1201px) {
-      margin-top: 30px;
-    }
+    // @include breakpoint.mq(min, 1201px) {
+    //   margin-top: 30px;
+    // }
 
     h1 {
       margin: 0 0 0.75em;
       font-family: variable.$font-dela;
       font-size: 6.5420560748vw;
       font-weight: 400;
-      letter-spacing: 0.04em;
+      // letter-spacing: 0.04em;
       line-height: 1.35;
 
       @include breakpoint.mq(min, 769px) {
-        margin-bottom: 0.5em;
+        margin-bottom: 0.325em;
         font-size: 4.3333333333vw;
       }
 
@@ -373,7 +373,13 @@ useSeo({
     font-size: 3.0373831776vw;
     font-weight: 500;
     letter-spacing: 0.08em;
-    line-height: 2;
+    line-height: 1.8;
+
+    :deep(.is-sp) {
+      @include breakpoint.mq(min, 769px) {
+        display: none;
+      }
+    }
 
     @include breakpoint.mq(min, 769px) {
       font-size: 1.4166666667vw;
@@ -415,6 +421,7 @@ useSeo({
       padding-inline: 22px;
       font-size: 1.5vw;
       transition: color 0.3s, background-color 0.3s;
+      padding-block: 0.7em;
 
       &:hover {
         color: #000;
@@ -425,6 +432,12 @@ useSeo({
     @include breakpoint.mq(min, 1201px) {
       margin-top: 30px;
       font-size: 18px;
+    }
+
+    span {
+      @include breakpoint.mq(min, 769px) {
+        margin-right: 6.5px;
+      }
     }
 
     svg {
@@ -558,13 +571,16 @@ useSeo({
     padding-bottom: 16.3551401869vw;
 
     @include breakpoint.mq(min, 769px) {
-      padding-top: 4.1666666667vw;
-      padding-bottom: 7.5vw;
+      max-width: 1200px;
+      margin-inline: auto;
+      // padding-top: 4.1666666667vw;
+      padding-top: 6.2vw;
+      padding-bottom: 0;
     }
 
     @include breakpoint.mq(min, 1201px) {
-      padding-top: 50px;
-      padding-bottom: 90px;
+      // padding-top: 50px;
+      // padding-bottom: 90px;
     }
 
     a {
@@ -573,7 +589,7 @@ useSeo({
       align-items: center;
       justify-content: center;
       width: 47.3684210526%;
-      padding: 0.4em 0;
+      padding: 0.22em 0;
       border: solid 0 #000;
       border-width: 1px 0;
       color: #000;

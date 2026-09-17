@@ -8,28 +8,68 @@ const props = withDefaults(defineProps<{
   index?: number
   /** Background the card sits on; the thumb masks its top strip to match. */
   surface?: 'page' | 'white'
+  /** Wait until the card enters the viewport before playing the thumb reveal. */
+  revealOnScroll?: boolean
 }>(), {
   index: 0,
   surface: 'page',
+  revealOnScroll: false,
 })
 
+const rootEl = ref<{ $el?: HTMLElement } | HTMLElement | null>(null)
 const revealed = ref(false)
+let observer: IntersectionObserver | null = null
 const staggerStyle = computed(() => ({
   '--talent-card-stagger': `${props.index * STAGGER_MS}ms`,
 }))
 
+function observeReveal() {
+  const raw = rootEl.value
+  const el = raw && '$el' in raw ? raw.$el : raw
+  if (!el || observer) return
+
+  observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry?.isIntersecting) return
+      revealed.value = true
+      observer?.disconnect()
+    },
+    { rootMargin: '0px 0px -200px 0px', threshold: 0 },
+  )
+  observer.observe(el)
+}
+
 onMounted(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealed.value = true
+    return
+  }
+
+  if (props.revealOnScroll) {
+    nextTick(observeReveal)
+    return
+  }
+
   requestAnimationFrame(() => {
     revealed.value = true
   })
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
 })
 </script>
 
 <template>
   <NuxtLink
+    ref="rootEl"
     :to="`/talents/${talent.slug}/`"
     class="c-talentCard"
-    :class="{ 'is-show': revealed, 'c-talentCard--onWhite': surface === 'white' }"
+    :class="{
+      'is-show': revealed,
+      'c-talentCard--onWhite': surface === 'white',
+      'c-talentCard--revealOnScroll': revealOnScroll,
+    }"
     :style="staggerStyle"
   >
     <div
@@ -101,6 +141,20 @@ onMounted(() => {
     transition-duration: 0.8s;
     transition-delay: var(--talent-card-stagger, 0s);
     transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+
+  &--revealOnScroll picture {
+    transition-duration: 1.2s;
+    transition-delay: 0s;
+    transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+
+  &--revealOnScroll.is-show picture {
+    opacity: 1;
+    transform: translateY(0);
+    transition-duration: 1.2s;
+    transition-delay: 0s;
+    transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
   }
 
   @media (prefers-reduced-motion: reduce) {
