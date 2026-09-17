@@ -247,7 +247,7 @@ useSeo({
           <h3><span>UNIT MEMBER</span></h3>
           <ul>
             <li v-for="(member, index) in unitMembers" :key="member.id">
-              <TalentCard :talent="member" :index="index" surface="white" />
+              <TalentCard :talent="member" :index="index" surface="white" reveal-on-scroll />
             </li>
           </ul>
         </section>
