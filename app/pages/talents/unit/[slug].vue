@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
-const { getUnitBySlug, getTalentsByUnit } = useTalents()
+const { getUnitBySlug } = useTalents()
 const isFilterOpen = ref(false)
 
 const unit = computed(() => getUnitBySlug(String(route.params.slug)))
@@ -9,7 +9,10 @@ if (!unit.value) {
   throw createError({ statusCode: 404, statusMessage: 'Unit not found' })
 }
 
-const members = computed(() => getTalentsByUnit(unit.value!.slug))
+const unitMembers = computed(() =>
+  [...(unit.value?.members ?? [])],
+)
+
 const title = computed(() => unit.value!.name.replace(/<br\s*\/?>/gi, ' '))
 const description = computed(() =>
   unit.value!.profileText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
@@ -84,7 +87,7 @@ useSeo({
             </a>
           </article>
 
-          <section v-if="members.length" class="p-unitDetail__members">
+          <section v-if="unitMembers.length" class="p-unitDetail__members">
             <header class="p-unitDetail__toolbar">
               <h2>TALENT LIST</h2>
               <button type="button" @click="isFilterOpen = true">
@@ -99,7 +102,7 @@ useSeo({
             </header>
 
             <ul class="p-unitDetail__memberList">
-              <li v-for="(member, index) in members" :key="member.id">
+              <li v-for="(member, index) in unitMembers" :key="member.id">
                 <TalentCard :talent="member" :index="index" reveal-on-scroll />
               </li>
             </ul>
@@ -317,8 +320,8 @@ useSeo({
   }
 
   &__logo {
-    width: 76%;
-    margin-top: 2.3364485981vw;
+    // width: 76%;
+    // margin-top: 2.3364485981vw;
 
     @include breakpoint.mq(min, 769px) {
       width: 69.587628866%;
@@ -332,14 +335,16 @@ useSeo({
 
   &__visual {
     width: 100%;
+    padding-top: 7px;
 
-    // @include breakpoint.mq(min, 769px) {
-    //   width: 82%;
-    // }
+    @include breakpoint.mq(min, 769px) {
+      // width: 82%;
+      padding-top: 0;
+    }
   }
 
   &__copy {
-    margin-top: 4.6728971963vw;
+    margin-top: -8px;
 
     @include breakpoint.mq(min, 769px) {
       margin-top: -9px;
@@ -350,7 +355,7 @@ useSeo({
     // }
 
     h1 {
-      margin: 0 0 0.75em;
+      margin: 0 0 0.56em;
       font-family: variable.$font-dela;
       font-size: 6.5420560748vw;
       font-weight: 400;
@@ -358,7 +363,7 @@ useSeo({
       line-height: 1.35;
 
       @include breakpoint.mq(min, 769px) {
-        margin-bottom: 0.325em;
+        margin: 0 0 0.325em;
         font-size: 4.3333333333vw;
       }
 
@@ -567,8 +572,9 @@ useSeo({
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding-top: 4.6728971963vw;
-    padding-bottom: 16.3551401869vw;
+    padding-top: 16vw;
+    margin-bottom: -2.8em;
+    // padding-bottom: 16.3551401869vw;
 
     @include breakpoint.mq(min, 769px) {
       max-width: 1200px;
@@ -576,11 +582,13 @@ useSeo({
       // padding-top: 4.1666666667vw;
       padding-top: 6.2vw;
       padding-bottom: 0;
+      margin-bottom: 0;
     }
 
     @include breakpoint.mq(min, 1201px) {
       // padding-top: 50px;
       // padding-bottom: 90px;
+      margin-bottom: 0;
     }
 
     a {
