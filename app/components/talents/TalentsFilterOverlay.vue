@@ -120,7 +120,7 @@ onUnmounted(() => {
     border: none;
     cursor: pointer;
     line-height: 0;
-    bottom: 9.6vw;
+    bottom: 10.1vw;
     left: 50%;
     width: 9.8130841121vw;
     transform: translateX(-50%);
@@ -240,7 +240,6 @@ onUnmounted(() => {
     img {
       display: block;
       width: 100%;
-      aspect-ratio: 476 / 318;
       object-fit: contain;
       vertical-align: bottom;
 

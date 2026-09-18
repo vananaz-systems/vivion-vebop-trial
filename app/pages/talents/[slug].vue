@@ -835,6 +835,10 @@ useSeo({
   &__unitVisual {
     width: 100%;
 
+    img {
+      aspect-ratio: 1940 / 1574;
+    }
+
     @include breakpoint.mq(min, 769px) {
       width: 76.8%;
     }
@@ -842,6 +846,10 @@ useSeo({
 
   &__unitLogo {
     width: 76%;
+
+    img {
+      aspect-ratio: 1350 / 898;
+    }
 
     @include breakpoint.mq(min, 769px) {
       width: 47%;
