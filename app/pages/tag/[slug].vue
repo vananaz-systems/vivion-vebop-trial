@@ -12,22 +12,25 @@ const matchedTag = computed(() => {
   return undefined
 })
 
-if (!matchedTag.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Tag not found' })
+async function redirectIfUnknown() {
+  if (!matchedTag.value) {
+    await navigateTo('/', { replace: true })
+  }
 }
 
+await redirectIfUnknown()
 watch(slug, () => {
-  if (!matchedTag.value) {
-    throw createError({ statusCode: 404, statusMessage: 'Tag not found' })
-  }
+  void redirectIfUnknown()
 })
 
-useSeo({
-  title: matchedTag.value.name,
-  description: `ビバップ高校の${matchedTag.value.name}一覧。`,
-})
+if (matchedTag.value) {
+  useSeo({
+    title: matchedTag.value.name,
+    description: `ビバップ高校の${matchedTag.value.name}一覧。`,
+  })
+}
 </script>
 
 <template>
-  <TopicsArchive :active-tag="slug" />
+  <TopicsArchive v-if="matchedTag" :active-tag="slug" />
 </template>
