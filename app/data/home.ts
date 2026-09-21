@@ -25,7 +25,7 @@ export const talentSlides = [
     ],
     ctaLabel: 'MEMBER LINEUP',
     ctaStacked: false,
-    to: '/talents/',
+    to: '/talents/unit/ボロダチ-コイスカ',
   },
   {
     id: 'nyankomeshi',
@@ -40,7 +40,7 @@ export const talentSlides = [
     ],
     ctaLabel: 'MEMBER LINEUP',
     ctaStacked: false,
-    to: '/talents/',
+    to: '/talents/unit/morimori-nyanko-meshi',
   },
   {
     id: 'meiden',
@@ -55,7 +55,7 @@ export const talentSlides = [
     ],
     ctaLabel: 'MEMBER LINEUP',
     ctaStacked: false,
-    to: '/talents/',
+    to: '/talents/unit/maiden-works',
   },
 ]
 
