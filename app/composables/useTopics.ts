@@ -7,12 +7,14 @@ export function useTopics() {
   )
 
   function getTopicBySlug(slug: string): Topic | undefined {
-    return topics.find(topic => topic.slug === slug)
+    return topics.find(topic => topic.id === slug)
   }
 
   function filterTopicsByTag(tag?: string | null): Topic[] {
     if (!tag) return latestTopics.value
-    return latestTopics.value.filter(topic => topic.tags.includes(tag))
+    return latestTopics.value.filter(topic =>
+      topic.tags.some(item => item.slug === tag),
+    )
   }
 
   return {

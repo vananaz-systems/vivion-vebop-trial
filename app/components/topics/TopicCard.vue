@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <article class="c-topicCard">
     <NuxtLink
-      :to="`/topics/${topic.slug}/`"
+      :to="`/topics/${topic.id}/`"
       class="c-topicCard__link"
       :aria-label="topic.title"
     />
@@ -19,6 +19,10 @@ defineProps<{
       </time>
       <h3 class="c-topicCard__title">{{ topic.title }}</h3>
       <footer class="c-topicCard__footer">
+        <!-- <ul v-if="topic.tags.length" class="c-topicCard__tags">
+          <li v-for="tag in topic.tags" :key="tag.id">{{ tag.name }}</li>
+        </ul> -->
+        <span class="c-topicCard__rule" aria-hidden="true" />
         <em>DETAIL →</em>
       </footer>
     </div>
@@ -127,14 +131,6 @@ defineProps<{
     margin-top: auto;
     font-size: 10px;
 
-    &::before {
-      content: "";
-      display: block;
-      flex-grow: 1;
-      height: 1px;
-      background: #60ec33;
-    }
-
     em {
       display: block;
       margin-left: 0.5em;
@@ -144,6 +140,28 @@ defineProps<{
       font-weight: 700;
       letter-spacing: 0.1em;
     }
+  }
+
+  &__rule {
+    display: block;
+    flex-grow: 1;
+    height: 1px;
+    background: #60ec33;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0.5em 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: variable.$font-display;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: variable.$black;
   }
 
   @include breakpoint.mq(min, 769px) {
