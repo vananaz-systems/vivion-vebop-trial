@@ -256,7 +256,7 @@ onMounted(() => {
       max-width: 1200px;
       margin-inline: auto;
       padding-inline: 0;
-      margin-bottom: 13vw;
+      margin-bottom: 12.1vw;
     }
   }
 
