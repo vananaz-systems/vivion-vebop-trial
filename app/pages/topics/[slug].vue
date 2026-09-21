@@ -45,7 +45,10 @@ onMounted(() => {
         >
       </picture>
 
-      <main class="p-topicDetail__body">
+      <main
+        class="p-topicDetail__body"
+        :class="{ 'p-topicDetail__body--hasFeatured': topic.featuredImage }"
+      >
         <div class="p-topicDetail__inner" v-html="topic.content" />
       </main>
     </div>
@@ -182,18 +185,31 @@ onMounted(() => {
 
   // Official `.md-post > main`
   &__body {
-    padding-top: 7.0093457944vw;
+    padding-top: 14vw;
     padding-bottom: 10.5140186916vw;
-    background: variable.$white;
+    background: variable.$page-bg;
+
+    &--hasFeatured {
+      padding-top: 7.0093457944vw;
+    }
 
     @include breakpoint.mq(min, 769px) {
       padding-top: 4.1666666667vw;
       padding-bottom: 6.6666666667vw;
+      background: variable.$white;
+
+      &--hasFeatured {
+        padding-top: 4.1666666667vw;
+      }
     }
 
     @include breakpoint.mq(min, 1201px) {
       padding-top: 50px;
       padding-bottom: 80px;
+
+      &--hasFeatured {
+        padding-top: 50px;
+      }
     }
   }
 
@@ -225,6 +241,10 @@ onMounted(() => {
       font-weight: 900;
       font-style: normal;
 
+      @include breakpoint.mq(max, 768px) {
+        font-size: 5.6074766355vw;
+      }
+
       @include breakpoint.mq(min, 769px) {
         font-size: 2.3333333333vw;
       }
@@ -241,6 +261,10 @@ onMounted(() => {
       font-family: variable.$font-dela;
       font-weight: 400;
       font-style: normal;
+
+      @include breakpoint.mq(max, 768px) {
+        font-size: 4.6728971963vw;
+      }
 
       @include breakpoint.mq(min, 769px) {
         font-size: 2vw;
@@ -261,6 +285,10 @@ onMounted(() => {
       font-weight: 700;
       font-style: normal;
 
+      @include breakpoint.mq(max, 768px) {
+        font-size: 3.738317757vw;
+      }
+
       @include breakpoint.mq(min, 769px) {
         font-size: 1.5vw;
       }
@@ -274,6 +302,10 @@ onMounted(() => {
       font-family: "Noto Sans JP", sans-serif;
       letter-spacing: 0.08em;
       line-height: 2;
+
+      @include breakpoint.mq(max, 768px) {
+        font-size: 3.5046728972vw;
+      }
 
       &:not(:last-child) {
         margin-bottom: 1.5em;
@@ -369,6 +401,10 @@ onMounted(() => {
       font-optical-sizing: auto;
       font-weight: 700;
       font-style: normal;
+
+      @include breakpoint.mq(max, 768px) {
+        font-size: 3.5046728972vw;
+      }
     }
   }
 
@@ -377,12 +413,13 @@ onMounted(() => {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 11.6822429907vw 0 0;
+    padding: 11.6822429907vw 0 12vw;
 
     @include breakpoint.mq(min, 769px) {
       max-width: 1200px;
       margin-inline: auto;
       padding-top: 4.1666666667vw;
+      padding-bottom: 0;
     }
 
     @include breakpoint.mq(min, 1201px) {
