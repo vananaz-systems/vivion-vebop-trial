@@ -175,7 +175,7 @@ onMounted(() => {
       object-fit: contain;
 
       @include breakpoint.mq(min, 769px) {
-        max-height: 38.75vw;
+        max-height: 675px;
       }
 
       @include breakpoint.mq(max, 768px) {
@@ -294,6 +294,25 @@ onMounted(() => {
       height: auto !important;
       vertical-align: bottom;
       display: inline;
+    }
+
+    :deep(.h4-1) {
+      letter-spacing: 0;
+      margin-top: -2px;
+      display: block;
+      margin-bottom: -33.5px;
+    }
+
+    :deep(.p-1) {
+      margin-bottom: -1em;
+      display: block;
+    }
+
+    :deep(.ls-1) {
+      letter-spacing: 0;
+      line-height: 1.8;
+      display: block;
+      margin-bottom: -2em;
     }
 
     :deep(.mb) {
