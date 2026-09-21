@@ -161,9 +161,11 @@ onMounted(() => {
   &__featured {
     display: block;
     margin-inline: auto;
+    margin-top: 3.35em;
 
     @include breakpoint.mq(min, 769px) {
       max-width: 1200px;
+      margin-top: 0;
     }
 
     img {
@@ -173,14 +175,8 @@ onMounted(() => {
       margin-inline: auto;
       vertical-align: bottom;
       object-fit: contain;
+      height: 100%;
 
-      @include breakpoint.mq(min, 769px) {
-        max-height: 675px;
-      }
-
-      @include breakpoint.mq(max, 768px) {
-        max-height: 120vw;
-      }
     }
   }
 
