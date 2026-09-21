@@ -1,10 +1,21 @@
-export interface Topic {
-  id: string
+import type { MicroCMSContent, MicroCMSImage } from '#shared/types/microcms'
+
+export interface TopicCategory extends MicroCMSContent {
   slug: string
+  name: string
+  parentCategory: { id: string } | null
+}
+
+export interface TopicTag extends MicroCMSContent {
+  slug: string
+  name: string
+}
+
+export interface Topic extends MicroCMSContent {
   title: string
-  publishedAt: string
-  excerpt: string
-  body: string[]
-  /** Official WordPress tags. `#NEWS` is currently the only category. */
-  tags: string[]
+  content: string
+  featuredImage?: MicroCMSImage
+  visibility: string[]
+  tags: TopicTag[]
+  categories: TopicCategory[]
 }
