@@ -4,6 +4,12 @@ import { fileURLToPath } from 'node:url'
 const CORE_APP_DIR = fileURLToPath(new URL('./app', import.meta.url))
 const APP_BASE_URL = process.env.NUXT_APP_BASE_URL || '/'
 
+// `app.head` is not rewritten by `baseURL`, so build public asset paths here.
+const asset = (path: string) => `${APP_BASE_URL.replace(/\/$/, '')}/${path}`
+
+// Official markup busts the icon cache with a dated query.
+const ICON_VERSION = '20260601'
+
 export default defineNuxtConfig({
   compatibilityDate: '2026-04-10',
   devtools: { enabled: true },
@@ -14,7 +20,12 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'ja' },
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
+      meta: [
+        { name: 'theme-color', content: '#000000' },
+      ],
       link: [
+        { rel: 'icon', href: asset(`favicon.ico?v=${ICON_VERSION}`), sizes: 'any' },
+        { rel: 'apple-touch-icon', href: asset(`apple-touch-icon.png?v=${ICON_VERSION}`) },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
