@@ -8,9 +8,33 @@ function apiUrl(origin: string, endpoint: string): string {
   return `${normalizedOrigin}/api/v1/${normalizedEndpoint}`
 }
 
+// Every prerendered route requests the same collections, so without this the number of
+// microCMS calls scales with the route count and the build can trip API rate limits.
+const prerenderCache = new Map<string, Promise<MicroCMSListResponse<unknown>>>()
+
 export async function fetchMicroCMSList<T>(
   endpoint: string,
   query: Record<string, string | number> = {},
+): Promise<MicroCMSListResponse<T>> {
+  if (!import.meta.prerender) {
+    return requestMicroCMSList<T>(endpoint, query)
+  }
+
+  const cacheKey = `${endpoint}:${JSON.stringify(query)}`
+  let pending = prerenderCache.get(cacheKey)
+
+  if (!pending) {
+    pending = requestMicroCMSList<T>(endpoint, query)
+    prerenderCache.set(cacheKey, pending)
+    pending.catch(() => prerenderCache.delete(cacheKey))
+  }
+
+  return await pending as MicroCMSListResponse<T>
+}
+
+async function requestMicroCMSList<T>(
+  endpoint: string,
+  query: Record<string, string | number>,
 ): Promise<MicroCMSListResponse<T>> {
   const config = useRuntimeConfig()
   const origin = config.public.apiBaseUrl

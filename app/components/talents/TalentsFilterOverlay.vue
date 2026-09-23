@@ -56,7 +56,7 @@ onUnmounted(() => {
           </header>
           <ul>
             <li v-for="unit in archiveUnits" :key="unit.id">
-              <NuxtLink :to="`/talents/unit/${unit.slug}`" @click="close">
+              <NuxtLink :to="`/talents/unit/${unit.slug}/`" @click="close">
                 <picture>
                   <img
                     v-if="unit.logo"
