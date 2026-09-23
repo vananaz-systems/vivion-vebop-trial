@@ -13,6 +13,8 @@ if (!talent.value) {
   throw createError({ statusCode: 404, statusMessage: 'Talent not found' })
 }
 
+const talentData = computed(() => parseTalentData(talent.value?.data))
+
 const unit = computed(() => (
   talent.value?.unit ? getUnitBySlug(talent.value.unit.slug) : undefined
 ))
@@ -188,8 +190,8 @@ useSeo({
             <dd v-html="talent.profileText" />
           </dl>
 
-          <div v-if="talent.data.length" class="p-talentDetail__metadata">
-            <dl v-for="entry in talent.data" :key="entry.headline">
+          <div v-if="talentData.length" class="p-talentDetail__metadata">
+            <dl v-for="entry in talentData" :key="entry.headline">
               <dt :style="{ color: talent.theme }">
                 <span :style="{ borderColor: talent.theme }">{{ entry.headline }}</span>
               </dt>
