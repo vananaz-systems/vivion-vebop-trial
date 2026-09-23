@@ -116,6 +116,12 @@ export default defineNuxtConfig({
   routeRules: {
     '/privacy/**': { redirect: { to: 'https://vivion.jp/privacy_protection/', statusCode: 301 } },
     '/contact/**': { redirect: { to: 'https://vebop.zendesk.com/hc/ja/requests/new', statusCode: 301 } },
+    // CMS slugs can be non-ASCII. Nuxt's prerender manifest stores decoded paths but
+    // compares encoded ones, so payload loading on client navigation must be forced
+    // here instead of relying on that lookup.
+    '/talents/**': { prerender: true },
+    '/topics/**': { prerender: true },
+    '/tag/**': { prerender: true },
   },
 
   runtimeConfig: {

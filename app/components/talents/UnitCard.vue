@@ -8,7 +8,7 @@ const props = defineProps<{
 
 const nameLines = computed(() => props.unit.name.split(/<br\s*\/?>/i))
 const displayName = computed(() => nameLines.value.join(' '))
-const href = computed(() => props.to ?? `/talents/unit/${props.unit.slug}`)
+const href = computed(() => props.to ?? `/talents/unit/${props.unit.slug}/`)
 </script>
 
 <template>
