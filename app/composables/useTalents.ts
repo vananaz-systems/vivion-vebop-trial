@@ -1,4 +1,5 @@
 import { ARCHIVE_UNIT_ORDER } from '~/utils/constants'
+import { parseTalentData } from '~/utils/parseTalentData'
 import type { MicroCMSListResponse } from '#shared/types/microcms'
 import type { Talent, TalentUnit } from '#shared/types/talent'
 
@@ -75,6 +76,15 @@ export async function loadTalentsData(): Promise<void> {
     })
   }
 
-  talents.value = talentResponse.value?.contents ?? []
-  units.value = unitResponse.value?.contents ?? []
+  talents.value = (talentResponse.value?.contents ?? []).map(talent => ({
+    ...talent,
+    data: parseTalentData(talent.data),
+  }))
+  units.value = (unitResponse.value?.contents ?? []).map(unit => ({
+    ...unit,
+    members: (unit.members ?? []).map(member => ({
+      ...member,
+      data: parseTalentData(member.data),
+    })),
+  }))
 }
