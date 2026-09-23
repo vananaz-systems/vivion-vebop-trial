@@ -1,4 +1,6 @@
 <script setup lang="ts">
+await loadTopicsData()
+
 const route = useRoute()
 const { getTopicBySlug } = useTopics()
 const topic = computed(() => getTopicBySlug(String(route.params.slug)))

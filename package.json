@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev --dotenv .env.development",
-    "generate": "nuxt generate --dotenv .env.production",
-    "generate:staging": "nuxt generate --dotenv .env.staging",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate && node --env-file-if-exists=.env ./scripts/localize-cms-images.mjs",
+    "generate:staging": "nuxt generate --dotenv .env.staging && node --env-file-if-exists=.env.staging ./scripts/localize-cms-images.mjs",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },

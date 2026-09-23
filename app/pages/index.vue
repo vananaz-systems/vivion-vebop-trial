@@ -1,4 +1,6 @@
 <script setup lang="ts">
+await loadTopicsData()
+
 const { brand } = useSite()
 const { begin, contentRevealed, fvLoaded } = useIntroLoader()
 

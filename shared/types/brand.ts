@@ -20,9 +20,6 @@ export interface BrandConfig {
     x: string
     xHandle: string
   }
-  news: {
-    apiPrefix: string
-  }
   loading: {
     bgIcon: string
     innerBg: string

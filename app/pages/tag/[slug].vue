@@ -1,4 +1,6 @@
 <script setup lang="ts">
+await loadTopicsData()
+
 const route = useRoute()
 const { topics } = useTopics()
 

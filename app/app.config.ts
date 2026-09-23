@@ -4,10 +4,10 @@
 export default defineAppConfig({
   brand: {
     siteName: 'ビバップ高校',
-    siteUrl: 'https://vhs-city.com/vebophighschool',
+    siteUrl: 'https://vivion-vebop-trial.vercel.app',
     description:
       'VTuber事務所「ビバップ高校」。合言葉は「型通りより型破り」。ジャンル問わずマルチタレントユニットをプロデュース。',
-    ogImage: 'https://vhs-city.com/vebophighschool/ogp_main.png',
+    ogImage: 'https://vivion-vebop-trial.vercel.app/ogp_main.png',
     copyright: '© ビバップ高校 / viviON Inc.',
     logo: {
       default: '/images/common/logo-icon.png',
@@ -17,9 +17,6 @@ export default defineAppConfig({
       youtube: 'https://www.youtube.com/@VebopProject_official',
       x: 'https://x.com/Vebop_Project',
       xHandle: 'Vebop_Project',
-    },
-    news: {
-      apiPrefix: '/api/vebop',
     },
     loading: {
       bgIcon: '/images/common/loading-icon.svg',

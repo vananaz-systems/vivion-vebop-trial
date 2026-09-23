@@ -1,24 +1,54 @@
 import type { MicroCMSListResponse } from '#shared/types/microcms'
 
-/**
- * microCMS client stub.
- * Pages currently read from `app/data`. Swap callers to this helper
- * once `NUXT_MICROCMS_API_KEY` and `NUXT_PUBLIC_MICROCMS_SERVICE_DOMAIN` are set.
- */
+const DEFAULT_LIMIT = 100
+
+function apiUrl(origin: string, endpoint: string): string {
+  const normalizedOrigin = origin.replace(/\/+$/, '')
+  const normalizedEndpoint = endpoint.replace(/^\/+|\/+$/g, '')
+  return `${normalizedOrigin}/api/v1/${normalizedEndpoint}`
+}
+
 export async function fetchMicroCMSList<T>(
   endpoint: string,
   query: Record<string, string | number> = {},
 ): Promise<MicroCMSListResponse<T>> {
   const config = useRuntimeConfig()
-  const domain = config.public.microCmsServiceDomain
-  const apiKey = config.microCmsApiKey
+  const origin = config.public.apiBaseUrl
+  const apiKey = config.microcmsApiKey
 
-  if (!domain || !apiKey) {
-    throw new Error('microCMS is not configured. Use static data until env keys are set.')
+  if (!origin || !apiKey) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'microCMS is not configured',
+    })
   }
 
-  return $fetch<MicroCMSListResponse<T>>(`https://${domain}.microcms.io/api/v1/${endpoint}`, {
-    headers: { 'X-MICROCMS-API-KEY': apiKey },
-    query,
-  })
+  const requestedLimit = Number(query.limit ?? DEFAULT_LIMIT)
+  const contents: T[] = []
+  let offset = Number(query.offset ?? 0)
+  let totalCount = 0
+
+  do {
+    const response = await $fetch<MicroCMSListResponse<T>>(apiUrl(origin, endpoint), {
+      headers: { 'X-MICROCMS-API-KEY': apiKey },
+      query: {
+        ...query,
+        limit: Math.min(requestedLimit, DEFAULT_LIMIT),
+        offset,
+      },
+    })
+
+    contents.push(...response.contents)
+    totalCount = response.totalCount
+    offset += response.contents.length
+
+    if (response.contents.length === 0) break
+  } while (offset < totalCount)
+
+  return {
+    contents,
+    totalCount,
+    offset: Number(query.offset ?? 0),
+    limit: contents.length,
+  }
 }
