@@ -162,6 +162,10 @@ microCMS bodies/thumbnails use `https://images.microcms-assets.io/...`.
 
 Vercel: build command as above; output `.output/public`; CMS env vars on the project for **build**.
 
+- [ ] Pin `NITRO_PRESET=static` (`vercel.json` → `build.env`). Otherwise Nitro auto-selects the
+      `vercel-static` preset, writes `.vercel/output/static`, skips the image script, and maps
+      trailing-slash routes to unroutable Build Output API paths (404 on every such page).
+
 ---
 
 ## 6. Verify
