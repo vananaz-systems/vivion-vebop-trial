@@ -1,4 +1,6 @@
 <script setup lang="ts">
+await loadTopicsData()
+
 import { presentRulesPage } from '~/data/pages'
 
 useSeo({

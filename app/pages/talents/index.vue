@@ -1,4 +1,9 @@
 <script setup lang="ts">
+await Promise.all([
+  loadTalentsData(),
+  loadTopicsData(),
+])
+
 useSeo({
   title: 'TALENTS',
   description: 'ビバップ高校の所属タレント一覧。',

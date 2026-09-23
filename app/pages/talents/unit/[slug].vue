@@ -1,4 +1,9 @@
 <script setup lang="ts">
+await Promise.all([
+  loadTalentsData(),
+  loadTopicsData(),
+])
+
 const route = useRoute()
 const { getUnitBySlug } = useTalents()
 const isFilterOpen = ref(false)

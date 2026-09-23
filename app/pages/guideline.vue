@@ -1,4 +1,6 @@
 <script setup lang="ts">
+await loadTopicsData()
+
 import { guidelinePage } from '~/data/pages'
 
 useSeo({
