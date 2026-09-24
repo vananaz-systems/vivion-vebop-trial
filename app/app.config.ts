@@ -3,7 +3,7 @@
 // appConfig はビルド時定数。環境依存値は runtimeConfig / .env.* へ。
 export default defineAppConfig({
   brand: {
-    siteName: 'ビバップ高校',
+    siteName: 'VTuber事務所「ビバップ高校」',
     siteUrl: 'https://vivion-vebop-trial.vercel.app',
     description:
       'VTuber事務所「ビバップ高校」。合言葉は「型通りより型破り」。ジャンル問わずマルチタレントユニットをプロデュース。',
