@@ -404,9 +404,6 @@
         font-size: 16px;
       }
 
-      &:not(:last-child) {
-        // margin-bottom: 0.85em;
-      }
     }
 
     strong {

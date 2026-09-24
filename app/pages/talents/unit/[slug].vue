@@ -18,7 +18,8 @@ const unitMembers = computed(() =>
   [...(unit.value?.members ?? [])],
 )
 
-const title = computed(() => unit.value!.name.replace(/<br\s*\/?>/gi, ' '))
+const titleLines = computed(() => unit.value!.name.split(/<br\s*\/?>/i))
+const title = computed(() => titleLines.value.join(' '))
 const description = computed(() =>
   unit.value!.profileText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
 )
@@ -74,7 +75,11 @@ useSeo({
             </picture>
 
             <div class="p-unitDetail__copy">
-              <h1>{{ title }}</h1>
+              <h1 :class="{ 'is-multiline': titleLines.length > 1 }">
+                <template v-for="(line, index) in titleLines" :key="index">
+                  <br v-if="index > 0">{{ line }}
+                </template>
+              </h1>
               <div class="p-unitDetail__description" v-html="unit.profileText" />
             </div>
 
@@ -366,6 +371,16 @@ useSeo({
       font-weight: 400;
       // letter-spacing: 0.04em;
       line-height: 1.35;
+
+      &.is-multiline {
+        line-height: 1;
+        margin-top: 8px;
+        margin-bottom: 38px;
+
+        @include breakpoint.mq(min, 769px) {
+          margin-bottom: 26px;
+        }
+      }
 
       @include breakpoint.mq(min, 769px) {
         margin: 0 0 0.325em;
