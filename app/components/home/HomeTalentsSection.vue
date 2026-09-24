@@ -761,7 +761,6 @@ onUnmounted(() => {
     overflow: visible;
     opacity: 0;
 
-    // Official: `main` is position:relative only ≥769, so SP arrows sit in the title row
     @include breakpoint.mq(min, 769px) {
       position: relative;
     }
@@ -804,10 +803,6 @@ onUnmounted(() => {
       -webkit-user-drag: none;
       user-select: none;
     }
-
-    // @include breakpoint.mq(max, 768px) {
-    //   width: 89.3023255814%;
-    // }
 
     @include breakpoint.mq(min, 769px) {
       padding-inline: max(0px, calc((100% - 1000px) / 2));
@@ -870,8 +865,6 @@ onUnmounted(() => {
     line-height: 0;
     -webkit-tap-highlight-color: transparent;
 
-    // The arrow is focused on pointer down to keep keyboard paging in sync, so the
-    // UA focus ring would otherwise stay visible after a click/tap.
     &:focus,
     &:focus-visible {
       outline: none;
@@ -904,7 +897,6 @@ onUnmounted(() => {
     }
   }
 
-  // Official `.talents > footer.is-sp` — under-carousel catch + ALL TALENTS
   &__foot {
     display: none;
 
