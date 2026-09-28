@@ -222,7 +222,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
   &__main {
     @include breakpoint.mq(min, 769px) {
       width: 80.8333333333%;
-      padding-top: 5px;
+      padding-top: 1px;
     }
   }
 
@@ -388,6 +388,10 @@ const isTalentsView = computed(() => props.mode === 'talents')
 
   &__units {
     justify-content: space-between;
+
+    @include breakpoint.mq(min, 769px) {
+      margin-top: 4px;
+    }
 
     li {
       width: 100%;

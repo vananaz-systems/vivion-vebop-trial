@@ -70,10 +70,10 @@ onMounted(() => {
               </p>
             </div>
 
-            <br class="p-present__break" aria-hidden="true">
+            <!-- <br class="p-present__break" aria-hidden="true"> -->
 
             <div class="p-present__block">
-              <p>{{ presentRulesPage.fanLetter.acceptedHeading }}</p>
+              <p class="p-present__block-heading">{{ presentRulesPage.fanLetter.acceptedHeading }}</p>
             </div>
             <ul class="p-present__list">
               <li v-for="item in presentRulesPage.fanLetter.accepted" :key="item">
@@ -263,6 +263,10 @@ onMounted(() => {
     }
   }
 
+  &__block-heading {
+    margin-top: 1.1em !important;
+  }
+
   &__block {
     p {
       margin: 0;
@@ -284,11 +288,11 @@ onMounted(() => {
     padding: 2em;
     background: variable.$white;
     border: 1px solid variable.$black;
-    margin-top: 1.1999em;
-    margin-bottom: 1.1999em;
+    margin-top: 1.14em;
+    margin-bottom: 1.12em;
 
     @include breakpoint.mq(min, 769px) {
-      padding: 2em 3em;
+      padding: 1.86em 2.7999em;;
     }
   }
 
