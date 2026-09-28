@@ -422,7 +422,7 @@
   }
 
   &__date {
-    margin-top: 1.5em;
+    margin-top: 1.1em !important;
     text-align: right;
   }
 }

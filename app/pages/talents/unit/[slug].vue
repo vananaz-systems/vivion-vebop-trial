@@ -31,7 +31,7 @@ useSeo({
 </script>
 
 <template>
-  <div v-if="unit" class="p-unitDetail">
+  <div v-if="unit" class="p-unitDetail" :class="{ 'is-multiline': titleLines.length > 1 }">
     <AppPageHeader title="UNIT" />
 
     <section class="p-unitDetail__archive">
@@ -52,7 +52,11 @@ useSeo({
         <div class="p-unitDetail__main">
           <ol class="p-unitDetail__breadcrumb" aria-label="パンくずリスト">
             <li>UNIT</li>
-            <li aria-current="page">{{ title }}</li>
+            <li aria-current="page" :class="{ 'is-multiline': titleLines.length > 1 }">
+              <template v-for="(line, index) in titleLines" :key="index">
+                <br v-if="index > 0">{{ line }}
+              </template>
+            </li>
           </ol>
 
           <article class="p-unitDetail__profile">
@@ -274,6 +278,12 @@ useSeo({
     }
   }
 
+  &.is-multiline &__main {
+    @include breakpoint.mq(min, 769px) {
+      padding-top: 5.5px;
+    }
+  }
+
   &__breadcrumb {
     display: none;
 
@@ -300,6 +310,16 @@ useSeo({
     li:not(:last-child)::after {
       content: ">";
       margin-inline: 0.5em;
+    }
+
+    li.is-multiline {
+      line-height: 1.8;
+    }
+  }
+
+  &.is-multiline &__breadcrumb {
+    @include breakpoint.mq(min, 1201px) {
+      margin-bottom: 40px;
     }
   }
 
@@ -479,11 +499,12 @@ useSeo({
     margin-bottom: 4.6728971963vw;
 
     @include breakpoint.mq(min, 769px) {
-      margin-bottom: 3.3333333333vw;
+      // margin-bottom: 3.3333333333vw;
+      margin-bottom: 36px;
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 40px;
+      margin-bottom: 36px;
     }
 
     h2 {
@@ -600,7 +621,7 @@ useSeo({
       max-width: 1200px;
       margin-inline: auto;
       // padding-top: 4.1666666667vw;
-      padding-top: 6.2vw;
+      padding-top: 5.7vw;
       padding-bottom: 0;
       margin-bottom: 0;
     }

@@ -381,6 +381,7 @@ function scrollTop() {
           fill: #60ec33;
         }
       }
+      padding-bottom: 1.25em;
     }
 
     em,
@@ -402,6 +403,7 @@ function scrollTop() {
 
       @include breakpoint.mq(min, 769px) {
         width: 1vw;
+        margin-top: 1px;
       }
 
       @include breakpoint.mq(min, 1201px) {
