@@ -47,7 +47,7 @@ onMounted(() => {
         </picture>
       </div>
       <h1 class="p-index__fv-logo">
-        <picture>
+        <picture class="logo">
           <source type="image/webp" srcset="/images/common/logo.webp">
           <img src="/images/common/logo.png" :alt="brand.siteName" decoding="async">
         </picture>
@@ -136,17 +136,22 @@ onMounted(() => {
     }
   }
 
+  // Official `.l-fv__inner .fvttl` + `.fvttl--logo` (width on the title box,
+  // scale on the logo). Collapse the h1 line box so height matches the image.
   &__fv-logo {
     position: absolute;
-    top: 69.677777%;
+    top: 69.67%;
     left: 50%;
     z-index: 2;
     width: 36.1111111111%;
     max-width: 520px;
     margin: 0;
+    font-size: 0;
+    line-height: 0;
     opacity: 0;
-    transform: translate(-50%, -50%) scale(1.6);
+    transform: translate(-50%, -50%) scale(1.08);
 
+    picture,
     img {
       display: block;
       width: 100%;
@@ -156,7 +161,7 @@ onMounted(() => {
     @include breakpoint.mq(sp) {
       width: 88.3720930233%;
       max-width: none;
-      transform: translate(-50%, -40%) scale(1.6);
+      transform: translate(-50%, -40%) scale(1.08);
     }
   }
 

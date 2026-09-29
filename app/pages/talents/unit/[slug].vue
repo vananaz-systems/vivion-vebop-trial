@@ -621,7 +621,7 @@ useSeo({
       max-width: 1200px;
       margin-inline: auto;
       // padding-top: 4.1666666667vw;
-      padding-top: 5.7vw;
+      padding-top: 5.75vw;
       padding-bottom: 0;
       margin-bottom: 0;
     }
@@ -638,7 +638,7 @@ useSeo({
       align-items: center;
       justify-content: center;
       width: 47.3684210526%;
-      padding: 0.22em 0;
+      padding: 0.23em 0 0.22em;
       border: solid 0 #000;
       border-width: 1px 0;
       color: #000;
