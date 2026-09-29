@@ -29,8 +29,36 @@ const shareLinks = [
   },
 ]
 
+/** Official `#js-pagetop`: `$("html,body").animate({ scrollTop: 0 }, 1200, "easeInOutExpo")`. */
+const PAGE_TOP_DURATION_MS = 1200
+
+function easeInOutExpo(t: number) {
+  if (t === 0 || t === 1) return t
+  if (t < 0.5) return 2 ** (20 * t - 10) / 2
+  return (2 - 2 ** (-20 * t + 10)) / 2
+}
+
+let pageTopRaf = 0
+
 function scrollTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  const startY = window.scrollY
+  if (startY <= 0) return
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.scrollTo(0, 0)
+    return
+  }
+
+  const startTime = performance.now()
+  cancelAnimationFrame(pageTopRaf)
+
+  const step = (now: number) => {
+    const t = Math.min((now - startTime) / PAGE_TOP_DURATION_MS, 1)
+    window.scrollTo(0, startY * (1 - easeInOutExpo(t)))
+    if (t < 1) pageTopRaf = requestAnimationFrame(step)
+  }
+
+  pageTopRaf = requestAnimationFrame(step)
 }
 </script>
 

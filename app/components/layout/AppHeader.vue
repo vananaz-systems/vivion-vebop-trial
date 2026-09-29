@@ -275,7 +275,9 @@ onUnmounted(() => {
     padding: 12px 34px 12px 32.5px;
     background: variable.$white;
     border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(17, 17, 17, 0.04);
+    filter: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='filter'><feGaussianBlur in='SourceAlpha' stdDeviation='12' /><feOffset dx='1' dy='1' result='offsetblur' /><feFlood flood-color='rgba(0,0,0,.05)' /><feComposite in2='offsetblur' operator='in' /><feMerge><feMergeNode /><feMergeNode in='SourceGraphic' /></feMerge></filter></svg>#filter");
+    -webkit-filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.05));
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.05));
     transform: translateY(-150%);
     transition-duration: 1.2s;
     transition-delay: 0.2s;

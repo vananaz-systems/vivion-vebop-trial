@@ -630,7 +630,7 @@ onUnmounted(() => {
   &__head-inner {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    // align-items: center;
     justify-content: space-between;
     max-width: 1200px;
     margin-inline: auto;

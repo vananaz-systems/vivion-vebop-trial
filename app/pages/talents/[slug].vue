@@ -507,7 +507,7 @@ useSeo({
 
     > dt {
       width: 10.5263157895%;
-      padding-top: 0.3em;
+      padding-top: 0.4em;
       font-family: variable.$font-display-medium;
       font-size: 2.3364485981vw;
       font-weight: 500;
@@ -562,6 +562,7 @@ useSeo({
   &__metadata {
     width: 88.4210526316%;
     margin-left: auto;
+    margin-top: 1px;
 
     &::before {
       content: "";
@@ -602,10 +603,10 @@ useSeo({
       }
 
       @include breakpoint.mq(min, 1201px) {
-        padding-bottom: 10px;
+        padding-bottom: 11.1px;
 
         &:not(:last-child) {
-          margin-bottom: 15px;
+          margin-bottom: 15.6px;
         }
       }
     }
@@ -727,6 +728,7 @@ useSeo({
         @include breakpoint.mq(min, 1201px) {
           margin-left: 10px;
           font-size: 12px;
+          margin-bottom: 1px;
         }
       }
     }
