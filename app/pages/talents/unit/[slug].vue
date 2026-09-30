@@ -500,8 +500,7 @@ useSeo({
     margin-bottom: 4.6728971963vw;
 
     @include breakpoint.mq(min, 769px) {
-      // margin-bottom: 3.3333333333vw;
-      margin-bottom: 36px;
+      margin-bottom: 3.3333333333vw;
     }
 
     @include breakpoint.mq(min, 1201px) {
@@ -621,8 +620,8 @@ useSeo({
     @include breakpoint.mq(min, 769px) {
       max-width: 1200px;
       margin-inline: auto;
-      // padding-top: 4.1666666667vw;
-      padding-top: 5.6vw;
+      padding-top: 8vw;
+      // padding-top: 100px;
       padding-bottom: 0;
       margin-bottom: 0;
     }
@@ -630,6 +629,7 @@ useSeo({
     @include breakpoint.mq(min, 1201px) {
       // padding-top: 50px;
       // padding-bottom: 90px;
+      padding-top: 100px;
       margin-bottom: 0;
     }
 
