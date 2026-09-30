@@ -37,7 +37,6 @@ const latest = computed(() => topics.value.slice(0, LATEST_TOPICS_LIMIT))
 
   @include breakpoint.mq(max, 768px) {
     padding: 32vw 0 0;
-    // margin-bottom: -26vw;
   }
 
   @include breakpoint.mq(min, 769px) {

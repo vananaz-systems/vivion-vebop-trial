@@ -780,10 +780,6 @@ $drawer-green: #60ec33;
     opacity: 0;
     transform: translateY(20%);
 
-    li:not(:last-child) {
-      // margin-bottom: 8px;
-    }
-
     a {
       display: flex;
       flex-wrap: wrap;

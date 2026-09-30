@@ -238,10 +238,6 @@ function scrollTop() {
       gap: 20px;
       margin-bottom: 6px;
     }
-
-    // @include breakpoint.mq(min, 1201px) {
-    //   margin-bottom: 6px;
-    // }
   }
 
   &__logo {

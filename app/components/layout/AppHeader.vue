@@ -170,7 +170,6 @@ onUnmounted(() => {
   }
 
   &.is-menu-open {
-    // z-index: auto;
     pointer-events: none;
   }
 
@@ -242,11 +241,8 @@ onUnmounted(() => {
     pointer-events: auto;
 
     @include breakpoint.mq(min, 769px) {
-      // padding-top: 25px;
-      // padding-left: 40px;
       padding-top: 0;
       padding-left: 0;
-      // width: 16.1764705882%;
       width: 15.1764705882%;
       max-width: 220px;
       margin-top: 3.3333333333vw;
@@ -260,10 +256,6 @@ onUnmounted(() => {
     @include breakpoint.mq(min, 1440px) {
       width: 220px;
     }
-
-    // @include breakpoint.mq(min_max, 769px, 1200px) {
-    //   padding-top: 3.3333333333vw;
-    // }
 
     picture,
     img {
@@ -280,7 +272,6 @@ onUnmounted(() => {
     flex-wrap: nowrap;
     align-items: center;
     gap: 20px;
-    // min-height: 60px;
     padding: 12px 34px 12px 32.5px;
     background: variable.$white;
     border-radius: 999px;

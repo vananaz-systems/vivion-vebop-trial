@@ -297,7 +297,6 @@ useSeo({
       font-family: variable.$font-display-medium;
       font-size: 1.0833333333vw;
       font-weight: 500;
-      // letter-spacing: 0.08em;
       line-height: 1;
       list-style: none;
     }
@@ -350,17 +349,10 @@ useSeo({
   }
 
   &__logo {
-    // width: 76%;
-    // margin-top: 2.3364485981vw;
-
     @include breakpoint.mq(min, 769px) {
       width: 69.587628866%;
       margin-top: 0;
     }
-
-    // @include breakpoint.mq(min, 1201px) {
-    //   margin-top: 20px;
-    // }
   }
 
   &__visual {
@@ -368,7 +360,6 @@ useSeo({
     padding-top: 7px;
 
     @include breakpoint.mq(min, 769px) {
-      // width: 82%;
       padding-top: 0;
     }
   }
@@ -380,16 +371,11 @@ useSeo({
       margin-top: -9px;
     }
 
-    // @include breakpoint.mq(min, 1201px) {
-    //   margin-top: 30px;
-    // }
-
     h1 {
       margin: 0 0 0.56em;
       font-family: variable.$font-dela;
       font-size: 6.5420560748vw;
       font-weight: 400;
-      // letter-spacing: 0.04em;
       line-height: 1.35;
 
       &.is-multiline {
@@ -615,20 +601,16 @@ useSeo({
     justify-content: center;
     padding-top: 16vw;
     margin-bottom: -2.8em;
-    // padding-bottom: 16.3551401869vw;
 
     @include breakpoint.mq(min, 769px) {
       max-width: 1200px;
       margin-inline: auto;
       padding-top: 8vw;
-      // padding-top: 100px;
       padding-bottom: 0;
       margin-bottom: 0;
     }
 
     @include breakpoint.mq(min, 1201px) {
-      // padding-top: 50px;
-      // padding-bottom: 90px;
       padding-top: 100px;
       margin-bottom: 0;
     }

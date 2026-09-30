@@ -41,9 +41,6 @@ onMounted(() => {
               <p>{{ presentRulesPage.fanLetter.intro }}</p>
             </div>
 
-            <!-- Official article uses a raw <br> (~18px) around the address card. -->
-            <!-- <br class="p-present__break" aria-hidden="true"> -->
-
             <div class="p-present__frame">
               <p class="p-present__frame-label">
                 <em>{{ presentRulesPage.fanLetter.address.label }}</em>
@@ -61,16 +58,12 @@ onMounted(() => {
               </div>
             </div>
 
-            <!-- <br class="p-present__break" aria-hidden="true"> -->
-
             <div class="p-present__block">
               <p>{{ presentRulesPage.fanLetter.eligibleHeading }}</p>
               <p v-for="paragraph in presentRulesPage.fanLetter.eligible" :key="paragraph">
                 {{ paragraph }}
               </p>
             </div>
-
-            <!-- <br class="p-present__break" aria-hidden="true"> -->
 
             <div class="p-present__block">
               <p class="p-present__block-heading">{{ presentRulesPage.fanLetter.acceptedHeading }}</p>
@@ -273,14 +266,6 @@ onMounted(() => {
       letter-spacing: 0.05em;
       font-family: variable.$font-sans;
     }
-  }
-
-  // Official `<br>` sits on `#Main` body (10px × line-height 1.8).
-  &__break {
-    display: block;
-    height: 18px;
-    font-size: 0;
-    line-height: 0;
   }
 
   &__frame {

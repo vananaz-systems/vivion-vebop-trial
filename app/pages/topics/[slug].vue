@@ -120,8 +120,6 @@ onMounted(() => {
     font-size: 2.8037383178vw;
     font-weight: 700;
     font-style: normal;
-    // letter-spacing: 0.08em;
-    // line-height: 1;
 
     @include breakpoint.mq(min, 769px) {
       font-size: 1.3333333333vw;

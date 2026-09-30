@@ -120,7 +120,6 @@ const seoDescription = computed(() =>
   talent.value?.profileText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() ?? '',
 )
 
-// const unitName = computed(() => unit.value?.name.replace(/<br\s*\/?>/gi, ' ') ?? '')
 const unitName = unit.value?.name
 
 const socialLinks = computed(() => {
@@ -368,7 +367,6 @@ useSeo({
       display: block;
       width: 100%;
       height: auto;
-      // aspect-ratio: 1200 / 968;
       object-fit: contain;
       object-position: center;
       opacity: 0;
@@ -517,7 +515,6 @@ useSeo({
 
       @include breakpoint.mq(min, 769px) {
         width: 20.7977207977%;
-        // padding-top: 0;
         font-size: 1vw;
         writing-mode: horizontal-tb;
       }
@@ -736,7 +733,6 @@ useSeo({
 
   &__unit {
     margin-top: 16.3551401869vw;
-    // padding: 21.0280373832vw 5.8411214953% 18.691588785vw;
     padding: 21.0280373832vw 0 18.691588785vw;
     background: #fff;
     opacity: 0;
@@ -818,14 +814,6 @@ useSeo({
   &__unitLink {
     display: block;
     color: #000;
-
-    // @include breakpoint.mq(min, 769px) {
-    //   transition: opacity 0.3s;
-
-    //   &:hover {
-    //     opacity: 0.7;
-    //   }
-    // }
   }
 
   &__unitVisual,

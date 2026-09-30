@@ -613,12 +613,10 @@ onUnmounted(() => {
   &__head {
     position: relative;
     z-index: 2;
-    // padding-left: 10.6976744186%;
     padding-right: 0;
     margin-bottom: 7.0093457944vw;
 
     @include breakpoint.mq(min, 769px) {
-      // padding-left: 11.8055555556%;
       margin-bottom: 4.1666666667vw;
     }
 
@@ -630,11 +628,9 @@ onUnmounted(() => {
   &__head-inner {
     display: flex;
     flex-wrap: wrap;
-    // align-items: center;
     justify-content: space-between;
     max-width: 1200px;
     margin-inline: auto;
-    // padding-inline: 40px;
   }
 
   &__title {
