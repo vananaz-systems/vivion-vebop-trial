@@ -71,11 +71,11 @@ onMounted(() => {
   pointer-events: none;
 
   @include breakpoint.mq(min, 769px) {
-    margin-top: calc(5vw - 100px);
+    margin-top: calc(4vw - 60px);
   }
 
   @include breakpoint.mq(pc) {
-    margin-top: calc(5vw - 104px);
+    margin-top: calc(4vw - 65px);
   }
 
   @include breakpoint.mq(min, 1201px) {
@@ -109,7 +109,6 @@ onMounted(() => {
       height: auto;
     }
 
-    // Official `.fvvideo` / `.fvvideo--inner` / `.fvvideo--image` on SP
     @include breakpoint.mq(max, 768px) {
       aspect-ratio: 430 / 674;
       overflow: hidden;
@@ -140,11 +139,11 @@ onMounted(() => {
   // scale on the logo). Collapse the h1 line box so height matches the image.
   &__fv-logo {
     position: absolute;
-    top: 69.67%;
+    top: 69.75%;
     left: 50%;
     z-index: 2;
     width: 36.1111111111%;
-    max-width: 520px;
+    max-width: 519.99px;
     margin: 0;
     font-size: 0;
     line-height: 0;

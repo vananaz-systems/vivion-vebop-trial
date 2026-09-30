@@ -246,10 +246,19 @@ onUnmounted(() => {
       // padding-left: 40px;
       padding-top: 0;
       padding-left: 0;
-      width: 16.1764705882%;
+      // width: 16.1764705882%;
+      width: 15.1764705882%;
       max-width: 220px;
-      margin-top: 25px;
+      margin-top: 3.3333333333vw;
       margin-left: 40px;
+    }
+
+    @include breakpoint.mq(min, 1201px) {
+      margin-top: 25px;
+    }
+
+    @include breakpoint.mq(min, 1440px) {
+      width: 220px;
     }
 
     // @include breakpoint.mq(min_max, 769px, 1200px) {
@@ -271,7 +280,7 @@ onUnmounted(() => {
     flex-wrap: nowrap;
     align-items: center;
     gap: 20px;
-    min-height: 60px;
+    // min-height: 60px;
     padding: 12px 34px 12px 32.5px;
     background: variable.$white;
     border-radius: 999px;
@@ -292,6 +301,7 @@ onUnmounted(() => {
       width: 680px;
       max-width: 680px;
       margin-inline: auto;
+      top: -10px;
 
       &.is-show {
         transform: translateY(0);
@@ -310,6 +320,10 @@ onUnmounted(() => {
       :deep(.c-logo:not(.c-logo--wordmark)) {
         width: 2.5vw;
       }
+    }
+
+    @include breakpoint.mq(min, 1301px) {
+      top: 0;
     }
   }
 

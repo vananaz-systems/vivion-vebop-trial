@@ -451,8 +451,8 @@ useSeo({
     min-height: 3.2em;
     margin: 7.0093457944vw auto 0;
     color: #fff;
+    border: solid 1px #6a6b76;
     background: #000;
-    border: 1px solid #000;
     font-family: variable.$font-display;
     font-size: 4.2056074766vw;
     font-weight: 600;
@@ -471,6 +471,7 @@ useSeo({
       &:hover {
         color: #000;
         background: #fff;
+        border: 1px solid #000;
       }
     }
 
@@ -621,7 +622,7 @@ useSeo({
       max-width: 1200px;
       margin-inline: auto;
       // padding-top: 4.1666666667vw;
-      padding-top: 5.75vw;
+      padding-top: 5.6vw;
       padding-bottom: 0;
       margin-bottom: 0;
     }
