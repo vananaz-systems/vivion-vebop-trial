@@ -236,12 +236,12 @@ function scrollTop() {
       flex-direction: row;
       align-items: center;
       gap: 20px;
-      margin-bottom: 2.6666666667vw;
-    }
-
-    @include breakpoint.mq(min, 1201px) {
       margin-bottom: 6px;
     }
+
+    // @include breakpoint.mq(min, 1201px) {
+    //   margin-bottom: 6px;
+    // }
   }
 
   &__logo {
@@ -409,7 +409,7 @@ function scrollTop() {
           fill: #60ec33;
         }
       }
-      padding-bottom: 1.25em;
+      padding-bottom: 1.22em;
     }
 
     em,
