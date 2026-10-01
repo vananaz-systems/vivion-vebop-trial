@@ -25,10 +25,9 @@ onMounted(() => {
     <article class="p-present__article">
       <header class="p-present__lead">
         <h2>
-          <span>
-            {{ presentRulesPage.lead[0] }}<br>
-            {{ presentRulesPage.lead[1] }}
-          </span>
+          <span>{{ presentRulesPage.lead[0] }}</span>
+          <br>
+          <span>{{ presentRulesPage.lead[1] }}</span>
         </h2>
       </header>
 
@@ -145,7 +144,7 @@ onMounted(() => {
   }
 
   &__lead {
-    margin-bottom: 2em;
+    margin-bottom: 1.99em;
     color: variable.$black;
     font-family: "Noto Sans JP", sans-serif;
     font-size: 6.0747663551vw;
@@ -157,6 +156,10 @@ onMounted(() => {
       font-size: inherit;
       font-weight: inherit;
       line-height: inherit;
+
+      @include breakpoint.mq(min, 769px) {
+        line-height: 1.71;
+      }
     }
 
     span {
@@ -277,7 +280,7 @@ onMounted(() => {
     margin-bottom: 1.12em;
 
     @include breakpoint.mq(min, 769px) {
-      padding: 1.86em 2.7999em;;
+      padding: 1.86em 2.7999em;
     }
   }
 
@@ -316,11 +319,11 @@ onMounted(() => {
     }
 
     p:not(:last-child) {
-      margin-bottom: 0.85em;
+      margin-bottom: 0.845em;
     }
 
     @include breakpoint.mq(min, 769px) {
-      font-size: 1.25vw;
+      font-size: 1.34vw;
     }
 
     @include breakpoint.mq(min, 1201px) {

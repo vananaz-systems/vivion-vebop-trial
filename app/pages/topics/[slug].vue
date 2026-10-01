@@ -215,9 +215,15 @@ onMounted(() => {
 
   &__inner {
     margin-inline: auto;
+    font-size: 3.5046728972vw;
 
     @include breakpoint.mq(min, 769px) {
       max-width: 834px;
+      font-size: 1.3333333333vw;
+    }
+
+    @include breakpoint.mq(min, 1201px) {
+      font-size: 1.6rem;
     }
 
     :deep(h1),
@@ -302,10 +308,6 @@ onMounted(() => {
       font-family: "Noto Sans JP", sans-serif;
       letter-spacing: 0.08em;
       line-height: 2;
-
-      @include breakpoint.mq(max, 768px) {
-        font-size: 3.5046728972vw;
-      }
 
       &:not(:last-child) {
         margin-bottom: 1.5em;

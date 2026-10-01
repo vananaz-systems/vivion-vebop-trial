@@ -27,7 +27,7 @@ useSeo({ title: title.value })
   min-height: 60vh;
   display: grid;
   align-content: center;
-  gap: 1rem;
+  gap: 16px;
 
   &__code {
     letter-spacing: 0.16em;
@@ -35,7 +35,7 @@ useSeo({ title: title.value })
   }
 
   h1 {
-    font-size: 1.8rem;
+    font-size: 28.8px;
   }
 }
 </style>

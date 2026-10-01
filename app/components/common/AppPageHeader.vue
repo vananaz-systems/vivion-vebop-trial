@@ -27,24 +27,24 @@ const isBanner = computed(() => !props.eyebrow && !props.description)
 
 .c-pageHeader {
   display: grid;
-  gap: 0.75rem;
-  margin-bottom: 2.5rem;
+  gap: 12px;
+  margin-bottom: 40px;
 
   &__eyebrow {
-    font-size: 0.75rem;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: variable.$text-muted;
   }
 
   &__title {
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-size: clamp(28.8px, 4vw, 41.6px);
     line-height: 1.25;
     letter-spacing: 0.04em;
   }
 
   &__desc {
-    max-width: 40rem;
+    max-width: 640px;
     color: variable.$text-muted;
   }
 
@@ -53,8 +53,8 @@ const isBanner = computed(() => !props.eyebrow && !props.description)
     gap: 0;
     margin-bottom: 0;
 
-    // Official `.l-pagesheader`. Sticky header already occupies PC flow space;
-    // SP header is 0-height so the banner needs the official top offset.
+    /* Official `.l-pagesheader`. Sticky header already occupies PC flow space.
+       SP header is 0-height so the banner needs the official top offset. */
     @include breakpoint.mq(max, 768px) {
       margin-top: 21.0280373832vw;
     }
@@ -86,7 +86,14 @@ const isBanner = computed(() => !props.eyebrow && !props.description)
       margin-inline: auto;
       padding-inline: 0;
       font-size: 3.5vw;
-      margin-top: 4.82vw;
+    }
+
+    @include breakpoint.mq(min_max, 769px, 959px) {
+      margin-top: calc(10vw - 50px);
+    }
+
+    @include breakpoint.mq(min_max, 960px, 1200px) {
+      margin-top: calc(10vw - 55px);
     }
 
     @include breakpoint.mq(min, 1201px) {

@@ -152,7 +152,7 @@ onUnmounted(() => {
   position: sticky;
   top: 0;
   z-index: 30;
-  padding: 16px 20px 0;
+  padding: 20px 20px 0;
   overflow: visible;
 
   // Official `.l-header` is `position: fixed` (not sticky). On SP the pill bar is
@@ -243,7 +243,7 @@ onUnmounted(() => {
     @include breakpoint.mq(min, 769px) {
       padding-top: 0;
       padding-left: 0;
-      width: 15.1764705882%;
+      width: calc((100vw - 80px) * 0.161764705882);
       max-width: 220px;
       margin-top: 3.3333333333vw;
       margin-left: 40px;
@@ -251,10 +251,6 @@ onUnmounted(() => {
 
     @include breakpoint.mq(min, 1201px) {
       margin-top: 25px;
-    }
-
-    @include breakpoint.mq(min, 1440px) {
-      width: 220px;
     }
 
     picture,

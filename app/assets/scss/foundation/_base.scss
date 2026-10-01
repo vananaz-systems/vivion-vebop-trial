@@ -1,11 +1,8 @@
 @use 'config/variable' as variable;
 
-// Official `html`/`body` from vhs-city style.css.
-// Official rem root is `html { font-size: 62.5%; }` (1rem = 10px). This app
-// keeps the browser rem and converts official rem → px/vw in components, so
-// we do not set 62.5% here (it would shrink leftover rem-based pages).
 html {
   background: variable.$bg;
+  font-size: 62.5%;
 }
 
 html,
@@ -21,6 +18,8 @@ body {
 
 body {
   background: variable.$bg;
+  font-size: 10px;
+  font-size: 1rem;
   font-optical-sizing: auto;
   font-weight: 400;
   word-wrap: break-word;

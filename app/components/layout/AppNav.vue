@@ -55,16 +55,16 @@ function isExternal(item: BrandNavItem) {
 .c-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.25rem 1.75rem;
+  gap: 20px 28px;
 
   &--stacked {
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 20px;
   }
 
   &__link {
     display: inline-block;
-    font-size: 0.78rem;
+    font-size: 12.48px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     opacity: 0.72;
