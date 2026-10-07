@@ -188,12 +188,14 @@
               A 問題ないです。本ガイドラインをよく読み、楽しく創作活動を行ってください。
             </p>
           </div>
+          <br>
           <div class="p-guidelineArticle__desc">
             <p>
               <strong>Q 『ビバップ高校』に所属するメンバーのグッズを作りたいのですが、これは二次創作活動に含まれますか？</strong><br>
               A 含まれます。ただし原則、私的利用の範囲で行ってください。第三者への頒布を実施する際は、非公式であることを明記の上、趣味やファンとしての活動の範囲内で行い、必ず営利性を排したものにしてください。また、グッズを作成する際の素材には、必ず二次的著作物を用いてください。当社からの素材提供はいたしません。
             </p>
           </div>
+          <br>
           <div class="p-guidelineArticle__desc">
             <p>
               <strong>Q 「二次的著作物」と「改変物」の違いがわかりません……。</strong><br>
@@ -216,6 +218,7 @@
             <p>当社は、みなさまの二次創作活動を大いに歓迎いたします。</p>
             <p>本ガイドラインを遵守の上、一般的なルールやマナーを守って、楽しく自由に二次創作活動を行ってください。</p>
             <p>今後とも、『ビバップ高校』とそのメンバーたちをよろしくお願いいたします。</p>
+            <br>
             <p class="p-guidelineArticle__date">2025年10月22日制定</p>
           </div>
         </div>
@@ -293,6 +296,7 @@
     padding-bottom: 0.4em;
     color: #000;
     font-family: "Noto Sans JP", sans-serif;
+    font-optical-sizing: auto;
     font-size: 4.6728971963vw;
     font-style: normal;
     font-weight: 700;
@@ -316,7 +320,7 @@
     }
 
     @include breakpoint.mq(min, 1201px) {
-      font-size: 26px;
+      font-size: 2.6rem;
 
       &::after {
         width: 20px;
@@ -339,7 +343,7 @@
       margin-bottom: 1.5em;
     }
 
-    ul ul {
+    ul > ul {
       margin-left: 1.5em;
     }
 
@@ -352,13 +356,14 @@
       }
 
       @include breakpoint.mq(min, 1201px) {
-        font-size: 16px;
+        font-size: 1.6rem;
       }
     }
 
     > ul > li {
       margin-left: 1.5em;
       font-family: "Noto Sans JP", sans-serif;
+      font-optical-sizing: auto;
       font-weight: 600;
       font-style: normal;
 
@@ -374,6 +379,7 @@
 
     > ul > li > ul > li {
       font-family: "Noto Sans JP", sans-serif;
+      font-optical-sizing: auto;
       font-weight: 500;
       font-style: normal;
     }
@@ -401,17 +407,12 @@
       }
 
       @include breakpoint.mq(min, 1201px) {
-        font-size: 16px;
+        font-size: 1.6rem;
       }
-
     }
 
     strong {
       font-weight: 600;
-    }
-
-    &:not(:last-child) {
-      margin-bottom: 1em;
     }
   }
 
@@ -422,7 +423,6 @@
   }
 
   &__date {
-    margin-top: 1.1em !important;
     text-align: right;
   }
 }

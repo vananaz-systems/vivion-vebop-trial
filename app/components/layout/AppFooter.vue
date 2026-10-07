@@ -230,7 +230,7 @@ function scrollTop() {
   &__logos {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.5vw;
+    margin-bottom: 1.1vw;
 
     @include breakpoint.mq(min, 769px) {
       flex-direction: row;
@@ -250,7 +250,7 @@ function scrollTop() {
 
     &--vhs {
       width: 55%;
-      margin-bottom: 1.4vw;
+      margin-bottom: 1vw;
 
       @include breakpoint.mq(min, 769px) {
         width: 14.3%;
@@ -388,7 +388,7 @@ function scrollTop() {
     justify-content: space-between;
     box-sizing: border-box;
     padding-top: 0.45em;
-    padding-bottom: 1.2em;
+    padding-bottom: 1.23em;
     border-bottom: 1px solid #000;
     color: #000;
     line-height: 1;
@@ -405,7 +405,7 @@ function scrollTop() {
           fill: #60ec33;
         }
       }
-      padding-bottom: 1.22em;
+      padding-bottom: 1.2em;
     }
 
     em,
@@ -419,6 +419,10 @@ function scrollTop() {
       font-family: "Noto Sans JP", sans-serif;
       font-style: normal;
       font-weight: 700;
+
+      @include breakpoint.mq(min, 769px) {
+        width: calc(100% - 15px);
+      }
     }
 
     i {

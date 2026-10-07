@@ -25,7 +25,6 @@ const { brand } = useSite()
   display: block;
   width: 30px;
   flex-shrink: 0;
-  // margin-bottom: 6px;
 
   img {
     width: 100%;

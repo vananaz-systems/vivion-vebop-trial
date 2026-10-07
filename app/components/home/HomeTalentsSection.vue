@@ -604,7 +604,6 @@ onUnmounted(() => {
     }
   }
 
-  // Official `.inner-section` — SP slider nav positions against this, not the carousel
   &__inner {
     position: relative;
     z-index: 2;
@@ -631,6 +630,11 @@ onUnmounted(() => {
     justify-content: space-between;
     max-width: 1200px;
     margin-inline: auto;
+    padding-inline: 17px;
+
+    @include breakpoint.mq(min, 769px) {
+      padding-inline: 40px;
+    }
   }
 
   &__title {
@@ -673,12 +677,12 @@ onUnmounted(() => {
     font-family: variable.$font-display;
     font-size: 3.2710280374vw;
     font-weight: 700;
-    letter-spacing: 0.1em;
     line-height: 1;
     color: variable.$black;
 
     @include breakpoint.mq(min, 769px) {
       font-size: 1.25vw;
+      letter-spacing: 0.1em;
     }
 
     @include breakpoint.mq(min, 1201px) {

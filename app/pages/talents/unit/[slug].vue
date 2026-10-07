@@ -104,10 +104,12 @@ if (unit.value) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <svg viewBox="0 0 30 30" aria-hidden="true">
-                <path fill="currentColor" d="M8.914,6.481,14.489,0H13.168L8.327,5.628,4.46,0H0L5.847,8.51,0,15.306H1.321L6.434,9.364l4.084,5.943h4.46L8.913,6.481ZM7.1,8.585l-.592-.847L1.8.995H3.827l3.8,5.442.592.847,4.945,7.073H11.139L7.1,8.585Z" transform="translate(7.409 7.469)" />
-              </svg>
-              <span>Official Unit X</span>
+              <i class="p-unitDetail__xLinkIcon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+                  <path fill="currentColor" d="M8.914,6.481,14.489,0H13.168L8.327,5.628,4.46,0H0L5.847,8.51,0,15.306H1.321L6.434,9.364l4.084,5.943h4.46L8.913,6.481ZM7.1,8.585l-.592-.847L1.8.995H3.827l3.8,5.442.592.847,4.945,7.073H11.139L7.1,8.585Z" transform="translate(7.409 7.469)" />
+                </svg>
+              </i>
+              <em class="p-unitDetail__xLinkTtl">Official Unit X</em>
             </a>
           </article>
 
@@ -190,33 +192,30 @@ if (unit.value) {
   }
 
   &__tab {
+    display: block;
     width: 47.3684210526%;
-
-    &:not(:last-child) {
-      margin-bottom: 0.45em;
-    }
+    margin: 0;
+    padding: 0;
+    font-size: 4.2056074766vw;
+    text-align: center;
 
     @include breakpoint.mq(min, 769px) {
       width: auto;
       font-size: 1.6666666667vw;
+      text-align: left;
+      transition: color 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
     }
 
     @include breakpoint.mq(min, 1201px) {
-      font-size: 20px;
+      font-size: 2rem;
     }
 
     a {
       position: relative;
-      display: block;
       color: rgba(106, 107, 118, 0.55);
       font-family: variable.$font-dela;
-      font-size: 4.2056074766vw;
-      line-height: 1.4;
-      text-align: center;
 
       @include breakpoint.mq(min, 769px) {
-        font-size: inherit;
-        text-align: left;
         transition: color 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
       }
 
@@ -240,41 +239,52 @@ if (unit.value) {
           background: #60ec33;
           opacity: 0;
           transform: translate(-200%, -50%);
+          transition: opacity 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
         }
-      }
-    }
 
-    &[data-status='current'] a {
-      color: #60ec33;
-
-      @include breakpoint.mq(min, 769px) {
-        color: #000;
-      }
-
-      &::before {
-        opacity: 1;
-        background: #60ec33;
-      }
-
-      &::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        width: 7.9439252336vw;
-        aspect-ratio: 34 / 9;
-        background: url("/images/common/icon/tri-bottom-wide.svg") center bottom / 100% auto no-repeat;
-        transform: translate(-50%, 130%);
-
-        @include breakpoint.mq(min, 769px) {
-          display: none;
+        @include breakpoint.mq(min_max, 769px, 1200px) {
+          width: 0.8333333333vw;
         }
       }
     }
 
     @include breakpoint.mq(min, 769px) {
-      &:hover a {
+      a:hover {
         color: #60ec33;
+
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
+
+    &[data-status='current'] {
+      a {
+        color: #60ec33;
+
+        @include breakpoint.mq(min, 769px) {
+          color: #000;
+        }
+
+        &::before {
+          opacity: 1;
+          background: #60ec33;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          width: 7.9439252336vw;
+          aspect-ratio: 34 / 9;
+          background: url("/images/common/icon/tri-bottom-wide.svg") center bottom / 100% auto no-repeat;
+          transform: translate(-50%, 130%);
+
+          @include breakpoint.mq(min, 769px) {
+            display: none;
+          }
+        }
       }
     }
   }
@@ -284,13 +294,7 @@ if (unit.value) {
 
     @include breakpoint.mq(min, 769px) {
       width: 80.8333333333%;
-      padding-top: 8.5px;
-    }
-  }
-
-  &.is-multiline &__main {
-    @include breakpoint.mq(min, 769px) {
-      padding-top: 5.5px;
+      padding-top: 5px;
     }
   }
 
@@ -441,52 +445,67 @@ if (unit.value) {
 
   &__xLink {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     width: 80%;
-    min-height: 3.2em;
+    height: 3.2em;
     margin: 7.0093457944vw auto 0;
+    padding: 0;
     color: #fff;
-    border: solid 1px #6a6b76;
     background: #000;
+    border: solid 1px #6a6b76;
     font-family: variable.$font-display;
     font-size: 4.2056074766vw;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    line-height: 1;
+    font-style: normal;
+    font-weight: 700;
+    font-optical-sizing: auto;
+    cursor: pointer;
 
     @include breakpoint.mq(min, 769px) {
       width: fit-content;
       min-width: 280px;
       margin-top: 2.5vw;
-      padding-inline: 22px;
       font-size: 1.5vw;
       transition: color 0.3s, background-color 0.3s;
-      padding-block: 0.7em;
 
       &:hover {
         color: #000;
         background: #fff;
-        border: 1px solid #000;
       }
     }
 
     @include breakpoint.mq(min, 1201px) {
       margin-top: 30px;
-      font-size: 18px;
+      font-size: 1.8rem;
+    }
+  }
+
+  &__xLinkIcon {
+    display: block;
+    width: 7.0093457944vw;
+
+    @include breakpoint.mq(min, 769px) {
+      width: 2.6666666667vw;
     }
 
-    span {
-      @include breakpoint.mq(min, 769px) {
-        margin-right: 6.5px;
-      }
+    @include breakpoint.mq(min, 1201px) {
+      width: 32px;
     }
 
     svg {
-      width: 1.78em;
-      height: 1.78em;
-      margin-right: 0.25em;
+      width: 100%;
+      height: auto;
+      vertical-align: middle;
     }
+  }
+
+  &__xLinkTtl {
+    display: block;
+    margin-left: 0.25em;
+    margin-right: 0.4em;
+    font-style: normal;
+    letter-spacing: 0.08em;
   }
 
   &__toolbar {

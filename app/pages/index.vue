@@ -146,11 +146,31 @@ onMounted(() => {
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.08);
 
+    @include breakpoint.mq(min, 769px) {
+      top: 69.25%;
+    }
+
+    @include breakpoint.mq(min, 960px) {
+      top: 69.45%;
+    }
+
+    @include breakpoint.mq(min, 1024px) {
+      top: 69.48%;
+    }
+
+    @include breakpoint.mq(min, 1301px) {
+      top: calc(70% - 3px);
+    }
+
     picture,
     img {
       display: block;
       width: 100%;
       height: auto;
+
+      /* @include breakpoint.mq(min, 769px) {
+        height: 77.31px;
+       } */
     }
 
     @include breakpoint.mq(sp) {

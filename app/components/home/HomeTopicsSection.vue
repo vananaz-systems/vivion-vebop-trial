@@ -32,12 +32,8 @@ const latest = computed(() => topics.value.slice(0, LATEST_TOPICS_LIMIT))
 @use '~/assets/scss/foundation/config/breakpoint' as breakpoint;
 
 .p-indexTopics {
-  padding: 11.6822429907vw 0 37.3831775701vw;
+  padding: 26.4vw 0 0;
   background: variable.$page-bg;
-
-  @include breakpoint.mq(max, 768px) {
-    padding: 32vw 0 0;
-  }
 
   @include breakpoint.mq(min, 769px) {
     padding: 12.5vw 40px 10vw;

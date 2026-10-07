@@ -90,7 +90,8 @@ onMounted(() => {
     padding-top: 7.0093457944vw;
 
     @include breakpoint.mq(min, 769px) {
-      padding: 4.5833333333vw 40px 0;
+      /* Official `#Topics` 40px + `.md-post` 40px */
+      padding: 4.5833333333vw 80px 0;
     }
 
     @include breakpoint.mq(min, 1201px) {

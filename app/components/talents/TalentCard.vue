@@ -122,7 +122,6 @@ onUnmounted(() => {
     }
   }
 
-  // Official `.talents--detail` unit member list masks with `#fff`.
   &--onWhite &__thumb::before {
     background: variable.$white;
   }

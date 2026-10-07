@@ -56,7 +56,7 @@ function playBarEnter() {
 onMounted(() => {
   syncBarVisibility()
   playBarEnter()
-  // window.addEventListener('scroll', syncBarVisibility, { passive: true })
+  window.addEventListener('scroll', syncBarVisibility, { passive: true })
 })
 
 watch(() => route.path, () => {
@@ -299,6 +299,19 @@ onUnmounted(() => {
       }
     }
 
+    /* Official `.l-pcheader` ≥1201. 14px vertical matches live's inline-img strut. */
+    @include breakpoint.mq(min, 1201px) {
+      gap: 20px;
+      padding: 14px 32.5px;
+
+      :deep(.c-logo:not(.c-logo--wordmark)) {
+        width: 30px;
+        margin-right: 5px;
+        margin-bottom: 0;
+        transform: translateY(-2px);
+      }
+    }
+
   }
 
   &__nav {
@@ -318,10 +331,25 @@ onUnmounted(() => {
       display: flex;
     }
 
+    @include breakpoint.mq(min, 960px) {
+      padding-left: 4.3px;
+    }
+
     @include breakpoint.mq(min_max, 769px, 1200px) {
       font-size: 1.25vw;
       margin-top: 1px;
       margin-right: -0.3px;
+    }
+
+    @include breakpoint.mq(min, 1200px) {
+      padding-left: 5px;
+    }
+
+    @include breakpoint.mq(min, 1201px) {
+      padding-left: 0;
+      margin-top: 0;
+      margin-right: 0;
+      font-size: 15px;
     }
   }
 
@@ -366,45 +394,65 @@ onUnmounted(() => {
     flex-shrink: 0;
     align-items: center;
     gap: 8px;
-    padding-right: 0.5px;
 
     @include breakpoint.mq(min, 769px) {
       display: flex;
     }
 
-    @include breakpoint.mq(min_max, 769px, 1200px) {
-      /* gap: 0.6666666667vw; */
-      gap: 4px;
-      padding-top: 1px;
-      margin-right: -1.3px;
+    @include breakpoint.mq(min, 769px) {
+      gap: 0.6666666667vw;
+    }
+
+    @include breakpoint.mq(min, 960px) {
+      gap: 0.5vw;
+      margin-right: -1px;
+    }
+
+    @include breakpoint.mq(min, 1200px) {
+      gap: 8px;
+      margin-right: 0.7px;
+    }
+
+    @include breakpoint.mq(min, 1201px) {
+      gap: 8px;
+      margin-right: 2px;
     }
 
     a {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 30px;
-      height: 30px;
+      width: 31px;
+      height: 31px;
       color: variable.$black;
       line-height: 0;
 
-      @include breakpoint.mq(min_max, 769px, 1200px) {
-        /* width: 2.5vw;
-        height: 2.5vw; */
+      @include breakpoint.mq(min, 769px) {
+        width: 2.6vw;
+        height: 2.6vw;
+        padding-top: 1px;
+      }
 
-        width: 20.5px;
-        height: 20.5px;
+      @include breakpoint.mq(min, 960px) {
+        width: 2.65vw;
+        height: 2.65vw;
+      }
+
+      @include breakpoint.mq(min, 1200px) {
+        width: 2.5vw;
+        height: 2.5vw;
+      }
+
+      @include breakpoint.mq(min, 1201px) {
+        width: 30px;
+        height: 30px;
+        padding-top: 0;
       }
 
       svg {
         display: block;
-        width: 30px;
-        height: 30px;
-
-        @include breakpoint.mq(min_max, 769px, 1200px) {
-          width: 100%;
-          height: 100%;
-        }
+        width: 100%;
+        height: 100%;
       }
     }
   }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BrandNavItem } from '#shared/types/brand'
+import type { BrandNavItem } from '@core/types/brand'
 import { drawerJa } from '~/data/home'
 
 const { brand } = useSite()
@@ -365,12 +365,20 @@ $drawer-green: #60ec33;
 
   &__head {
     @include breakpoint.mq(min, 769px) {
-      margin-bottom: 54px;
+      margin-bottom: 4.7vw;
       padding-top: 35px;
     }
 
-    @include breakpoint.mq(min_max, 769px, 1200px) {
-      margin-bottom: 4.1666666667vw;
+    @include breakpoint.mq(min, 960px) {
+      margin-bottom: 4.6vw;
+    }
+
+    @include breakpoint.mq(min, 1024px) {
+      margin-bottom: 4.55vw;
+    }
+
+    @include breakpoint.mq(min, 1201px) {
+      margin-bottom: calc(50px + 3.953125px);
     }
 
     @include breakpoint.mq(max, 768px) {

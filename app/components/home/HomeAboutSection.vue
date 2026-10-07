@@ -170,7 +170,6 @@ onUnmounted(() => {
 
     small {
       font-size: 3.5046728972vw;
-      letter-spacing: 0.07em;
       color: #6a6b76;
       -webkit-font-smoothing: antialiased;
       -webkit-text-size-adjust: 100%;
@@ -182,6 +181,7 @@ onUnmounted(() => {
       }
 
       @include breakpoint.mq(min, 769px) {
+        letter-spacing: 0.07em;
         font-size: 1.5vw;
       }
 
@@ -276,7 +276,11 @@ onUnmounted(() => {
   }
 
   &__deco {
-    padding-top: 0.4em;
+    padding-top: 0.39em;
+
+    @include breakpoint.mq(min, 769px) {
+      padding-top: 0.4em;
+    }
 
     @include breakpoint.mq(sp) {
       position: absolute;
@@ -295,8 +299,11 @@ onUnmounted(() => {
 
     img {
       display: block;
-      width: 100%;
       height: auto;
+
+      @include breakpoint.mq(min, 769px) {
+        width: 100%;
+      }
     }
   }
 

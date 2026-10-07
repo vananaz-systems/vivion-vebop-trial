@@ -36,7 +36,6 @@ const portraitImage = ref<HTMLImageElement | null>(null)
 const portraitLoaded = ref(false)
 
 function revealPortrait() {
-  // One frame so the pre-load state paints before the transition starts.
   requestAnimationFrame(() => {
     portraitLoaded.value = true
   })
@@ -362,7 +361,6 @@ if (talent.value) {
     position: relative;
     z-index: 3;
     display: block;
-    // The pre-load zoom would otherwise widen the page while it eases back to scale(1).
     overflow: clip;
 
     @include breakpoint.mq(min, 769px) {
@@ -569,7 +567,6 @@ if (talent.value) {
   &__metadata {
     width: 88.4210526316%;
     margin-left: auto;
-    margin-top: 1px;
 
     &::before {
       content: "";
@@ -595,7 +592,7 @@ if (talent.value) {
       justify-content: space-between;
       margin: 0;
       padding-bottom: 2.3364485981vw;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: solid 1px rgba(0, 0, 0, 0.1);
 
       &:not(:last-child) {
         margin-bottom: 2.8037383178vw;
@@ -610,10 +607,10 @@ if (talent.value) {
       }
 
       @include breakpoint.mq(min, 1201px) {
-        padding-bottom: 11.1px;
+        padding-bottom: 10px;
 
         &:not(:last-child) {
-          margin-bottom: 15.6px;
+          margin-bottom: 15px;
         }
       }
     }
@@ -630,20 +627,21 @@ if (talent.value) {
       }
 
       @include breakpoint.mq(min, 1201px) {
-        font-size: 15px;
+        font-size: 1.5rem;
       }
 
       span {
         display: block;
         padding-left: 0.6em;
         color: #000;
-        border-left: 3px solid;
+        border-left: solid 3px;
         line-height: 1;
 
         @include breakpoint.mq(min, 769px) {
           padding-left: 0;
           color: inherit;
           border-left: 0;
+          line-height: inherit;
         }
       }
     }
@@ -652,7 +650,9 @@ if (talent.value) {
       width: 73.2142857143%;
       margin: 0;
       font-family: "Noto Sans JP", sans-serif;
+      font-optical-sizing: auto;
       font-size: 3.0373831776vw;
+      font-style: normal;
       font-weight: 700;
 
       @include breakpoint.mq(min, 769px) {
@@ -661,7 +661,7 @@ if (talent.value) {
       }
 
       @include breakpoint.mq(min, 1201px) {
-        font-size: 14px;
+        font-size: 1.4rem;
       }
     }
   }
@@ -755,7 +755,6 @@ if (talent.value) {
     @include breakpoint.mq(min, 769px) {
       margin-top: 7.5vw;
       padding: 7.5vw 8.3333333333vw 6.6666666667vw;
-      max-width: 1400px;
     }
 
     @include breakpoint.mq(min, 1201px) {
@@ -865,15 +864,18 @@ if (talent.value) {
 
   &__unitProfile {
     margin-bottom: 14.0186915888vw;
+    padding-left: 5.8411214953%;
+    padding-right: 5.8411214953%;
     text-align: center;
-    margin-top: -0.4em;
 
     @include breakpoint.mq(min, 769px) {
       margin-bottom: 5vw;
+      padding-left: 0;
+      padding-right: 0;
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 65px;
+      margin-bottom: 60px;
     }
 
     h3 {
@@ -881,23 +883,23 @@ if (talent.value) {
       font-family: variable.$font-dela;
       font-size: 6.5420560748vw;
       font-weight: 400;
-      line-height: 1.3;
+      line-height: 1;
 
       @include breakpoint.mq(min, 769px) {
-        margin-bottom: 0.35em;
+        margin-bottom: 0.5em;
         font-size: 3.3333333333vw;
       }
 
       @include breakpoint.mq(min, 1201px) {
-        font-size: 40px;
+        font-size: 4rem;
       }
     }
 
     > div {
       font-family: "Noto Sans JP", sans-serif;
+      font-optical-sizing: auto;
       font-size: 3.0373831776vw;
       font-weight: 500;
-      line-height: 2;
 
       :deep(.is-sp) {
         @include breakpoint.mq(min, 769px) {
@@ -910,7 +912,7 @@ if (talent.value) {
       }
 
       @include breakpoint.mq(min, 1201px) {
-        font-size: 17px;
+        font-size: 1.7rem;
       }
 
     }
@@ -943,7 +945,6 @@ if (talent.value) {
       font-size: 2.3364485981vw;
       font-weight: 600;
       letter-spacing: 0.2em;
-      line-height: 1;
 
       @include breakpoint.mq(min, 769px) {
         margin-bottom: 1.6666666667vw;
@@ -951,8 +952,8 @@ if (talent.value) {
       }
 
       @include breakpoint.mq(min, 1201px) {
-        margin-bottom: 26px;
-        font-size: 14px;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
       }
 
       &::before,
@@ -1004,19 +1005,20 @@ if (talent.value) {
     }
   }
 
-  // Official `.l-pagelinks` + `.md-btn__pagelinks`
   &__footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 11.6822429907vw 0 16.3551401869vw;
+    padding-top: 11.6822429907vw;
+    padding-bottom: 9.3457943925vw;
 
     @include breakpoint.mq(min, 769px) {
-      padding: 4.1666666667vw 0 7.5vw;
+      padding-top: 4.1666666667vw;
+      padding-bottom: 0;
     }
 
     @include breakpoint.mq(min, 1201px) {
-      padding: 50px 0 0px;
+      padding-top: 50px;
     }
 
     a {

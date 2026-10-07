@@ -91,7 +91,6 @@ onMounted(() => {
       margin-inline: auto;
       margin-bottom: 5vw;
       padding-inline: 0;
-      margin-top: 2px;
     }
 
     @include breakpoint.mq(min, 1201px) {
@@ -107,7 +106,7 @@ onMounted(() => {
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 16.5px;
+      margin-bottom: 15px;
     }
   }
 
@@ -126,7 +125,6 @@ onMounted(() => {
       font-style: normal;
       font-weight: 700;
       letter-spacing: 0.08em;
-      line-height: 1;
       font-optical-sizing: auto;
 
       @include breakpoint.mq(min, 769px) {
@@ -134,7 +132,7 @@ onMounted(() => {
       }
 
       @include breakpoint.mq(min, 1201px) {
-        font-size: 12px;
+        font-size: 1.2rem;
       }
     }
   }

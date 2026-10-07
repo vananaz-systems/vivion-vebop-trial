@@ -101,7 +101,6 @@ const isTalentsView = computed(() => props.mode === 'talents')
     align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 9.3457943925vw;
-    margin-top: 0.5px;
 
     @include breakpoint.mq(min, 769px) {
       display: block;
@@ -112,33 +111,29 @@ const isTalentsView = computed(() => props.mode === 'talents')
 
   &__tab {
     width: 47.3684210526%;
-
-    &:not(:last-child) {
-      margin-bottom: 0.45em;
-    }
+    text-align: center;
 
     @include breakpoint.mq(min, 769px) {
       width: auto;
       font-size: 1.6666666667vw;
+      text-align: left;
       transition: color 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
     }
 
     @include breakpoint.mq(min, 1201px) {
-      font-size: 20px;
+      font-size: 2rem;
     }
 
     a {
       position: relative;
-      display: block;
+      display: inline-block;
       color: rgba(106, 107, 118, 0.55);
       font-family: variable.$font-dela;
       font-size: 4.2056074766vw;
-      line-height: 1.4;
-      text-align: center;
+      line-height: 1;
 
       @include breakpoint.mq(min, 769px) {
         font-size: inherit;
-        text-align: left;
         transition: color 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
       }
 
@@ -172,7 +167,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
     }
 
     @include breakpoint.mq(min, 769px) {
-      &:hover a {
+      a:hover {
         color: #60ec33;
 
         &::before {
@@ -215,7 +210,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
   &__main {
     @include breakpoint.mq(min, 769px) {
       width: 80.8333333333%;
-      padding-top: 1px;
+      padding-top: 5px;
     }
   }
 
@@ -224,8 +219,8 @@ const isTalentsView = computed(() => props.mode === 'talents')
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding-top: 6.5vw;
-    margin-bottom: 4.3vw;
+    padding-top: 7.0093457944vw;
+    margin-bottom: 5.1401869159vw;
 
     @include breakpoint.mq(min, 769px) {
       padding-top: 0;
@@ -233,7 +228,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 36px;
+      margin-bottom: 40px;
     }
 
     h2 {
@@ -304,6 +299,11 @@ const isTalentsView = computed(() => props.mode === 'talents')
 
     @include breakpoint.mq(min, 769px) {
       width: 1.5vw;
+      transform: translateY(0.5px);
+    }
+
+    @include breakpoint.mq(min, 1024px) {
+      transform: translateY(1px);
     }
 
     @include breakpoint.mq(min, 1201px) {
