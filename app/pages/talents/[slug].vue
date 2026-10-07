@@ -7,11 +7,19 @@ await Promise.all([
 const route = useRoute()
 const { getTalentBySlug, getUnitBySlug } = useTalents()
 
-const talent = computed(() => getTalentBySlug(String(route.params.slug)))
+const slug = computed(() => String(route.params.slug))
+const talent = computed(() => getTalentBySlug(slug.value))
 
-if (!talent.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Talent not found' })
+async function redirectIfUnknown() {
+  if (!talent.value) {
+    await navigateTo('/', { replace: true })
+  }
 }
+
+await redirectIfUnknown()
+watch(slug, () => {
+  void redirectIfUnknown()
+})
 
 const talentData = computed(() => parseTalentData(talent.value?.data))
 
@@ -149,10 +157,12 @@ function getSocialHandle(url: string) {
   return decodeURIComponent(pathname.split('/').pop() || url)
 }
 
-useSeo({
-  title: talent.value.name,
-  description: seoDescription.value,
-})
+if (talent.value) {
+  useSeo({
+    title: talent.value.name,
+    description: seoDescription.value,
+  })
+}
 </script>
 
 <template>

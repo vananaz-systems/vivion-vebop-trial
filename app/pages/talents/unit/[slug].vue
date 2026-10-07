@@ -8,26 +8,36 @@ const route = useRoute()
 const { getUnitBySlug } = useTalents()
 const isFilterOpen = ref(false)
 
-const unit = computed(() => getUnitBySlug(String(route.params.slug)))
+const slug = computed(() => String(route.params.slug))
+const unit = computed(() => getUnitBySlug(slug.value))
 
-if (!unit.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Unit not found' })
+async function redirectIfUnknown() {
+  if (!unit.value) {
+    await navigateTo('/', { replace: true })
+  }
 }
+
+await redirectIfUnknown()
+watch(slug, () => {
+  void redirectIfUnknown()
+})
 
 const unitMembers = computed(() =>
   [...(unit.value?.members ?? [])],
 )
 
-const titleLines = computed(() => unit.value!.name.split(/<br\s*\/?>/i))
+const titleLines = computed(() => unit.value?.name.split(/<br\s*\/?>/i) ?? [])
 const title = computed(() => titleLines.value.join(' '))
 const description = computed(() =>
-  unit.value!.profileText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+  unit.value?.profileText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() ?? '',
 )
 
-useSeo({
-  title: title.value,
-  description: description.value,
-})
+if (unit.value) {
+  useSeo({
+    title: title.value,
+    description: description.value,
+  })
+}
 </script>
 
 <template>
@@ -594,7 +604,7 @@ useSeo({
     }
   }
 
-  // Official `.l-pagelinks` + `.md-btn__pagelinks`
+  /* Official `.l-pagelinks` + `.md-btn__pagelinks` */
   &__footer {
     display: flex;
     flex-wrap: wrap;

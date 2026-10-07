@@ -56,7 +56,7 @@ function playBarEnter() {
 onMounted(() => {
   syncBarVisibility()
   playBarEnter()
-  window.addEventListener('scroll', syncBarVisibility, { passive: true })
+  // window.addEventListener('scroll', syncBarVisibility, { passive: true })
 })
 
 watch(() => route.path, () => {
@@ -82,7 +82,9 @@ onUnmounted(() => {
         >
       </picture>
     </div>
-    <AppLogo v-else variant="wordmark" class="c-header__logo" />
+    <div v-else class="c-header__logo">
+      <AppLogo variant="wordmark" />
+    </div>
 
     <div class="c-header__bar" :class="{ 'is-show': isBarVisible }" :aria-hidden="!isBarVisible">
       <AppLogo />
@@ -149,24 +151,21 @@ onUnmounted(() => {
 @use '~/assets/scss/foundation/config/breakpoint' as breakpoint;
 
 .c-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   z-index: 30;
-  padding: 20px 20px 0;
+  width: 100%;
+  padding-left: 5.8411214953%;
+  padding-right: 5.8411214953%;
   overflow: visible;
+  pointer-events: none;
+  box-sizing: border-box;
+  line-height: 1;
 
-  // Official `.l-header` is `position: fixed` (not sticky). On SP the pill bar is
-  // `display: none`, so sticky + padding 0 yields a 0-height box that clips the
-  // fixed MENU on first paint until scroll/reflow. Keep MENU on the viewport.
-  @include breakpoint.mq(max, 768px) {
-    position: relative;
-    top: auto;
-    padding: 0;
-    overflow: visible;
-  }
-
-  @include breakpoint.mq(pc) {
-    padding: 20px 32px 0;
+  @include breakpoint.mq(min, 769px) {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
   &.is-menu-open {
@@ -188,19 +187,9 @@ onUnmounted(() => {
   }
 
   &__catch {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: relative;
     z-index: 1;
-    width: 100%;
-    padding-left: 5.8411214953%;
-    padding-right: 5.8411214953%;
     pointer-events: none;
-
-    @include breakpoint.mq(min, 769px) {
-      padding-left: 40px;
-      padding-right: 40px;
-    }
 
     picture {
       display: block;
@@ -228,29 +217,23 @@ onUnmounted(() => {
     }
   }
 
-  // Official `.l-header > .logo` on inner pages (wordmark, not catch).
+  /* Official `.l-header > .logo` — % is of this padded header, not the viewport. */
   &__logo {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: relative;
     z-index: 1;
     display: block;
     padding-top: 4.6728971963vw;
-    padding-left: 5.8411214953%;
-    width: 52.59vw;
+    width: 46.7289719626vw;
     pointer-events: auto;
 
     @include breakpoint.mq(min, 769px) {
-      padding-top: 0;
-      padding-left: 0;
-      width: calc((100vw - 80px) * 0.161764705882);
+      padding-top: 3.3333333333vw;
+      width: 16.1764705882%;
       max-width: 220px;
-      margin-top: 3.3333333333vw;
-      margin-left: 40px;
     }
 
     @include breakpoint.mq(min, 1201px) {
-      margin-top: 25px;
+      padding-top: 25px;
     }
 
     picture,
@@ -268,30 +251,32 @@ onUnmounted(() => {
     flex-wrap: nowrap;
     align-items: center;
     gap: 20px;
+    box-sizing: border-box;
     padding: 12px 34px 12px 32.5px;
     background: variable.$white;
     border-radius: 999px;
     filter: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='filter'><feGaussianBlur in='SourceAlpha' stdDeviation='12' /><feOffset dx='1' dy='1' result='offsetblur' /><feFlood flood-color='rgba(0,0,0,.05)' /><feComposite in2='offsetblur' operator='in' /><feMerge><feMergeNode /><feMergeNode in='SourceGraphic' /></feMerge></filter></svg>#filter");
     -webkit-filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.05));
     filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.05));
-    transform: translateY(-150%);
+    transform: translate(-50%, -150%);
     transition-duration: 1.2s;
     transition-delay: 0.2s;
     transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
-    // Official `.l-pcheader.is-pc` is `display: none !important` at max-width: 768px
     @include breakpoint.mq(max, 768px) {
       display: none;
     }
 
     @include breakpoint.mq(min, 769px) {
+      position: fixed;
+      top: 20px;
+      left: 50%;
       width: 680px;
       max-width: 680px;
-      margin-inline: auto;
-      top: -10px;
+      pointer-events: auto;
 
       &.is-show {
-        transform: translateY(0);
+        transform: translate(-50%, 0);
       }
 
       &:not(.is-show) {
@@ -299,19 +284,21 @@ onUnmounted(() => {
       }
     }
 
+    @include breakpoint.mq(min_max, 769px, 1300px) {
+      top: 10px;
+    }
+
     @include breakpoint.mq(min_max, 769px, 1200px) {
       width: 56.6666666667vw;
       gap: 1.6666666667vw;
-      padding: 12px 2.8333333333vw 12px 2.7083333333vw;
+      padding: 12px 2.8333333333vw 13px 2.7083333333vw;
 
       :deep(.c-logo:not(.c-logo--wordmark)) {
         width: 2.5vw;
+        margin-bottom: 3px;
       }
     }
 
-    @include breakpoint.mq(min, 1301px) {
-      top: 0;
-    }
   }
 
   &__nav {
@@ -321,9 +308,11 @@ onUnmounted(() => {
     justify-content: space-between;
     min-width: 0;
     gap: 0;
-    padding-left: 5px;
-    // Official `.l-navlinks`: 1.5rem with html rem 10px
+    padding-left: 3.3px;
+    /* padding-left: 5px; */
+    /* Official `.l-navlinks`: 1.5rem with html rem 10px */
     font-size: 15px;
+    /* padding-right: 0.5px; */
 
     @include breakpoint.mq(min, 769px) {
       display: flex;
@@ -331,6 +320,8 @@ onUnmounted(() => {
 
     @include breakpoint.mq(min_max, 769px, 1200px) {
       font-size: 1.25vw;
+      margin-top: 1px;
+      margin-right: -0.3px;
     }
   }
 
@@ -343,7 +334,7 @@ onUnmounted(() => {
     text-transform: uppercase;
     color: variable.$black;
 
-    // Official `.l-pcheader` nav underline (min-width: 769px)
+    /* Official `.l-pcheader` nav underline (min-width: 769px) */
     @include breakpoint.mq(min, 769px) {
       position: relative;
 
@@ -361,8 +352,7 @@ onUnmounted(() => {
         transition-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
       }
 
-      // `.router-link-active` is intentionally excluded: ABOUT links to `/#About`,
-      // so it matches the homepage route and would be underlined by default.
+      /* `.router-link-active` is excluded: ABOUT is `/#About` and would match HOME. */
       &:hover::after,
       &.is-current::after,
       &[data-status='current']::after {
@@ -376,13 +366,17 @@ onUnmounted(() => {
     flex-shrink: 0;
     align-items: center;
     gap: 8px;
+    padding-right: 0.5px;
 
     @include breakpoint.mq(min, 769px) {
       display: flex;
     }
 
     @include breakpoint.mq(min_max, 769px, 1200px) {
-      gap: 0.6666666667vw;
+      /* gap: 0.6666666667vw; */
+      gap: 4px;
+      padding-top: 1px;
+      margin-right: -1.3px;
     }
 
     a {
@@ -395,8 +389,11 @@ onUnmounted(() => {
       line-height: 0;
 
       @include breakpoint.mq(min_max, 769px, 1200px) {
-        width: 2.5vw;
-        height: 2.5vw;
+        /* width: 2.5vw;
+        height: 2.5vw; */
+
+        width: 20.5px;
+        height: 20.5px;
       }
 
       svg {
@@ -431,10 +428,9 @@ onUnmounted(() => {
     padding: 0;
     line-height: 0;
     overflow: visible;
+    pointer-events: auto;
 
-    // Official `.l-navtrigger` @ max-width 768: 34.112vw × (50/146) tall, `right: 0`.
-    // Pin with `left` + `vw` (not `right: 0`) so a wider layout viewport after the
-    // intro overflow lock — or a 0-height sticky CB — cannot shove MENU off-screen.
+    /* Official `.l-navtrigger` @ max 768: 34.112vw × (50/146), pinned with left + vw. */
     @include breakpoint.mq(max, 768px) {
       top: 4.6vw;
       left: 65.8878504673vw;

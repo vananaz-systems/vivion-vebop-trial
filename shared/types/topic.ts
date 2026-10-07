@@ -15,7 +15,6 @@ export interface Topic extends MicroCMSContent {
   title: string
   content: string
   featuredImage?: MicroCMSImage
-  visibility: string[]
   tags: TopicTag[]
   categories: TopicCategory[]
 }

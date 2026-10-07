@@ -3,18 +3,11 @@ const props = defineProps<{
   mode: 'talents' | 'unit'
 }>()
 
-const route = useRoute()
-const { archiveUnits, getArchiveTalents, isArchiveUnit } = useTalents()
+const { archiveUnits, getArchiveTalents } = useTalents()
 
 const isFilterOpen = ref(false)
 
-const activeUnitSlug = computed(() => {
-  const value = route.query.unit
-  const slug = Array.isArray(value) ? value[0] : value
-  return slug && isArchiveUnit(slug) ? slug : null
-})
-
-const visibleTalents = computed(() => getArchiveTalents(activeUnitSlug.value))
+const visibleTalents = computed(() => getArchiveTalents())
 
 const isTalentsView = computed(() => props.mode === 'talents')
 </script>
@@ -58,7 +51,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
         <ul v-if="isTalentsView" class="p-talentsArchive__talents">
           <li
             v-for="(talent, index) in visibleTalents"
-            :key="`${activeUnitSlug ?? 'all'}-${talent.id}`"
+            :key="talent.id"
           >
             <TalentCard :talent="talent" :index="index" />
           </li>

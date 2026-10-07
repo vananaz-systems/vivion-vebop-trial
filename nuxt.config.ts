@@ -114,8 +114,6 @@ export default defineNuxtConfig({
   css: ['~/assets/css/clash-display.css', '~/assets/scss/main.scss'],
 
   routeRules: {
-    '/privacy/**': { redirect: { to: 'https://vivion.jp/privacy_protection/', statusCode: 301 } },
-    '/contact/**': { redirect: { to: 'https://vebop.zendesk.com/hc/ja/requests/new', statusCode: 301 } },
     // CMS slugs can be non-ASCII. Nuxt's prerender manifest stores decoded paths but
     // compares encoded ones, so payload loading on client navigation must be forced
     // here instead of relying on that lookup.
@@ -126,9 +124,6 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     microcmsApiKey: '',
-    // Build-time: SITE_* or NUXT_SITE_*. Runtime overlay (Nitro): NUXT_SITE_* only.
-    siteUser: process.env.NUXT_SITE_USER || process.env.SITE_USER || '',
-    sitePassword: process.env.NUXT_SITE_PASSWORD || process.env.SITE_PASSWORD || '',
     public: {
       apiBaseUrl: '',
       parentSiteUrl: '',

@@ -21,21 +21,8 @@ export function useTalents() {
     return units.value.find(unit => unit.slug === slug)
   }
 
-  function sortTalentsByOrder(list: Talent[]) {
-    return [...list].sort((a, b) => a.order - b.order)
-  }
-
-  function getTalentsByUnit(unitSlug: string): Talent[] {
-    return sortTalentsByOrder(talents.value.filter(talent => talent.unit?.slug === unitSlug))
-  }
-
-  function getArchiveTalents(unitSlug?: string | null): Talent[] {
-    if (!unitSlug) return sortTalentsByOrder(talents.value)
-    return getTalentsByUnit(unitSlug)
-  }
-
-  function isArchiveUnit(slug: string): boolean {
-    return (ARCHIVE_UNIT_ORDER as readonly string[]).includes(slug)
+  function getArchiveTalents(): Talent[] {
+    return [...talents.value].sort((a, b) => a.order - b.order)
   }
 
   return {
@@ -44,9 +31,7 @@ export function useTalents() {
     archiveUnits,
     getTalentBySlug,
     getUnitBySlug,
-    getTalentsByUnit,
     getArchiveTalents,
-    isArchiveUnit,
   }
 }
 

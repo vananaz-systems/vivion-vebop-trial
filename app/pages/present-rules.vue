@@ -278,9 +278,15 @@ onMounted(() => {
     border: 1px solid variable.$black;
     margin-top: 1.14em;
     margin-bottom: 1.12em;
+    font-size: 3.2710280374vw;
 
     @include breakpoint.mq(min, 769px) {
-      padding: 1.86em 2.7999em;
+      font-size: 15px;
+      padding: 2em 3em;
+    }
+
+    @include breakpoint.mq(min_max, 769px, 1200px) {
+      font-size: 1.25vw;
     }
   }
 
@@ -310,7 +316,7 @@ onMounted(() => {
   }
 
   &__frame-body {
-    font-size: 3.2710280374vw;
+    font-size: inherit;
     font-family: variable.$font-sans;
 
     p {
@@ -319,15 +325,7 @@ onMounted(() => {
     }
 
     p:not(:last-child) {
-      margin-bottom: 0.845em;
-    }
-
-    @include breakpoint.mq(min, 769px) {
-      font-size: 1.34vw;
-    }
-
-    @include breakpoint.mq(min, 1201px) {
-      font-size: 15px;
+      margin-bottom: 0.85em;
     }
   }
 

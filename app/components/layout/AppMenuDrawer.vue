@@ -338,6 +338,7 @@ $drawer-green: #60ec33;
   &__contents {
     position: relative;
     z-index: 2;
+    box-sizing: border-box;
 
     @include breakpoint.mq(min, 769px) {
       margin-left: auto;

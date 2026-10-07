@@ -3,16 +3,26 @@ await loadTopicsData()
 
 const route = useRoute()
 const { getTopicBySlug } = useTopics()
-const topic = computed(() => getTopicBySlug(String(route.params.slug)))
+const slug = computed(() => String(route.params.slug))
+const topic = computed(() => getTopicBySlug(slug.value))
 
-if (!topic.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Topic not found' })
+async function redirectIfUnknown() {
+  if (!topic.value) {
+    await navigateTo('/', { replace: true })
+  }
 }
 
-useSeo({
-  title: topic.value.title,
-  description: toPlainText(topic.value.content),
+await redirectIfUnknown()
+watch(slug, () => {
+  void redirectIfUnknown()
 })
+
+if (topic.value) {
+  useSeo({
+    title: topic.value.title,
+    description: toPlainText(topic.value.content),
+  })
+}
 
 /** Official `#Main` fade: `$(#Main).animate({ opacity: 1 }, 1200, "easeInOutCirc")`. */
 const revealed = ref(false)
@@ -76,7 +86,6 @@ onMounted(() => {
     transition: opacity 1.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
   }
 
-  // Official `#Topics` + `.md-post`
   &__post {
     padding-top: 7.0093457944vw;
 
@@ -129,7 +138,6 @@ onMounted(() => {
       font-size: 16px;
     }
 
-    // Official `.md-post > header > time:after`
     &::after {
       content: "UPDATE";
       margin-left: 0.75em;
@@ -160,7 +168,6 @@ onMounted(() => {
     }
   }
 
-  // Official `.md-post > picture`
   &__featured {
     display: block;
     margin-inline: auto;
@@ -183,7 +190,6 @@ onMounted(() => {
     }
   }
 
-  // Official `.md-post > main`
   &__body {
     padding-top: 14vw;
     padding-bottom: 10.5140186916vw;
@@ -410,7 +416,6 @@ onMounted(() => {
     }
   }
 
-  // Official `.l-pagelinks` + `.md-btn__pagelinks`
   &__footer {
     display: flex;
     flex-wrap: wrap;

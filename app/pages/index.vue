@@ -65,21 +65,17 @@ onMounted(() => {
 @use '~/assets/scss/foundation/config/breakpoint' as breakpoint;
 
 .p-index {
-  // Official `.l-fv` SP margin; header bar is hidden so no -100px overlap
+  /* Official `.l-fv` — header is fixed, so these are viewport offsets. */
   margin-top: 9.3457943925vw;
   opacity: 0;
   pointer-events: none;
 
   @include breakpoint.mq(min, 769px) {
-    margin-top: calc(4vw - 60px);
+    margin-top: 60px;
   }
 
-  @include breakpoint.mq(pc) {
-    margin-top: calc(4vw - 65px);
-  }
-
-  @include breakpoint.mq(min, 1201px) {
-    margin-top: -20px;
+  @include breakpoint.mq(min_max, 769px, 1200px) {
+    margin-top: 5vw;
   }
 
   &.is-revealed {
@@ -135,8 +131,8 @@ onMounted(() => {
     }
   }
 
-  // Official `.l-fv__inner .fvttl` + `.fvttl--logo` (width on the title box,
-  // scale on the logo). Collapse the h1 line box so height matches the image.
+  /* Official `.l-fv__inner .fvttl` + `.fvttl--logo` (width on the title box,
+     scale on the logo). Collapse the h1 line box so height matches the image. */
   &__fv-logo {
     position: absolute;
     top: 69.75%;
