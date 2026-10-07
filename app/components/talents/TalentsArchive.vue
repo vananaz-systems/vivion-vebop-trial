@@ -1,33 +1,27 @@
 <script setup lang="ts">
 const props = defineProps<{
-  mode: 'talents' | 'unit'
-}>()
+  mode: 'talents' | 'unit';
+}>();
 
-const { archiveUnits, getArchiveTalents } = useTalents()
+const { archiveUnits, getArchiveTalents } = useTalents();
 
-const isFilterOpen = ref(false)
+const isFilterOpen = ref(false);
 
-const visibleTalents = computed(() => getArchiveTalents())
+const visibleTalents = computed(() => getArchiveTalents());
 
-const isTalentsView = computed(() => props.mode === 'talents')
+const isTalentsView = computed(() => props.mode === 'talents');
 </script>
 
 <template>
-  <section class="p-talentsArchive" id="Talents">
+  <section id="Talents" class="p-talentsArchive">
     <div class="p-talentsArchive__lineup">
       <nav class="p-talentsArchive__tabs" aria-label="タレント一覧切り替え">
-        <div
-          class="p-talentsArchive__tab"
-          :data-status="isTalentsView ? 'current' : undefined"
-        >
+        <div class="p-talentsArchive__tab" :data-status="isTalentsView ? 'current' : undefined">
           <NuxtLink to="/talents/">
             <span>所属タレント一覧</span>
           </NuxtLink>
         </div>
-        <div
-          class="p-talentsArchive__tab"
-          :data-status="mode === 'unit' ? 'current' : undefined"
-        >
+        <div class="p-talentsArchive__tab" :data-status="mode === 'unit' ? 'current' : undefined">
           <NuxtLink to="/talents/unit/">
             <span>ユニット一覧</span>
           </NuxtLink>
@@ -49,10 +43,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
         </header>
 
         <ul v-if="isTalentsView" class="p-talentsArchive__talents">
-          <li
-            v-for="(talent, index) in visibleTalents"
-            :key="talent.id"
-          >
+          <li v-for="(talent, index) in visibleTalents" :key="talent.id">
             <TalentCard :talent="talent" :index="index" />
           </li>
         </ul>
@@ -106,6 +97,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
       display: block;
       width: 19.1666666667%;
       margin-bottom: 0;
+      margin-top: -0.8px;
     }
   }
 
@@ -118,6 +110,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
       font-size: 1.6666666667vw;
       text-align: left;
       transition: color 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+      margin-bottom: 1px;
     }
 
     @include breakpoint.mq(min, 1201px) {
@@ -138,7 +131,7 @@ const isTalentsView = computed(() => props.mode === 'talents')
       }
 
       &::before {
-        content: "";
+        content: '';
         position: absolute;
         left: 50%;
         bottom: 0;
@@ -190,13 +183,13 @@ const isTalentsView = computed(() => props.mode === 'talents')
         }
 
         &::after {
-          content: "";
+          content: '';
           position: absolute;
           left: 50%;
           bottom: 0;
           width: 7.9439252336vw;
           aspect-ratio: 34 / 9;
-          background: url("/images/common/icon/tri-bottom-wide.svg") center bottom / 100% auto no-repeat;
+          background: url('/images/common/icon/tri-bottom-wide.svg') center bottom / 100% auto no-repeat;
           transform: translate(-50%, 130%);
 
           @include breakpoint.mq(min, 769px) {
@@ -210,7 +203,11 @@ const isTalentsView = computed(() => props.mode === 'talents')
   &__main {
     @include breakpoint.mq(min, 769px) {
       width: 80.8333333333%;
-      padding-top: 5px;
+      padding-top: 5.2px;
+    }
+
+    @include breakpoint.mq(min, 960px) {
+      padding-top: 2px;
     }
   }
 
@@ -227,8 +224,16 @@ const isTalentsView = computed(() => props.mode === 'talents')
       margin-bottom: 3.3333333333vw;
     }
 
+    @include breakpoint.mq(min, 960px) {
+      margin-bottom: 30px;
+    }
+
+    @include breakpoint.mq(min, 1024px) {
+      margin-bottom: 32px;
+    }
+
     @include breakpoint.mq(min, 1201px) {
-      margin-bottom: 40px;
+      margin-bottom: 35px;
     }
 
     h2 {
@@ -260,7 +265,10 @@ const isTalentsView = computed(() => props.mode === 'talents')
       border: none;
       cursor: pointer;
       font-family: variable.$font-display;
+      font-optical-sizing: auto;
+      font-style: normal;
       font-weight: 700;
+      line-height: 1.75;
     }
   }
 
@@ -295,15 +303,10 @@ const isTalentsView = computed(() => props.mode === 'talents')
   &__filterIcon {
     display: block;
     width: 3.5046728972vw;
-    line-height: 0;
 
     @include breakpoint.mq(min, 769px) {
       width: 1.5vw;
       transform: translateY(0.5px);
-    }
-
-    @include breakpoint.mq(min, 1024px) {
-      transform: translateY(1px);
     }
 
     @include breakpoint.mq(min, 1201px) {
