@@ -71,7 +71,7 @@ onMounted(() => {
   }
 
   &__body {
-    padding: 7.0093457944vw 0 17.523364486vw;
+    padding: 7.0093457944vw 0 30.35vw;
 
     @include breakpoint.mq(min, 769px) {
       padding: 4.5833333333vw 40px 0;

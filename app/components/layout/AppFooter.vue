@@ -192,7 +192,7 @@ function scrollTop() {
   z-index: 2;
   background: variable.$white;
   color: #000;
-  padding: 14vw 0 14.0186915888vw;
+  padding: 37.4vw 0 14.0186915888vw;
 
   @include breakpoint.mq(min, 769px) {
     padding: 7.0833333333vw 40px 6.25vw;
@@ -230,7 +230,7 @@ function scrollTop() {
   &__logos {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.1vw;
+    margin-bottom: 1.5vw;
 
     @include breakpoint.mq(min, 769px) {
       flex-direction: row;
@@ -250,7 +250,7 @@ function scrollTop() {
 
     &--vhs {
       width: 55%;
-      margin-bottom: 1vw;
+      margin-bottom: 1.5vw;
 
       @include breakpoint.mq(min, 769px) {
         width: 14.3%;
@@ -271,7 +271,7 @@ function scrollTop() {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 6.5420560748vw;
+    margin-bottom: 7vw;
 
     @include breakpoint.mq(min, 769px) {
       margin-bottom: 4.1666666667vw;
