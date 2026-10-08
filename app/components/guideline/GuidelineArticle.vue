@@ -360,7 +360,7 @@
       }
     }
 
-    > ul > li {
+    ul > li {
       margin-left: 1.5em;
       font-family: "Noto Sans JP", sans-serif;
       font-optical-sizing: auto;
@@ -372,12 +372,12 @@
       }
     }
 
-    > ul > li > ul {
+    ul > li > ul {
       margin-top: 0.5em;
       list-style-type: circle;
     }
 
-    > ul > li > ul > li {
+    ul > li > ul > li {
       font-family: "Noto Sans JP", sans-serif;
       font-optical-sizing: auto;
       font-weight: 500;
