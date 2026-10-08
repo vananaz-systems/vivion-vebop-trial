@@ -1,445 +1,575 @@
 <script setup lang="ts">
-import { talentSlides } from '~/data/home'
-import { aboutPage } from '~/data/pages'
+import { talentSlides } from '~/data/home';
+import { aboutPage } from '~/data/pages';
 
-const DRAG_THRESHOLD = 6
-const SCROLL_SETTLE_MS = 520
-const AUTOPLAY_MS = 4000
+const DRAG_THRESHOLD = 6;
+const SCROLL_SETTLE_MS = 520;
+const AUTOPLAY_MS = 4000;
+const MOBILE_SLIDER_MQ = '(max-width: 768px)';
+const SLICK_SPEED_MS = 300;
+const SLICK_TOUCH_THRESHOLD = 5;
 
-const sectionEl = ref<HTMLElement | null>(null)
-const track = ref<HTMLElement | null>(null)
-const index = ref(0)
-const isScrolled = ref(false)
-const { contentRevealed } = useIntroLoader()
-const isDragging = ref(false)
-const isReady = ref(false)
+const sectionEl = ref<HTMLElement | null>(null);
+const carousel = ref<HTMLElement | null>(null);
+const track = ref<HTMLElement | null>(null);
+const index = ref(0);
+const isScrolled = ref(false);
+const { contentRevealed } = useIntroLoader();
+const isDragging = ref(false);
+const isReady = ref(false);
 
-const looping = computed(() => talentSlides.length > 1)
+const looping = computed(() => talentSlides.length > 1);
 
 const loopedSlides = computed(() => {
   if (!looping.value) {
-    return talentSlides.map(slide => ({ ...slide, loopKey: slide.id, isClone: false }))
+    return talentSlides.map((slide) => ({ ...slide, loopKey: slide.id, isClone: false }));
   }
 
-  const first = talentSlides[0]!
-  const last = talentSlides[talentSlides.length - 1]!
+  const first = talentSlides[0]!;
+  const last = talentSlides[talentSlides.length - 1]!;
 
   return [
     { ...last, loopKey: `${last.id}-clone-start`, isClone: true },
-    ...talentSlides.map(slide => ({ ...slide, loopKey: slide.id, isClone: false })),
+    ...talentSlides.map((slide) => ({ ...slide, loopKey: slide.id, isClone: false })),
     { ...first, loopKey: `${first.id}-clone-end`, isClone: true },
-  ]
-})
+  ];
+});
 
-let observer: IntersectionObserver | null = null
-let pointerId: number | null = null
-let startX = 0
-let startY = 0
-let startScrollLeft = 0
-let hasDragged = false
-let ignoreGesture = false
-let suppressClick = false
-let suppressClickTimer: ReturnType<typeof setTimeout> | null = null
-let settleTimer: ReturnType<typeof setTimeout> | null = null
-let autoplayTimer: ReturnType<typeof setTimeout> | null = null
-let isAnimating = false
-let isJumping = false
-let isHovering = false
-let reducedMotionQuery: MediaQueryList | null = null
+let observer: IntersectionObserver | null = null;
+let pointerId: number | null = null;
+let touchActive = false;
+let startX = 0;
+let startY = 0;
+let lastX = 0;
+let startScrollLeft = 0;
+let hasDragged = false;
+let ignoreGesture = false;
+let suppressClick = false;
+let suppressClickTimer: ReturnType<typeof setTimeout> | null = null;
+let settleTimer: ReturnType<typeof setTimeout> | null = null;
+let autoplayTimer: ReturnType<typeof setTimeout> | null = null;
+let scrollAnimFrame = 0;
+let isAnimating = false;
+let isJumping = false;
+let isHovering = false;
+let reducedMotionQuery: MediaQueryList | null = null;
+
+function isMobileSlider() {
+  return window.matchMedia(MOBILE_SLIDER_MQ).matches;
+}
+
+function cancelScrollAnim() {
+  if (!scrollAnimFrame) return;
+  cancelAnimationFrame(scrollAnimFrame);
+  scrollAnimFrame = 0;
+}
+
+function animateScrollLeft(el: HTMLElement, to: number, duration: number) {
+  cancelScrollAnim();
+  const from = el.scrollLeft;
+  const delta = to - from;
+  if (Math.abs(delta) < 1) {
+    settleLoopPosition();
+    return;
+  }
+
+  isAnimating = true;
+  freezeTrack(el, false);
+  const start = performance.now();
+  const step = (now: number) => {
+    const t = Math.min(1, (now - start) / duration);
+    el.scrollLeft = from + delta * (1 - (1 - t) ** 3);
+    if (t < 1) {
+      scrollAnimFrame = requestAnimationFrame(step);
+      return;
+    }
+    scrollAnimFrame = 0;
+    settleLoopPosition();
+  };
+  scrollAnimFrame = requestAnimationFrame(step);
+}
 
 function realIndexFromTrack(trackIndex: number) {
-  const count = talentSlides.length
-  if (!looping.value) return Math.min(count - 1, Math.max(0, trackIndex))
-  if (trackIndex <= 0) return count - 1
-  if (trackIndex >= count + 1) return 0
-  return trackIndex - 1
+  const count = talentSlides.length;
+  if (!looping.value) return Math.min(count - 1, Math.max(0, trackIndex));
+  if (trackIndex <= 0) return count - 1;
+  if (trackIndex >= count + 1) return 0;
+  return trackIndex - 1;
 }
 
 function trackIndexFromReal(realIndex: number) {
-  return looping.value ? realIndex + 1 : realIndex
+  return looping.value ? realIndex + 1 : realIndex;
 }
 
 function isCloneTrack(trackIndex: number) {
-  if (!looping.value) return false
-  return trackIndex === 0 || trackIndex === talentSlides.length + 1
+  if (!looping.value) return false;
+  return trackIndex === 0 || trackIndex === talentSlides.length + 1;
 }
 
 function targetScrollLeft(el: HTMLElement, child: HTMLElement) {
-  const trackRect = el.getBoundingClientRect()
-  const childRect = child.getBoundingClientRect()
-  return el.scrollLeft + (childRect.left + childRect.width / 2) - (trackRect.left + el.clientWidth / 2)
+  const trackRect = el.getBoundingClientRect();
+  const childRect = child.getBoundingClientRect();
+  return el.scrollLeft + (childRect.left + childRect.width / 2) - (trackRect.left + el.clientWidth / 2);
 }
 
 function freezeTrack(el: HTMLElement, smooth: boolean) {
-  el.style.scrollSnapType = 'none'
-  el.style.scrollBehavior = smooth ? 'smooth' : 'auto'
+  el.style.scrollSnapType = 'none';
+  el.style.scrollBehavior = smooth ? 'smooth' : 'auto';
 }
 
 function restoreTrack(el: HTMLElement) {
-  el.style.scrollSnapType = ''
-  el.style.scrollBehavior = ''
+  el.style.scrollSnapType = '';
+  el.style.scrollBehavior = '';
 }
 
 function afterPaint(fn: () => void) {
   requestAnimationFrame(() => {
-    requestAnimationFrame(fn)
-  })
+    requestAnimationFrame(fn);
+  });
 }
 
 function jumpToChild(el: HTMLElement, child: HTMLElement) {
-  isAnimating = false
-  isJumping = true
-  freezeTrack(el, false)
-  el.scrollTo({ left: el.scrollLeft, behavior: 'auto' })
-  el.scrollLeft = targetScrollLeft(el, child)
-  void el.offsetWidth
+  isAnimating = false;
+  isJumping = true;
+  freezeTrack(el, false);
+  el.scrollTo({ left: el.scrollLeft, behavior: 'auto' });
+  el.scrollLeft = targetScrollLeft(el, child);
+  Number(el.offsetWidth);
   afterPaint(() => {
-    restoreTrack(el)
-    isJumping = false
-  })
+    restoreTrack(el);
+    isJumping = false;
+  });
 }
 
 function scrollToTrack(trackIndex: number, smooth: boolean) {
-  const el = track.value
-  if (!el) return
-  const child = el.children[trackIndex] as HTMLElement | undefined
-  if (!child) return
+  const el = track.value;
+  if (!el) return;
+  const child = el.children[trackIndex] as HTMLElement | undefined;
+  if (!child) return;
 
   if (!smooth) {
-    jumpToChild(el, child)
-    return
+    jumpToChild(el, child);
+    return;
   }
 
-  isAnimating = true
+  isAnimating = true;
   if (settleTimer) {
-    clearTimeout(settleTimer)
-    settleTimer = null
+    clearTimeout(settleTimer);
+    settleTimer = null;
   }
 
-  freezeTrack(el, true)
-  el.scrollTo({ left: targetScrollLeft(el, child), behavior: 'smooth' })
-  scheduleSettle(SCROLL_SETTLE_MS)
+  if (isMobileSlider()) {
+    animateScrollLeft(el, targetScrollLeft(el, child), SLICK_SPEED_MS);
+    return;
+  }
+
+  freezeTrack(el, true);
+  el.scrollTo({ left: targetScrollLeft(el, child), behavior: 'smooth' });
+  scheduleSettle(SCROLL_SETTLE_MS);
 }
 
 function realTrackFromClone(trackIndex: number) {
-  return trackIndex === 0 ? talentSlides.length : 1
+  return trackIndex === 0 ? talentSlides.length : 1;
 }
 
 function settleLoopPosition() {
-  if (isDragging.value || isJumping) return
+  if (isDragging.value || isJumping) return;
   if (settleTimer) {
-    clearTimeout(settleTimer)
-    settleTimer = null
+    clearTimeout(settleTimer);
+    settleTimer = null;
   }
 
-  isAnimating = false
-  const nearest = findNearestTrackIndex()
-  index.value = realIndexFromTrack(nearest)
+  isAnimating = false;
+  const nearest = findNearestTrackIndex();
+  index.value = realIndexFromTrack(nearest);
   if (!isCloneTrack(nearest)) {
-    const el = track.value
-    if (el) restoreTrack(el)
-    return
+    const el = track.value;
+    if (el) restoreTrack(el);
+    return;
   }
-  scrollToTrack(realTrackFromClone(nearest), false)
+  scrollToTrack(realTrackFromClone(nearest), false);
 }
 
 function scheduleSettle(delay = 100) {
-  if (settleTimer) clearTimeout(settleTimer)
-  settleTimer = setTimeout(settleLoopPosition, delay)
+  if (settleTimer) clearTimeout(settleTimer);
+  settleTimer = setTimeout(settleLoopPosition, delay);
 }
 
 function findNearestTrackIndex() {
-  const el = track.value
-  if (!el) return trackIndexFromReal(index.value)
+  const el = track.value;
+  if (!el) return trackIndexFromReal(index.value);
 
-  const children = Array.from(el.children) as HTMLElement[]
-  if (!children.length) return trackIndexFromReal(index.value)
+  const children = Array.from(el.children) as HTMLElement[];
+  if (!children.length) return trackIndexFromReal(index.value);
 
-  const trackRect = el.getBoundingClientRect()
-  const trackCenter = trackRect.left + el.clientWidth / 2
+  const trackRect = el.getBoundingClientRect();
+  const trackCenter = trackRect.left + el.clientWidth / 2;
 
-  let nearest = 0
-  let nearestDist = Infinity
+  let nearest = 0;
+  let nearestDist = Infinity;
 
   children.forEach((child, i) => {
-    const rect = child.getBoundingClientRect()
-    const dist = Math.abs(rect.left + rect.width / 2 - trackCenter)
+    const rect = child.getBoundingClientRect();
+    const dist = Math.abs(rect.left + rect.width / 2 - trackCenter);
     if (dist < nearestDist) {
-      nearestDist = dist
-      nearest = i
+      nearestDist = dist;
+      nearest = i;
     }
-  })
+  });
 
-  return nearest
+  return nearest;
 }
 
 function stopAutoplay() {
   if (autoplayTimer) {
-    clearTimeout(autoplayTimer)
-    autoplayTimer = null
+    clearTimeout(autoplayTimer);
+    autoplayTimer = null;
   }
 }
 
 function canAutoplay() {
   return (
-    looping.value
-    && !reducedMotionQuery?.matches
-    && document.visibilityState === 'visible'
-    && !isDragging.value
-    && !isHovering
-  )
+    looping.value &&
+    !reducedMotionQuery?.matches &&
+    document.visibilityState === 'visible' &&
+    !isDragging.value &&
+    !isHovering
+  );
 }
 
 function startAutoplay() {
-  stopAutoplay()
-  if (!canAutoplay()) return
+  stopAutoplay();
+  if (!canAutoplay()) return;
   autoplayTimer = setTimeout(() => {
-    autoplayTimer = null
-    if (!canAutoplay()) return
-    go(index.value + 1)
-  }, AUTOPLAY_MS)
+    autoplayTimer = null;
+    if (!canAutoplay()) return;
+    go(index.value + 1);
+  }, AUTOPLAY_MS);
 }
 
 function onCarouselEnter() {
-  isHovering = true
-  stopAutoplay()
+  isHovering = true;
+  stopAutoplay();
 }
 
 function onCarouselLeave() {
-  isHovering = false
-  startAutoplay()
+  isHovering = false;
+  startAutoplay();
 }
 
 function onVisibilityChange() {
-  if (document.visibilityState === 'hidden') stopAutoplay()
-  else startAutoplay()
+  if (document.visibilityState === 'hidden') stopAutoplay();
+  else startAutoplay();
 }
 
 function onReducedMotionChange() {
-  if (reducedMotionQuery?.matches) stopAutoplay()
-  else startAutoplay()
+  if (reducedMotionQuery?.matches) stopAutoplay();
+  else startAutoplay();
 }
 
 function go(nextIndex: number) {
-  const count = talentSlides.length
-  if (!count) return
+  const count = talentSlides.length;
+  if (!count) return;
 
-  let trackIndex: number
+  let trackIndex: number;
   if (!looping.value) {
-    trackIndex = Math.min(count - 1, Math.max(0, nextIndex))
-    index.value = trackIndex
-  }
-  else if (nextIndex < 0) {
-    trackIndex = 0
-    index.value = count - 1
-  }
-  else if (nextIndex >= count) {
-    trackIndex = count + 1
-    index.value = 0
-  }
-  else {
-    trackIndex = nextIndex + 1
-    index.value = nextIndex
+    trackIndex = Math.min(count - 1, Math.max(0, nextIndex));
+    index.value = trackIndex;
+  } else if (nextIndex < 0) {
+    trackIndex = 0;
+    index.value = count - 1;
+  } else if (nextIndex >= count) {
+    trackIndex = count + 1;
+    index.value = 0;
+  } else {
+    trackIndex = nextIndex + 1;
+    index.value = nextIndex;
   }
 
-  scrollToTrack(trackIndex, true)
-  startAutoplay()
+  scrollToTrack(trackIndex, true);
+  startAutoplay();
 }
 
 function isAlignedWith(trackIndex: number) {
-  const el = track.value
-  const child = el?.children[trackIndex] as HTMLElement | undefined
-  if (!el || !child) return false
-  return Math.abs(targetScrollLeft(el, child) - el.scrollLeft) < 2
+  const el = track.value;
+  const child = el?.children[trackIndex] as HTMLElement | undefined;
+  if (!el || !child) return false;
+  return Math.abs(targetScrollLeft(el, child) - el.scrollLeft) < 2;
 }
 
 function snapToNearest() {
-  const nearest = findNearestTrackIndex()
-  index.value = realIndexFromTrack(nearest)
+  const nearest = findNearestTrackIndex();
+  index.value = realIndexFromTrack(nearest);
   if (isCloneTrack(nearest) && isAlignedWith(nearest)) {
-    scrollToTrack(realTrackFromClone(nearest), false)
-    return
+    scrollToTrack(realTrackFromClone(nearest), false);
+    return;
   }
-  scrollToTrack(nearest, true)
+  scrollToTrack(nearest, true);
 }
 
 function syncToIndex() {
-  if (isDragging.value) return
-  scrollToTrack(trackIndexFromReal(index.value), false)
+  if (isDragging.value) return;
+  scrollToTrack(trackIndexFromReal(index.value), false);
 }
 
 function onTrackScroll() {
-  if (isDragging.value || isAnimating || isJumping) return
-  scheduleSettle()
+  if (isDragging.value || isAnimating || isJumping) return;
+  scheduleSettle();
 }
 
 function onTrackScrollEnd() {
-  if (isDragging.value || isJumping) return
-  settleLoopPosition()
+  if (isDragging.value || isJumping) return;
+  settleLoopPosition();
 }
 
 function onArrowMouseDown(event: MouseEvent) {
-  event.preventDefault()
-  const btn = event.currentTarget
+  event.preventDefault();
+  const btn = event.currentTarget;
   if (btn instanceof HTMLElement) {
-    btn.focus({ preventScroll: true })
+    btn.focus({ preventScroll: true });
   }
 }
 
 function resetDrag() {
-  pointerId = null
-  hasDragged = false
-  ignoreGesture = false
-  isDragging.value = false
+  pointerId = null;
+  touchActive = false;
+  hasDragged = false;
+  ignoreGesture = false;
+  isDragging.value = false;
+}
+
+function beginDrag(el: HTMLElement, clientX: number, clientY: number) {
+  cancelScrollAnim();
+  if (settleTimer) {
+    clearTimeout(settleTimer);
+    settleTimer = null;
+  }
+
+  startX = clientX;
+  startY = clientY;
+  lastX = clientX;
+  startScrollLeft = el.scrollLeft;
+  hasDragged = false;
+  ignoreGesture = false;
+}
+
+function moveDrag(el: HTMLElement, clientX: number, clientY: number, threshold: number) {
+  lastX = clientX;
+  const dx = clientX - startX;
+  const dy = clientY - startY;
+  const absX = Math.abs(dx);
+  const absY = Math.abs(dy);
+
+  if (!hasDragged) {
+    if (absX <= threshold && absY <= threshold) return false;
+
+    if (absY >= absX) {
+      ignoreGesture = true;
+      return false;
+    }
+
+    if (absX <= threshold) return false;
+
+    hasDragged = true;
+    isDragging.value = true;
+    stopAutoplay();
+  }
+
+  el.scrollLeft = startScrollLeft - dx;
+  return true;
+}
+
+function finishMobileSwipe(el: HTMLElement) {
+  const dx = lastX - startX;
+  const minSwipe = el.clientWidth / SLICK_TOUCH_THRESHOLD;
+  if (Math.abs(dx) >= minSwipe) {
+    go(dx < 0 ? index.value + 1 : index.value - 1);
+    return;
+  }
+  scrollToTrack(trackIndexFromReal(index.value), true);
+}
+
+function afterDrag(el: HTMLElement, didDrag: boolean) {
+  if (!didDrag) return;
+  suppressClick = true;
+  if (suppressClickTimer) clearTimeout(suppressClickTimer);
+  suppressClickTimer = setTimeout(() => {
+    suppressClick = false;
+    suppressClickTimer = null;
+  }, 300);
+  const focused = document.activeElement;
+  if (focused instanceof HTMLElement && el.contains(focused)) {
+    focused.blur();
+  }
+  if (isMobileSlider()) finishMobileSwipe(el);
+  else snapToNearest();
 }
 
 function onPointerDown(event: PointerEvent) {
-  const el = track.value
-  if (!el) return
-  if (event.pointerType === 'mouse' && event.button !== 0) return
+  const el = track.value;
+  if (!el) return;
+  if (event.pointerType === 'touch' && isMobileSlider()) return;
+  if (event.pointerType === 'mouse' && event.button !== 0) return;
 
-  if (settleTimer) {
-    clearTimeout(settleTimer)
-    settleTimer = null
-  }
-
-  pointerId = event.pointerId
-  startX = event.clientX
-  startY = event.clientY
-  startScrollLeft = el.scrollLeft
-  hasDragged = false
-  ignoreGesture = false
+  pointerId = event.pointerId;
+  beginDrag(el, event.clientX, event.clientY);
 }
 
 function onPointerMove(event: PointerEvent) {
-  const el = track.value
-  if (!el || ignoreGesture || pointerId !== event.pointerId) return
+  const el = track.value;
+  if (!el || ignoreGesture || pointerId !== event.pointerId) return;
+  if (event.pointerType === 'touch' && isMobileSlider()) return;
 
-  const dx = event.clientX - startX
-  const dy = event.clientY - startY
-  const absX = Math.abs(dx)
-  const absY = Math.abs(dy)
-
-  if (!hasDragged) {
-    if (absX <= DRAG_THRESHOLD && absY <= DRAG_THRESHOLD) return
-
-    if (absY >= absX) {
-      ignoreGesture = true
-      return
-    }
-
-    if (absX <= DRAG_THRESHOLD) return
-
-    hasDragged = true
-    isDragging.value = true
-    stopAutoplay()
-    el.setPointerCapture(event.pointerId)
+  const dragged = moveDrag(el, event.clientX, event.clientY, DRAG_THRESHOLD);
+  if (!dragged && !hasDragged) return;
+  if (hasDragged && !el.hasPointerCapture(event.pointerId)) {
+    el.setPointerCapture(event.pointerId);
   }
-
-  event.preventDefault()
-  el.scrollLeft = startScrollLeft - dx
+  event.preventDefault();
 }
 
 function onPointerUp(event: PointerEvent) {
-  const el = track.value
-  if (!el || pointerId !== event.pointerId) return
+  const el = track.value;
+  if (!el || pointerId !== event.pointerId) return;
+  if (event.pointerType === 'touch' && isMobileSlider()) return;
 
   if (el.hasPointerCapture(event.pointerId)) {
-    el.releasePointerCapture(event.pointerId)
+    el.releasePointerCapture(event.pointerId);
   }
 
-  const didDrag = hasDragged
-
-  if (didDrag) {
-    suppressClick = true
-    if (suppressClickTimer) clearTimeout(suppressClickTimer)
-    suppressClickTimer = setTimeout(() => {
-      suppressClick = false
-      suppressClickTimer = null
-    }, 300)
-    const focused = document.activeElement
-    if (focused instanceof HTMLElement && el.contains(focused)) {
-      focused.blur()
-    }
-    snapToNearest()
-  }
-
-  resetDrag()
-  if (didDrag) startAutoplay()
+  const didDrag = hasDragged;
+  afterDrag(el, didDrag);
+  resetDrag();
+  if (didDrag) startAutoplay();
 }
 
-function onClickCapture(event: MouseEvent) {
-  if (!suppressClick) return
-  event.preventDefault()
-  event.stopPropagation()
-  suppressClick = false
+function onTouchStart(event: TouchEvent) {
+  if (!isMobileSlider()) return;
+  const el = track.value;
+  const touch = event.touches[0];
+  if (!el || !touch) return;
+  touchActive = true;
+  beginDrag(el, touch.clientX, touch.clientY);
+}
+
+function onTouchMove(event: TouchEvent) {
+  if (!touchActive || !isMobileSlider()) return;
+  const el = track.value;
+  const touch = event.touches[0];
+  if (!el || !touch || ignoreGesture) return;
+
+  moveDrag(el, touch.clientX, touch.clientY, 2);
+  if (hasDragged) event.preventDefault();
+}
+
+function onTouchEnd() {
+  if (!touchActive || !isMobileSlider()) return;
+  const el = track.value;
+  const didDrag = hasDragged;
+  if (el) afterDrag(el, didDrag);
+  resetDrag();
+  if (didDrag) startAutoplay();
+}
+
+function onClickCapture(event: Event) {
+  if (!suppressClick) return;
+  event.preventDefault();
+  event.stopPropagation();
+  suppressClick = false;
+}
+
+function bindCarouselChrome() {
+  const root = carousel.value;
+  const trackEl = track.value;
+  root?.addEventListener('pointerenter', onCarouselEnter);
+  root?.addEventListener('pointerleave', onCarouselLeave);
+  root?.addEventListener('focusin', onCarouselEnter);
+  root?.addEventListener('focusout', onCarouselLeave);
+  trackEl?.addEventListener('click', onClickCapture, true);
+  trackEl?.addEventListener('touchstart', onTouchStart, { passive: true });
+  trackEl?.addEventListener('touchmove', onTouchMove, { passive: false });
+  trackEl?.addEventListener('touchend', onTouchEnd);
+  trackEl?.addEventListener('touchcancel', onTouchEnd);
+}
+
+function unbindCarouselChrome() {
+  const root = carousel.value;
+  const trackEl = track.value;
+  root?.removeEventListener('pointerenter', onCarouselEnter);
+  root?.removeEventListener('pointerleave', onCarouselLeave);
+  root?.removeEventListener('focusin', onCarouselEnter);
+  root?.removeEventListener('focusout', onCarouselLeave);
+  trackEl?.removeEventListener('click', onClickCapture, true);
+  trackEl?.removeEventListener('touchstart', onTouchStart);
+  trackEl?.removeEventListener('touchmove', onTouchMove);
+  trackEl?.removeEventListener('touchend', onTouchEnd);
+  trackEl?.removeEventListener('touchcancel', onTouchEnd);
 }
 
 function observeScrollIn() {
-  const el = sectionEl.value
-  if (!el || observer) return
+  const el = sectionEl.value;
+  if (!el || observer) return;
 
   observer = new IntersectionObserver(
     ([entry]) => {
-      if (!entry?.isIntersecting) return
-      isScrolled.value = true
-      observer?.disconnect()
+      if (!entry?.isIntersecting) return;
+      isScrolled.value = true;
+      observer?.disconnect();
     },
-    { rootMargin: '0px 0px -200px 0px', threshold: 0 },
-  )
-  observer.observe(el)
+    { rootMargin: '0px 0px -200px 0px', threshold: 0 }
+  );
+  observer.observe(el);
 }
 
 onMounted(() => {
   const position = () => {
-    syncToIndex()
-    isReady.value = true
-  }
+    syncToIndex();
+    isReady.value = true;
+  };
 
   nextTick(() => {
-    syncToIndex()
-    requestAnimationFrame(position)
-  })
+    bindCarouselChrome();
+    syncToIndex();
+    requestAnimationFrame(position);
+  });
 
-  window.addEventListener('resize', syncToIndex)
+  window.addEventListener('resize', syncToIndex);
 
-  reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-  reducedMotionQuery.addEventListener('change', onReducedMotionChange)
-  document.addEventListener('visibilitychange', onVisibilityChange)
-  startAutoplay()
+  reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  reducedMotionQuery.addEventListener('change', onReducedMotionChange);
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  startAutoplay();
 
   if (contentRevealed.value) {
-    if (reducedMotionQuery?.matches) isScrolled.value = true
-    else observeScrollIn()
+    if (reducedMotionQuery?.matches) isScrolled.value = true;
+    else observeScrollIn();
   }
-})
+});
 
 watch(contentRevealed, (revealed) => {
-  if (!revealed) return
+  if (!revealed) return;
   if (reducedMotionQuery?.matches) {
-    isScrolled.value = true
-    return
+    isScrolled.value = true;
+    return;
   }
-  nextTick(observeScrollIn)
-})
+  nextTick(observeScrollIn);
+});
 
 onUnmounted(() => {
-  observer?.disconnect()
-  window.removeEventListener('resize', syncToIndex)
-  document.removeEventListener('visibilitychange', onVisibilityChange)
-  reducedMotionQuery?.removeEventListener('change', onReducedMotionChange)
-  if (suppressClickTimer) clearTimeout(suppressClickTimer)
-  if (settleTimer) clearTimeout(settleTimer)
-  stopAutoplay()
-})
+  observer?.disconnect();
+  unbindCarouselChrome();
+  window.removeEventListener('resize', syncToIndex);
+  document.removeEventListener('visibilitychange', onVisibilityChange);
+  reducedMotionQuery?.removeEventListener('change', onReducedMotionChange);
+  if (suppressClickTimer) clearTimeout(suppressClickTimer);
+  if (settleTimer) clearTimeout(settleTimer);
+  cancelScrollAnim();
+  stopAutoplay();
+});
 </script>
 
 <template>
-  <section
-    ref="sectionEl"
-    class="p-indexTalents"
-    :class="{ 'is-scrolled': isScrolled }"
-  >
+  <section ref="sectionEl" class="p-indexTalents" :class="{ 'is-scrolled': isScrolled }">
     <div class="p-indexTalents__inner">
       <div class="p-indexTalents__head">
         <div class="p-indexTalents__head-inner">
@@ -459,61 +589,74 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <div
-        class="p-indexTalents__carousel"
-        @mouseenter="onCarouselEnter"
-        @mouseleave="onCarouselLeave"
-      >
-      <div class="p-indexTalents__nav">
-        <div class="p-indexTalents__nav-inner">
-          <button
-            class="p-indexTalents__arrow p-indexTalents__arrow--prev"
-            type="button"
-            aria-label="前のタレント"
-            @mousedown="onArrowMouseDown"
-            @click="go(index - 1)"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><g transform="translate(342 1899) rotate(180)"><path d="M307-260.13l12.728-12.728L307-285.585,308.414-287l12.728,12.728h0l1.414,1.415-1.414,1.414h0l-12.729,12.728Z" transform="translate(13 2156)" fill="#60ec33"></path><rect width="32" height="32" transform="translate(310 1867)" fill="none"></rect></g></svg>
-          </button>
+      <div ref="carousel" class="p-indexTalents__carousel">
+        <div class="p-indexTalents__nav">
+          <div class="p-indexTalents__nav-inner">
+            <button
+              class="p-indexTalents__arrow p-indexTalents__arrow--prev"
+              type="button"
+              aria-label="前のタレント"
+              @mousedown="onArrowMouseDown"
+              @click="go(index - 1)"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                <g transform="translate(342 1899) rotate(180)">
+                  <path
+                    d="M307-260.13l12.728-12.728L307-285.585,308.414-287l12.728,12.728h0l1.414,1.415-1.414,1.414h0l-12.729,12.728Z"
+                    transform="translate(13 2156)"
+                    fill="#60ec33"
+                  ></path>
+                  <rect width="32" height="32" transform="translate(310 1867)" fill="none"></rect>
+                </g>
+              </svg>
+            </button>
 
-          <button
-            class="p-indexTalents__arrow p-indexTalents__arrow--next"
-            type="button"
-            aria-label="次のタレント"
-            @mousedown="onArrowMouseDown"
-            @click="go(index + 1)"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><g transform="translate(-310 -1867)"><path d="M307-260.13l12.728-12.728L307-285.585,308.414-287l12.728,12.728h0l1.414,1.415-1.414,1.414h0l-12.729,12.728Z" transform="translate(13 2156)" fill="#60ec33"></path><rect width="32" height="32" transform="translate(310 1867)" fill="none"></rect></g></svg>
-          </button>
+            <button
+              class="p-indexTalents__arrow p-indexTalents__arrow--next"
+              type="button"
+              aria-label="次のタレント"
+              @mousedown="onArrowMouseDown"
+              @click="go(index + 1)"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                <g transform="translate(-310 -1867)">
+                  <path
+                    d="M307-260.13l12.728-12.728L307-285.585,308.414-287l12.728,12.728h0l1.414,1.415-1.414,1.414h0l-12.729,12.728Z"
+                    transform="translate(13 2156)"
+                    fill="#60ec33"
+                  ></path>
+                  <rect width="32" height="32" transform="translate(310 1867)" fill="none"></rect>
+                </g>
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div
-        ref="track"
-        class="p-indexTalents__track"
-        :class="{ 'is-dragging': isDragging, 'is-ready': isReady }"
-        @pointerdown="onPointerDown"
-        @pointermove="onPointerMove"
-        @pointerup="onPointerUp"
-        @pointercancel="onPointerUp"
-        @click.capture="onClickCapture"
-        @scroll="onTrackScroll"
-        @scrollend="onTrackScrollEnd"
-      >
-        <TalentSlide
-          v-for="slide in loopedSlides"
-          :key="slide.loopKey"
-          :name="slide.name"
-          :image="slide.image"
-          :image-width="slide.imageWidth"
-          :image-height="slide.imageHeight"
-          :description="slide.description"
-          :cta-label="slide.ctaLabel"
-          :cta-stacked="slide.ctaStacked"
-          :to="slide.to"
-          :aria-hidden="slide.isClone"
-        />
-      </div>
+        <div
+          ref="track"
+          class="p-indexTalents__track"
+          :class="{ 'is-dragging': isDragging, 'is-ready': isReady }"
+          @pointerdown="onPointerDown"
+          @pointermove="onPointerMove"
+          @pointerup="onPointerUp"
+          @pointercancel="onPointerUp"
+          @scroll="onTrackScroll"
+          @scrollend="onTrackScrollEnd"
+        >
+          <TalentSlide
+            v-for="slide in loopedSlides"
+            :key="slide.loopKey"
+            :name="slide.name"
+            :image="slide.image"
+            :image-width="slide.imageWidth"
+            :image-height="slide.imageHeight"
+            :description="slide.description"
+            :cta-label="slide.ctaLabel"
+            :cta-stacked="slide.ctaStacked"
+            :to="slide.to"
+            :aria-hidden="slide.isClone"
+          />
+        </div>
       </div>
 
       <footer class="p-indexTalents__foot">
@@ -524,7 +667,7 @@ onUnmounted(() => {
             width="170"
             height="20"
             decoding="async"
-          >
+          />
         </h4>
         <NuxtLink to="/talents/" class="p-indexTalents__all p-indexTalents__all--sp">
           <i class="p-indexTalents__all-icon" aria-hidden="true">
@@ -549,22 +692,38 @@ onUnmounted(() => {
 
 @keyframes talents-arrow {
   0%,
-  100% { transform: translateX(0); }
-  60% { transform: translateX(20%); }
+  100% {
+    transform: translateX(0);
+  }
+  60% {
+    transform: translateX(20%);
+  }
 }
 
 @keyframes sliderPrevAnime {
-  0% { transform: translateX(0); }
-  40% { transform: translateX(-20%); }
+  0% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-20%);
+  }
   70%,
-  100% { transform: translateX(0); }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 @keyframes sliderNextAnime {
-  0% { transform: translateX(0); }
-  40% { transform: translateX(20%); }
+  0% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(20%);
+  }
   70%,
-  100% { transform: translateX(0); }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .p-indexTalents {
@@ -582,7 +741,7 @@ onUnmounted(() => {
   }
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     right: 0;
@@ -653,7 +812,6 @@ onUnmounted(() => {
 
     @include breakpoint.mq(min, 769px) {
       font-size: 1.3333333333vw;
-      
     }
 
     @include breakpoint.mq(min, 1201px) {
@@ -750,7 +908,7 @@ onUnmounted(() => {
     transition: color 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
     &::after {
-      content: "→";
+      content: '→';
       display: inline-block;
       margin-left: 0.5em;
       animation: talents-arrow 1.2s linear infinite;
@@ -785,6 +943,10 @@ onUnmounted(() => {
     touch-action: pan-y pinch-zoom;
     visibility: hidden;
 
+    @include breakpoint.mq(max, 768px) {
+      scroll-snap-type: none;
+    }
+
     &.is-ready {
       visibility: visible;
     }
@@ -813,6 +975,11 @@ onUnmounted(() => {
       width: 100%;
       scroll-snap-align: center;
       scroll-snap-stop: always;
+
+      @include breakpoint.mq(max, 768px) {
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
+      }
 
       @include breakpoint.mq(min, 769px) {
         flex-basis: min(1000px, 100%);
@@ -915,7 +1082,7 @@ onUnmounted(() => {
     width: 39.7196261682vw;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 0;

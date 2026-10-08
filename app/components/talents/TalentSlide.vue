@@ -113,12 +113,13 @@ function bodyParts(paragraph: string): BodyPart[] {
       display: block;
       width: 100%;
       height: auto;
+      vertical-align: bottom;
+      aspect-ratio: 1000 / 530;
+      object-fit: cover;
+      object-position: center top;
 
       @include breakpoint.mq(min, 769px) {
         height: 100%;
-        aspect-ratio: 1000 / 530;
-        object-fit: cover;
-        object-position: center top;
       }
 
       @include breakpoint.mq(min, 1201px) {
