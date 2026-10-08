@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { brand } = useSite()
+const route = useRoute()
 const config = useRuntimeConfig()
 const parentSiteUrl = (config.public.parentSiteUrl as string) || 'https://vhs-city.com/'
 const pageUrl = brand.siteUrl
@@ -60,10 +61,15 @@ function scrollTop() {
 
   pageTopRaf = requestAnimationFrame(step)
 }
+
+const isTopicsListFooter = computed(() => {
+  const path = route.path.replace(/\/$/, '') || '/';
+  return path === '/topics' || path.startsWith('/tag/');
+});
 </script>
 
 <template>
-  <footer id="Foot" class="c-footer">
+  <footer id="Foot" class="c-footer" :class="{ 'c-footer--topicsList': isTopicsListFooter }">
     <div class="c-footer__inner">
       <div class="c-footer__body">
         <div class="c-footer__info">
@@ -192,7 +198,11 @@ function scrollTop() {
   z-index: 2;
   background: variable.$white;
   color: #000;
-  padding: 37.4vw 0 14.0186915888vw;
+  padding: 13.6vw 0 14.0186915888vw;
+
+  &--topicsList {
+    padding: 37.4vw 0 14.0186915888vw;
+  }
 
   @include breakpoint.mq(min, 769px) {
     padding: 7.0833333333vw 40px 6.25vw;
