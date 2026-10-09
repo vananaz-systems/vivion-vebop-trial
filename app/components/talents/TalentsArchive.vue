@@ -385,8 +385,8 @@ const isTalentsView = computed(() => props.mode === 'talents');
   &__units {
     justify-content: space-between;
 
-    @include breakpoint.mq(min, 769px) {
-      margin-top: 4px;
+    @include breakpoint.mq(min, 960px) {
+      margin-top: 3px;
     }
 
     li {

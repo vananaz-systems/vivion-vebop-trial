@@ -162,7 +162,7 @@ if (unit.value) {
     }
 
     @include breakpoint.mq(min, 1201px) {
-      padding-top: 55px;
+      padding-top: 54px;
     }
   }
 
@@ -188,6 +188,11 @@ if (unit.value) {
       display: block;
       width: 19.1666666667%;
       margin-bottom: 0;
+      margin-top: -2px;
+    }
+
+    @include breakpoint.mq(min, 1201px) {
+      margin-top: -1.8px;
     }
   }
 
@@ -208,6 +213,7 @@ if (unit.value) {
 
     @include breakpoint.mq(min, 1201px) {
       font-size: 2rem;
+      line-height: 1.75;
     }
 
     a {
@@ -294,7 +300,19 @@ if (unit.value) {
 
     @include breakpoint.mq(min, 769px) {
       width: 80.8333333333%;
-      padding-top: 5px;
+      padding-top: 4.5px;
+    }
+
+    @include breakpoint.mq(min, 960px) {
+      padding-top: 6px;
+    }
+
+    @include breakpoint.mq(min, 1024px) {
+      padding-top: 6.5px;
+    }
+
+    @include breakpoint.mq(min, 1201px) {
+      padding-top: 9.5px;
     }
   }
 
@@ -306,13 +324,21 @@ if (unit.value) {
       align-items: center;
       justify-content: flex-end;
       min-height: 16px;
-      margin: 0 0 3.3333333333vw;
+      margin: 0 0 3.3vw;
       padding: 0;
       font-family: variable.$font-display-medium;
       font-size: 1.0833333333vw;
       font-weight: 500;
       line-height: 1;
       list-style: none;
+    }
+
+    @include breakpoint.mq(min, 960px) {
+      margin-bottom: 3.5vw;
+    }
+
+    @include breakpoint.mq(min, 1024px) {
+      margin-bottom: 3.6vw;
     }
 
     @include breakpoint.mq(min, 1201px) {
