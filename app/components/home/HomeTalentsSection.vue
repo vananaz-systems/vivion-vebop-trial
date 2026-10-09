@@ -3,8 +3,7 @@ import { talentSlides } from '~/data/home';
 import { aboutPage } from '~/data/pages';
 
 const DRAG_THRESHOLD = 6;
-const SCROLL_SETTLE_MS = 520;
-const AUTOPLAY_MS = 4000;
+const AUTOPLAY_MS = 3500;
 const MOBILE_SLIDER_MQ = '(max-width: 768px)';
 const SLICK_SPEED_MS = 300;
 const SLICK_TOUCH_THRESHOLD = 5;
@@ -51,7 +50,8 @@ let autoplayTimer: ReturnType<typeof setTimeout> | null = null;
 let scrollAnimFrame = 0;
 let isAnimating = false;
 let isJumping = false;
-let isHovering = false;
+let activeTrackTarget = -1;
+let queuedStep = 0;
 let reducedMotionQuery: MediaQueryList | null = null;
 
 function isMobileSlider() {
@@ -138,6 +138,7 @@ function jumpToChild(el: HTMLElement, child: HTMLElement) {
   afterPaint(() => {
     restoreTrack(el);
     isJumping = false;
+    flushQueuedSteps();
   });
 }
 
@@ -146,6 +147,9 @@ function scrollToTrack(trackIndex: number, smooth: boolean) {
   if (!el) return;
   const child = el.children[trackIndex] as HTMLElement | undefined;
   if (!child) return;
+
+  activeTrackTarget = trackIndex;
+  index.value = realIndexFromTrack(trackIndex);
 
   if (!smooth) {
     jumpToChild(el, child);
@@ -158,14 +162,7 @@ function scrollToTrack(trackIndex: number, smooth: boolean) {
     settleTimer = null;
   }
 
-  if (isMobileSlider()) {
-    animateScrollLeft(el, targetScrollLeft(el, child), SLICK_SPEED_MS);
-    return;
-  }
-
-  freezeTrack(el, true);
-  el.scrollTo({ left: targetScrollLeft(el, child), behavior: 'smooth' });
-  scheduleSettle(SCROLL_SETTLE_MS);
+  animateScrollLeft(el, targetScrollLeft(el, child), SLICK_SPEED_MS);
 }
 
 function realTrackFromClone(trackIndex: number) {
@@ -183,8 +180,10 @@ function settleLoopPosition() {
   const nearest = findNearestTrackIndex();
   index.value = realIndexFromTrack(nearest);
   if (!isCloneTrack(nearest)) {
+    activeTrackTarget = nearest;
     const el = track.value;
     if (el) restoreTrack(el);
+    flushQueuedSteps();
     return;
   }
   scrollToTrack(realTrackFromClone(nearest), false);
@@ -228,13 +227,7 @@ function stopAutoplay() {
 }
 
 function canAutoplay() {
-  return (
-    looping.value &&
-    !reducedMotionQuery?.matches &&
-    document.visibilityState === 'visible' &&
-    !isDragging.value &&
-    !isHovering
-  );
+  return looping.value && !reducedMotionQuery?.matches && document.visibilityState === 'visible' && !isDragging.value;
 }
 
 function startAutoplay() {
@@ -243,18 +236,8 @@ function startAutoplay() {
   autoplayTimer = setTimeout(() => {
     autoplayTimer = null;
     if (!canAutoplay()) return;
-    go(index.value + 1);
+    goBy(1);
   }, AUTOPLAY_MS);
-}
-
-function onCarouselEnter() {
-  isHovering = true;
-  stopAutoplay();
-}
-
-function onCarouselLeave() {
-  isHovering = false;
-  startAutoplay();
 }
 
 function onVisibilityChange() {
@@ -267,25 +250,46 @@ function onReducedMotionChange() {
   else startAutoplay();
 }
 
-function go(nextIndex: number) {
-  const count = talentSlides.length;
-  if (!count) return;
+function lastTrackIndex() {
+  return looping.value ? talentSlides.length + 1 : Math.max(0, talentSlides.length - 1);
+}
 
-  let trackIndex: number;
-  if (!looping.value) {
-    trackIndex = Math.min(count - 1, Math.max(0, nextIndex));
-    index.value = trackIndex;
-  } else if (nextIndex < 0) {
-    trackIndex = 0;
-    index.value = count - 1;
-  } else if (nextIndex >= count) {
-    trackIndex = count + 1;
-    index.value = 0;
-  } else {
-    trackIndex = nextIndex + 1;
-    index.value = nextIndex;
+function targetOrVisualTrack() {
+  if (activeTrackTarget >= 0) return activeTrackTarget;
+  return findNearestTrackIndex();
+}
+
+function flushQueuedSteps() {
+  if (!queuedStep || isJumping || isDragging.value) return;
+  const step = queuedStep > 0 ? 1 : -1;
+  queuedStep -= step;
+  goBy(step);
+}
+
+function goBy(step: number) {
+  const count = talentSlides.length;
+  if (!count || !step) return;
+
+  if (isJumping) {
+    queuedStep += step;
+    startAutoplay();
+    return;
   }
 
+  const from = targetOrVisualTrack();
+  const to = from + step;
+  const max = lastTrackIndex();
+
+  if (looping.value && (to < 0 || to > max)) {
+    queuedStep += step;
+    if (isCloneTrack(from) && !isAnimating) {
+      scrollToTrack(realTrackFromClone(from), false);
+    }
+    startAutoplay();
+    return;
+  }
+
+  const trackIndex = looping.value ? to : Math.min(max, Math.max(0, to));
   scrollToTrack(trackIndex, true);
   startAutoplay();
 }
@@ -318,7 +322,7 @@ function onTrackScroll() {
 }
 
 function onTrackScrollEnd() {
-  if (isDragging.value || isJumping) return;
+  if (isDragging.value || isJumping || isAnimating) return;
   settleLoopPosition();
 }
 
@@ -383,7 +387,7 @@ function finishMobileSwipe(el: HTMLElement) {
   const dx = lastX - startX;
   const minSwipe = el.clientWidth / SLICK_TOUCH_THRESHOLD;
   if (Math.abs(dx) >= minSwipe) {
-    go(dx < 0 ? index.value + 1 : index.value - 1);
+    goBy(dx < 0 ? 1 : -1);
     return;
   }
   scrollToTrack(trackIndexFromReal(index.value), true);
@@ -479,12 +483,7 @@ function onClickCapture(event: Event) {
 }
 
 function bindCarouselChrome() {
-  const root = carousel.value;
   const trackEl = track.value;
-  root?.addEventListener('pointerenter', onCarouselEnter);
-  root?.addEventListener('pointerleave', onCarouselLeave);
-  root?.addEventListener('focusin', onCarouselEnter);
-  root?.addEventListener('focusout', onCarouselLeave);
   trackEl?.addEventListener('click', onClickCapture, true);
   trackEl?.addEventListener('touchstart', onTouchStart, { passive: true });
   trackEl?.addEventListener('touchmove', onTouchMove, { passive: false });
@@ -493,12 +492,7 @@ function bindCarouselChrome() {
 }
 
 function unbindCarouselChrome() {
-  const root = carousel.value;
   const trackEl = track.value;
-  root?.removeEventListener('pointerenter', onCarouselEnter);
-  root?.removeEventListener('pointerleave', onCarouselLeave);
-  root?.removeEventListener('focusin', onCarouselEnter);
-  root?.removeEventListener('focusout', onCarouselLeave);
   trackEl?.removeEventListener('click', onClickCapture, true);
   trackEl?.removeEventListener('touchstart', onTouchStart);
   trackEl?.removeEventListener('touchmove', onTouchMove);
@@ -597,7 +591,7 @@ onUnmounted(() => {
               type="button"
               aria-label="前のタレント"
               @mousedown="onArrowMouseDown"
-              @click="go(index - 1)"
+              @click="goBy(-1)"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                 <g transform="translate(342 1899) rotate(180)">
@@ -616,7 +610,7 @@ onUnmounted(() => {
               type="button"
               aria-label="次のタレント"
               @mousedown="onArrowMouseDown"
-              @click="go(index + 1)"
+              @click="goBy(1)"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                 <g transform="translate(-310 -1867)">
