@@ -59,7 +59,7 @@ if (unit.value) {
           </div>
         </nav>
 
-        <div class="p-unitDetail__main">
+        <div class="p-unitDetail__main" :class="{ 'is-multiline': titleLines.length > 1 }">
           <ol class="p-unitDetail__breadcrumb" aria-label="パンくずリスト">
             <li>UNIT</li>
             <li aria-current="page" :class="{ 'is-multiline': titleLines.length > 1 }">
@@ -313,6 +313,12 @@ if (unit.value) {
 
     @include breakpoint.mq(min, 1201px) {
       padding-top: 9.5px;
+    }
+
+    &.is-multiline {
+      @include breakpoint.mq(min, 1201px) {
+        padding-top: 5.4px;
+      }
     }
   }
 
